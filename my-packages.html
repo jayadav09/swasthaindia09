@@ -15,6 +15,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f6f8;
+      padding: 30px 20px;
+      margin: 0;
+    }
        * {
       box-sizing: border-box;
       margin: 0;
@@ -67,6 +75,199 @@
     .nav-links a:hover {
       color: #00bfa5;
     }
+.package-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .package-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .package-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .package-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: #222;
+      margin-right: auto;
+    }
+
+    .price-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 20px;
+    }
+
+    .mrp {
+      color: #999;
+      text-decoration: line-through;
+      font-size: 14px;
+    }
+
+    .offer-price {
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .discount-tag {
+      background: #ff4d4f;
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-weight: 600;
+    }
+
+    .expand-icon {
+      font-size: 24px;
+      cursor: pointer;
+      margin-left: 15px;
+    }
+
+    .package-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.9s ease;
+}
+
+.expanded .package-details {
+  max-height: 1000px; /* enough height for content */
+}
+
+    .package-details p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #444;
+      display: flex;
+    }
+
+    .icon-label {
+      font-weight: 600;
+      color: #000;
+      width: 160px;
+      display: inline-block;
+    }
+
+    .book-now {
+      display: block;
+      margin: 20px auto 0;
+      background-color: #ff4d4f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+.test-detail-section {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.test-details-header h3 {
+  margin: 16px 0 10px;
+  font-size: 20px;
+  color: #2c3e50;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 4px;
+}
+
+.test-box {
+  background: #f9f9f9;
+  padding: 12px 16px;
+  border-left: 4px solid #ff5e5e;
+  border-radius: 8px;
+  margin: 12px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.test-box h4 {
+  font-size: 16px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #222;
+}
+
+.test-box p {
+  margin: 4px 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #555;
+  line-height: 1.4;
+}
+
+.test-box ol {
+  margin: 4px 0 8px 18px;
+  padding-left: 0;
+}
+
+.test-box ol li {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+
+.test-detail-section {
+  padding: 10px 12px;
+}
+
+.not-found {
+  color: #888;
+  font-size: 14px;
+  margin-left: 12px;
+}
+
+.test-detail-section {
+  margin-top: 20px;
+  padding: 12px 8px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+
+    .book-now:hover {
+      background-color: #d9363e;
+    }
+.know-more-toggle {
+  background-color: #ffffff;
+  color: #ff4d4f;
+  border: 2px solid #ff4d4f;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 15px 0 0;
+  display: inline-block;
+}
+
+.know-more-toggle:hover {
+  background-color: #181a19;
+  color: #ffffff;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
     @media (max-width: 768px) {
       .hamburger {
@@ -90,26 +291,7 @@
       .nav-links.active {
         display: flex;
         animation: fadeIn 0.3s ease;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      .hero-buttons {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 10px;
-        width: 100%;
-        max-width: 450px;
-        margin: 0 auto;
-      }
-      .hero-buttons .hero-btn {
-        flex: 1 1 48%;
-        justify-content: center;
-        display: flex;
-      }
+      }     
 
       .packages {
         display: grid !important;
@@ -117,33 +299,7 @@
         gap: 16px;
         padding: 0 12px !important;
       }
-    }
-
-    .hero-section {
-      background: linear-gradient(120deg, #e0f7fa, #ffffff);
-      padding: 60px 20px;
-      text-align: center;
-      position: relative;
-    }
-    .hero-inner {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .hero-section h1 {
-      font-size: 36px;
-      color: #004d40;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-    .hero-section p {
-      font-size: 15px;
-      color: #555;
-      margin-bottom: 20px;
-      max-width: 700px;
-      margin: 0 auto 20px auto;
-      line-height: 1.4;
-      text-align: center;
-    }
+    }    
     .hero-btn {
       background: #007f5f;
       color: white;
@@ -155,13 +311,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: background 0.3s ease;
     }
-    .hero-btn:hover {
-      background: #005f45;
-    }
-    .hero-btn:hover, .whatsapp-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-    }
+    
     .hero-whatsapp {
       margin-top: 20px;
     }
@@ -184,23 +334,69 @@
     .section {
       margin-top: 40px;
     }
+    @media (max-width: 600px) {
+  .package-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .package-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pricing-info {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .price-box {
+    text-align: left;
+    margin-bottom: 8px;
+  }
+
+  .package-name {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .discount-tag {
+    align-self: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .expand-icon {
+    align-self: flex-end;
+  }
+
+  .package-details {
+    font-size: 14px;
+    line-height: 1.6;
+    padding-top: 10px;
+  }
+
+  .book-now {
+    display: block;
+    margin: 20px auto 10px;
+    text-align: center;
+  }
+}
+@media (max-width: 600px) {
+  .know-more-toggle {
+    width: 100%;
+    text-align: center;
+  }
+}
+
     @media (max-width: 768px) {
       .hero-section h1 { font-size: 28px; }
       .hero-btn { font-size: 16px; padding: 12px 24px; }
     }
 h1 { text-align: center; color: #00796b; font-size: 2rem; margin: 30px 0; }
 .floating-banner { position: sticky; top: 0; z-index: 999; background: #004d40; color: white; padding: 12px; font-size: 15px; text-align: center; font-weight: 500; }
-    .floating-banner a { color: #ffeb3b; font-weight: bold; text-decoration: underline; }
-
-    .packages { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto 40px; padding: 0 20px; }
-    .card { background: #fff; border-radius: 16px; box-shadow: 0 6px 14px rgba(0,0,0,0.08); padding: 24px; text-align: center; transition: transform 0.4s ease; position: relative; }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 12px 20px rgba(0,0,0,0.12); }
-    .test-name { font-size: 20px; font-weight: 600; color: #004d40; cursor: pointer; margin-bottom: 10px; }
-    .price { font-size: 15px; color: #757575; text-decoration: line-through; }
-    .offer { font-size: 22px; color: #d32f2f; font-weight: bold; }
-    .book-btn { margin-top: 15px; padding: 10px 20px; background: #00796b; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
-    .book-btn:hover { background: #004d40; }
-    .test-details { margin-top: 15px; text-align: left; font-size: 14px; color: #333; display: none; }
+    .floating-banner a { color: #ffeb3b; font-weight: bold; text-decoration: underline; }    
     .wa-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 9999; }
     .wa-float img { width: 100%; height: auto; }
   </style>
@@ -231,67 +427,183 @@ h1 { text-align: center; color: #00796b; font-size: 2rem; margin: 30px 0; }
   <a href="https://wa.me/919911990556" target="_blank">+91-9911990556</a>
 </div>
 
-<h1>Full Body Test Packages</h1>
-<div class="packages">
-  <div class="card">
-    <div class="test-name" onclick="toggleDetails('basic')">🧬 Full Body Checkup – Basic</div>
-    <div class="price">₹2598</div>
-    <div class="offer">₹1299 Only</div>
-    <a class="book-btn" href="https://wa.me/919911990556?text=I%20want%20to%20book%20Full%20Body%20Checkup%20–%20Basic" target="_blank">Book Now</a>
-    <div class="test-details" id="basic">
-      <p><strong>Description:</strong> Includes CBC, LFT, KFT, Lipid Profile, Sugar, and Urine tests.</p>
-    </div>
-  </div>
-  <div class="card">
-    <div class="test-name" onclick="toggleDetails('advanced')">🩺 Full Body Checkup – Advanced</div>
-    <div class="price">₹3798</div>
-    <div class="offer">₹1899 Only</div>
-    <a class="book-btn" href="https://wa.me/919911990556?text=I%20want%20to%20book%20Full%20Body%20Checkup%20–%20Advanced" target="_blank">Book Now</a>
-    <div class="test-details" id="advanced">
-      <p><strong>Description:</strong> Includes Basic + Thyroid, Vitamin D & B12 for deeper health insights.</p>
-    </div>
-  </div>
-  <div class="card">
-    <div class="test-name" onclick="toggleDetails('senior_male')">👨‍⚕️ Full Body Checkup – Senior (Male)</div>
-    <div class="price">₹4600</div>
-    <div class="offer">₹2300 Only</div>
-    <a class="book-btn" href="https://wa.me/919911990556?text=I%20want%20to%20book%20Full%20Body%20Checkup%20–%20Senior%20(Male)" target="_blank">Book Now</a>
-    <div class="test-details" id="senior_male">
-      <p><strong>Description:</strong> Covers cardiac, kidney, liver, sugar & prostate screening.</p>
-    </div>
-  </div>
-  <div class="card">
-    <div class="test-name" onclick="toggleDetails('senior_female')">👩‍⚕️ Full Body Checkup – Senior (Female)</div>
-    <div class="price">₹4800</div>
-    <div class="offer">₹2400 Only</div>
-    <a class="book-btn" href="https://wa.me/919911990556?text=I%20want%20to%20book%20Full%20Body%20Checkup%20–%20Senior%20(Female)" target="_blank">Book Now</a>
-    <div class="test-details" id="senior_female">
-      <p><strong>Description:</strong> Covers thyroid, bone, sugar, liver, and women's wellness.</p>
-    </div>
-  </div>
-  <div class="card">
-    <div class="test-name" onclick="toggleDetails('executive')">🧪 Full Body Checkup – Executive Panel</div>
-    <div class="price">₹7000</div>
-    <div class="offer">₹3500 Only</div>
-    <a class="book-btn" href="https://wa.me/919911990556?text=I%20want%20to%20book%20Full%20Body%20Checkup%20–%20Executive%20Panel" target="_blank">Book Now</a>
-    <div class="test-details" id="executive">
-      <p><strong>Description:</strong> Complete body profile including CRP, electrolytes & hormonal screening.</p>
-    </div>
-  </div>
-  <div class="card">
-    <div class="test-name" onclick="toggleDetails('executive')">🧪 Complete Health Package (82 Parameters)</div>
-    <div class="price">₹5999</div>
-    <div class="offer">₹2595 Only</div>
-    <a class="book-btn" href="https://wa.me/919911990556?text=I%20want%20to%20book%20Full%20Body%20Checkup%20–%20Executive%20Panel" target="_blank">Book Now</a>
-    <div class="test-details" id="executive">
-      <p><strong>Description:</strong> Complete body profile including Complete CBC, KFT, LFT, Thyroid, Lipid profile, Iron Profiles, Electrolytes, HbA1C/MPG, Fasting Blood Sugar, Urine, Vitamin D3, Vitamin B12 & Calcium.</p>
-    </div>
-  </div>
-</div>
-
 <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
   <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
 </a>
+<!-- Modal for Test Details -->
+<div id="test-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+  <div style="background:#fff; padding:20px 25px; border-radius:12px; max-width:500px; width:90%; position:relative;">
+    <h2 id="modal-test-name" style="margin-top:0;"></h2>
+    <p><strong>Description:</strong> <span id="modal-test-description"></span></p>
+    <p><strong>Parameters:</strong> <span id="modal-test-parameters"></span></p>
+    <p><strong>Purpose:</strong> <span id="modal-test-purpose"></span></p>
+    <button onclick="closeModal()" style="position:absolute; top:10px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">×</button>
+  </div>
+</div>
+<div id="loading-message" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  flex-direction: column;
+  transition: opacity 0.5s ease;
+">
+  <div class="spinner" style="
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #007bff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+  "></div>
+  <div style="font-size: 16px; color: #333;">Loading health packages, please wait...</div>
+</div>
+
+  <div id="test-cards-container"></div>
+
+  <script>
+const sheetURL = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";  // Replace with your deployed Apps Script URL
+const container = document.getElementById("test-cards-container");
+
+let currentlyExpanded = null;
+
+fetch(sheetURL)
+  .then(res => {
+    return res.text().then(text => {
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        console.error("Not a valid JSON!", text);
+        throw new Error("Invalid JSON from API");
+      }
+    });
+  })
+  .then(data => {
+const loader = document.getElementById("loading-message");
+loader.style.opacity = "0";
+setTimeout(() => {
+  loader.style.display = "none";
+}, 500); // matches transition duration
+
+    const testsMap = {};
+    data.tests.forEach(test => {
+      const key = test["Test Name"]?.trim().toLowerCase();
+      if (key) testsMap[key] = test;
+    });
+
+    data.packages.forEach(pkg => {
+      const card = document.createElement("div");
+      card.className = "package-card";
+
+      const discount = Math.round(((pkg.MRP - pkg.Offer_Price) / pkg.MRP) * 100);
+      const testNames = pkg["Tests Included"].split(',').map(t => t.trim());
+      let testDetailsHTML = "";
+
+      testNames.forEach(name => {
+        const test = testsMap[name.toLowerCase()];
+        if (test) {
+          const parameters = test.Parameters?.split(',').map(p => p.trim());
+          const paramList = parameters?.map((p, i) => `<li>${p}</li>`).join('') || '';
+          testDetailsHTML += `
+            <div class="test-box">
+             <h4>${test["Test Name"]}</h4>
+             <p><strong>Description:</strong></p>
+             <p><i>${test.Description}</i></p>
+             ${paramList ? `<p><strong>Parameters Included:</strong></p><ol>${paramList}</ol>` : ""}
+${test.Purpose ? `<p><strong>Purpose:</strong></p>
+<p>${test.Purpose}</p>` : ""}
+
+            </div>
+            <hr/>
+          `;
+        } else {
+          testDetailsHTML += `<p style="color:#999;">❌ <strong>${name}</strong> – not found in Sheet2</p>`;
+        }
+      });
+if (testDetailsHTML) {
+  testDetailsHTML = `
+    <div class="test-details-header">
+      <h3>Test Details:</h3>
+    </div>
+    ${testDetailsHTML}
+  `;
+}
+
+      card.innerHTML = `
+        <div class="package-header">
+          <div class="package-name">${pkg.Package}</div>
+          <div class="price-section">
+            <div class="mrp">MRP: ₹${pkg.MRP}</div>
+            <div class="offer-price">Offer: ₹${pkg.Offer_Price}</div>
+            <div class="discount-tag">${discount}% OFF</div>
+            <div class="expand-icon">+</div>
+          </div>
+        </div>
+
+        <div class="package-details">
+          <p><span class="icon-label">Tests Included:</span> ${pkg["Tests Included"]}</p>
+<p><span class="icon-label">No. of Parameters:</span> ${pkg["No. of Parameters"]}</p>
+<p><span class="icon-label">Sample Type:</span> ${pkg["Sample Type"]}</p>
+<p><span class="icon-label">Fasting Required:</span> ${pkg["Fasting Required"]}</p>
+<p><span class="icon-label">Report Time:</span> ${pkg["Report Time"]}</p>
+<p><span class="icon-label">Collection Timing:</span> ${pkg["Collection Timing"]}</p>
+<p><span class="icon-label">Home Collection:</span> ${pkg["Home Collection"] === "Yes" ? "Yes" : "No"}</p>
+<p><span class="icon-label">Description:</span> ${pkg.Description}</p>
+
+
+          <hr/>
+                   <button class="know-more-toggle">Know More</button>
+<div class="test-detail-section" style="display: none;">
+  ${testDetailsHTML}
+</div>
+
+          <a href="${pkg["Book Link"]}" class="book-now" target="_blank">Book Now</a>
+        </div>
+      `;
+
+      const toggle = card.querySelector('.expand-icon');
+const knowMoreBtn = card.querySelector('.know-more-toggle');
+const testDetailSection = card.querySelector('.test-detail-section');
+
+knowMoreBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const isVisible = testDetailSection.style.display === "block";
+  testDetailSection.style.display = isVisible ? "none" : "block";
+  knowMoreBtn.textContent = isVisible ? "Know More" : "Hide Details";
+});
+
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (currentlyExpanded && currentlyExpanded !== card) {
+          currentlyExpanded.classList.remove("expanded");
+        }
+        card.classList.toggle("expanded");
+        currentlyExpanded = card.classList.contains("expanded") ? card : null;
+      });
+
+      container.appendChild(card);
+    });
+  })
+  .catch(error => {
+  console.error("Error fetching data:", error);
+  document.getElementById("loading-message").innerHTML = "❌ Failed to load packages. Please try again later.";
+});
+
+// Collapse any open card when clicking outside
+document.addEventListener("click", e => {
+  if (currentlyExpanded && !currentlyExpanded.contains(e.target)) {
+    currentlyExpanded.classList.remove("expanded");
+    currentlyExpanded = null;
+  }
+});
+
+</script>
 
 <script>
   function toggleDetails(id) {
