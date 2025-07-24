@@ -862,59 +862,134 @@ text-align: center;
     });
 </script>
  <script>
-    const testsApi = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
-    const packagesApi = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
+  const worker = new Worker("worker.js");
 
-    let allData = [];
+  let allData = [], testDetails = [];
 
-    async function fetchData() {
-      const [testsRes, packagesRes] = await Promise.all([
-        fetch(testsApi),
-        fetch(packagesApi)
-      ]);
+  async function fetchData() {
+    const [testRes, packageRes] = await Promise.all([
+      fetch("https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec"),
+      fetch("https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec")
+    ]);
+    const testData = await testRes.json();
+    const packageData = await packageRes.json();
 
-      const tests = await testsRes.json();
-      const packages = await packagesRes.json();
-      const allTests = tests.map(t => ({ type: 'Test', name: t["Test Name"], mrp: t["MRP"], offer: t["Offer Price"], data: t }));
-      const allPackages = packages.packages?.map(p => ({ type: 'Package', name: p["Package"], mrp: p["MRP"], offer: p["Offer_Price"], data: p })) || [];
-      allData = [...allTests, ...allPackages];
+    const tests = testData.map(t => ({ type: 'Test', name: t["Test Name"], data: t }));
+    const packages = packageData.packages.map(p => ({ type: 'Package', name: p["Package"], data: p }));
+    allData = [...tests, ...packages];
+    testDetails = packageData.tests;
+
+    // Send all data to worker for background filtering
+    worker.postMessage({ type: "init", payload: allData });
+  }
+
+  function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
+  }
+
+  function renderSuggestions(matches) {
+    const suggestionsBox = document.getElementById("suggestions");
+    if (!matches.length) {
+      suggestionsBox.innerHTML = "";
+      suggestionsBox.style.display = "none";
+      return;
+    }
+    suggestionsBox.innerHTML = matches.map(item => `
+      <div class='suggestion' data-name="${item.name}" data-type="${item.type}">
+        ${item.name}
+      </div>`).join('');
+    suggestionsBox.style.display = "block";
+  }
+
+  function renderDetails(item) {
+    const container = document.getElementById("detailsContainer");
+    if (!item) {
+      container.innerHTML = "<p style='text-align:center;'>No details found.</p>";
+      return;
     }
 
-    function displayResults(results) {
-      const container = document.getElementById("resultsContainer");
-      container.innerHTML = "";
+    const data = item.data;
+    const name = data["Test Name"] || data["Package"] || "Details";
+    const mrp = parseFloat(data["MRP"] || 0);
+    const offer = parseFloat(data["Offer Price"] || data["Offer_Price"] || 0);
+    const discount = mrp && offer ? Math.round(((mrp - offer) / mrp) * 100) : 0;
+    const bookLink = data["Booking Link"] || "#";
 
-      if (results.length === 0) {
-        container.innerHTML = "<p>No results found.</p>";
-        return;
+    const fieldsOrder = ["Tests Included", "No. of Parameters", "Sample Type", "Fasting Required", "Report Time", "Collection Timing", "Home Collection", "Description"];
+    const fields = fieldsOrder.map(k => data[k] ? `<p><strong>${k}:</strong> ${data[k]}</p>` : "").join('');
+
+    let html = `
+      <div class="details-card">
+        <h2>${name}</h2>
+        <div class="price-line">
+          MRP: <s>₹${mrp}</s> <strong>₹${offer}</strong> <span class="discount-tag">(${discount}% OFF)</span>
+        </div>
+        ${fields}
+        <a class="book-btn" href="${bookLink}" target="_blank">Book Now</a>
+      </div>
+    `;
+
+    if (item.type === "Package") {
+      const includedTests = (data["Tests Included"] || "").split(",").map(t => t.trim().toLowerCase());
+      const breakdown = testDetails.filter(t => includedTests.includes((t["Test Name"] || "").toLowerCase()));
+
+      if (breakdown.length > 0) {
+        html += `<div class="test-details"><h3>Test Details:</h3>`;
+        breakdown.forEach(test => {
+          html += `
+            <div style="margin-bottom: 16px;">
+              <h4>${test["Test Name"]}</h4>
+              ${test["Description"] ? `<p><strong>Description:</strong> ${test["Description"]}</p>` : ""}
+              ${test["Parameters Included"] ? `<p><strong>Parameters Included:</strong> ${test["Parameters Included"]}</p>` : ""}
+              ${test["Purpose"] ? `<p><strong>Purpose:</strong> ${test["Purpose"]}</p>` : ""}
+            </div>
+          `;
+        });
+        html += `</div>`;
       }
-
-      results.forEach(item => {
-        const discount = item.mrp && item.offer ? Math.round(((item.mrp - item.offer) / item.mrp) * 100) : 0;
-        const div = document.createElement("div");
-        div.className = "result-card";
-        div.innerHTML = `
-          <h3>${item.name}</h3>
-          <p>MRP: <s>₹${item.mrp || 0}</s> Offer: <strong>₹${item.offer || 0}</strong> ${discount ? `<span style='color:green;'>(${discount}% OFF)</span>` : ''}</p>
-          <a href="details.html?name=${encodeURIComponent(item.name)}&type=${item.type}" class="book-btn">View Details</a>
-        `;
-        container.appendChild(div);
-      });
     }
 
-    document.getElementById("searchInput").addEventListener("input", async function () {
-      const query = this.value.trim().toLowerCase();
-      if (!query) {
-        document.getElementById("resultsContainer").innerHTML = "";
+    container.innerHTML = html;
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const input = document.getElementById("searchInput");
+    const suggestionsBox = document.getElementById("suggestions");
+
+    await fetchData();
+
+    const queryName = getQueryParam("name")?.toLowerCase();
+    const result = allData.find(item => item.name?.toLowerCase() === queryName);
+    if (result) renderDetails(result);
+
+    // Listen for input
+    input.addEventListener("input", e => {
+      const query = e.target.value.trim();
+      if (query.length === 0) {
+        suggestionsBox.style.display = "none";
         return;
       }
-
-      if (allData.length === 0) await fetchData();
-
-      const results = allData.filter(item => item.name?.toLowerCase().includes(query));
-      displayResults(results);
+      worker.postMessage({ type: "search", payload: query });
     });
-  </script>
+
+    // Receive results from worker
+    worker.onmessage = function (e) {
+      renderSuggestions(e.data);
+    };
+
+    suggestionsBox.addEventListener("click", function (e) {
+      if (e.target.classList.contains("suggestion")) {
+        const name = e.target.dataset.name.toLowerCase();
+        const match = allData.find(item => item.name.toLowerCase() === name);
+        input.value = e.target.dataset.name;
+        suggestionsBox.style.display = "none";
+        renderDetails(match);
+      }
+    });
+  });
+</script>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
