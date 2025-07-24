@@ -413,7 +413,42 @@ h2 {
   cursor: pointer;
   text-align: center;
 }
-
+.search-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .search-box {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .result-card {
+      background: white;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .result-card h3 {
+      margin: 0 0 5px;
+    }
+    .result-card p {
+      margin: 0;
+      color: #555;
+    }
+    .book-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #007bff;
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+    }
 .search-card:hover {
   transform: translateY(-5px);
 }
@@ -622,31 +657,11 @@ text-align: center;
 </div>
 </section>
   <!-- 🔍 Modern Search Section -->
-<section style="padding: 50px 20px; background-color: #f0f7ff;">
-  <h2 style="text-align: center; font-size: 28px; color: #2c3e50; margin-bottom: 25px;">Search for Tests or Packages</h2>
-
-  <div style="display: flex; justify-content: center;">
-    <div style="position: relative; width: 100%; max-width: 450px;">
-      <input 
-        type="text" 
-        id="searchMain" 
-        placeholder="Search test by name..." 
-        style="
-          width: 100%;
-          padding: 14px 20px 14px 48px;
-          border-radius: 30px;
-          border: 1px solid #ccc;
-          font-size: 16px;
-          outline: none;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-          background-image: url('https://img.icons8.com/ios-filled/24/000000/search--v1.png');
-          background-position: 15px center;
-          background-repeat: no-repeat;
-          background-size: 18px;
-        "
-      />
-    </div>
+<div class="search-container">
+    <input type="text" id="searchInput" class="search-box" placeholder="Search tests or packages..." />
+    <div id="resultsContainer"></div>
   </div>
+ 
 
   <!-- Results will appear below -->
   <div id="search-results" style="display: none; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 40px;"></div>
@@ -800,11 +815,19 @@ text-align: center;
     });
   }
 
-  // Auto-show popup after 2 seconds on page load
+  // ✅ Show popup only once using sessionStorage
   window.onload = function () {
-    setTimeout(openPopup, 2000);
+    const hasPopupShown = sessionStorage.getItem("popupShown");
+
+    if (!hasPopupShown) {
+      setTimeout(() => {
+        openPopup();
+        sessionStorage.setItem("popupShown", "true");
+      }, 2000); // 2-second delay
+    }
   };
 </script>
+
  </script>
 <script>
   fetch("https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec")
@@ -838,64 +861,61 @@ text-align: center;
       });
     });
 </script>
-  <script>
-let allPackages = [];
+ <script>
+    const testsApi = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
+    const packagesApi = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
 
-function renderSearchResults(data) {
-  const container = document.getElementById("search-results");
-  container.innerHTML = "";
+    let allData = [];
 
-  if (data.length === 0) {
-    container.innerHTML = "<p style='text-align:center;'>No matching test found.</p>";
-    return;
-  }
+    async function fetchData() {
+      const [testsRes, packagesRes] = await Promise.all([
+        fetch(testsApi),
+        fetch(packagesApi)
+      ]);
 
-  data.forEach(test => {
-    const testName = test["Test Name"] || "";
-    const mrp = parseFloat(test["MRP"]) || 0;
-    const offer = parseFloat(test["Offer Price"]) || 0;
-    const discount = mrp && offer ? Math.round(((mrp - offer) / mrp) * 100) : 0;
-    const bookingLink = test["Booking Link"] || "#";
+      const tests = await testsRes.json();
+      const packages = await packagesRes.json();
+      const allTests = tests.map(t => ({ type: 'Test', name: t["Test Name"], mrp: t["MRP"], offer: t["Offer Price"], data: t }));
+      const allPackages = packages.packages?.map(p => ({ type: 'Package', name: p["Package"], mrp: p["MRP"], offer: p["Offer_Price"], data: p })) || [];
+      allData = [...allTests, ...allPackages];
+    }
 
-    const card = document.createElement("div");
-    card.className = "search-card";
+    function displayResults(results) {
+      const container = document.getElementById("resultsContainer");
+      container.innerHTML = "";
 
-    card.innerHTML = `
-      <h3>${testName}</h3>
-      <div class="price">
-        <span class="mrp">₹${mrp}</span>
-        <span class="offer">₹${offer}</span>
-        ${discount > 0 ? `<span class="discount-tag">${discount}% OFF</span>` : ''}
-      </div>
-      <a href="${bookingLink}" target="_blank" class="book-btn">Book Now</a>
-    `;
-
-    container.appendChild(card);
-  });
-
-  container.style.display = "flex";
-}
-
-fetch("https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec")
-  .then(res => res.json())
-  .then(data => {
-    allPackages = data;
-
-    document.getElementById("searchMain").addEventListener("input", function () {
-      const query = this.value.toLowerCase();
-      const filtered = allPackages.filter(test =>
-        test["Test Name"].toLowerCase().includes(query)
-      );
-      
-      // Show results if search is not empty
-      if (query.trim().length > 0) {
-        renderSearchResults(filtered);
-      } else {
-        document.getElementById("search-results").style.display = "none";
+      if (results.length === 0) {
+        container.innerHTML = "<p>No results found.</p>";
+        return;
       }
+
+      results.forEach(item => {
+        const discount = item.mrp && item.offer ? Math.round(((item.mrp - item.offer) / item.mrp) * 100) : 0;
+        const div = document.createElement("div");
+        div.className = "result-card";
+        div.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>MRP: <s>₹${item.mrp || 0}</s> Offer: <strong>₹${item.offer || 0}</strong> ${discount ? `<span style='color:green;'>(${discount}% OFF)</span>` : ''}</p>
+          <a href="details.html?name=${encodeURIComponent(item.name)}&type=${item.type}" class="book-btn">View Details</a>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    document.getElementById("searchInput").addEventListener("input", async function () {
+      const query = this.value.trim().toLowerCase();
+      if (!query) {
+        document.getElementById("resultsContainer").innerHTML = "";
+        return;
+      }
+
+      if (allData.length === 0) await fetchData();
+
+      const results = allData.filter(item => item.name?.toLowerCase().includes(query));
+      displayResults(results);
     });
-  });
-</script>
+  </script>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const nav = document.getElementById("navLinks");
