@@ -198,44 +198,6 @@
   border-bottom: 2px solid #eee;
   padding-bottom: 4px;
 }
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 30px 20px;
-  border-radius: 12px;
-  max-width: 700px;
-  width: 95%;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.25);
-  position: relative;
-  animation: fadeSlide 0.4s ease;
-}
-
-.modal-close {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 24px;
-  cursor: pointer;
-  color: #888;
-}
-
-.modal-close:hover {
-  color: #ff4d4f;
-}
 
 .test-box {
   background: #f9f9f9;
@@ -448,6 +410,136 @@ h1 { text-align: center; color: #00796b; font-size: 2rem; margin: 30px 0; }
     .floating-banner a { color: #ffeb3b; font-weight: bold; text-decoration: underline; }    
     .wa-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 9999; }
     .wa-float img { width: 100%; height: auto; }
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.modal-container {
+  background: white;
+  width: 95%;
+  max-width: 720px;
+  height: 90vh;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 36px;
+  height: 36px;
+  background: #ff4d4f;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1001;
+  border: 3px solid white;
+}
+
+.modal-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #ffffff;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #00796b;
+  margin: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-now-btn {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-left: 12px;
+  transition: background 0.3s ease;
+}
+
+.book-now-btn:hover {
+  background-color: #d9363e;
+}
+
+.modal-body-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  scroll-behavior: smooth;
+}
+@media (max-width: 600px) {
+  .modal-container {
+    height: 95vh;
+    border-radius: 16px 16px 0 0;
+    margin-top: auto;
+  }
+}
+.modal-overlay.show {
+  backdrop-filter: blur(5px); /* ✅ background blur */
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(5px);
+  }
+}
+
+.modal-container {
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.modal-overlay.show .modal-container {
+  transform: translateY(0);
+  opacity: 1;
+}
   </style>
 </head>
 <body>
@@ -481,11 +573,21 @@ h1 { text-align: center; color: #00796b; font-size: 2rem; margin: 30px 0; }
 </a>
 <!-- Modal -->
 <div id="testDetailModal" class="modal-overlay">
-  <div class="modal-content">
-    <span class="modal-close" onclick="closeModal()">×</span>
-    <div id="modal-body"></div>
+  <div class="modal-container">
+    <div class="modal-content">
+      <!-- Close Button OUTSIDE Top Right -->
+      <span class="modal-close" onclick="closeModal()">×</span>
+
+      <!-- Sticky Header -->
+      <div class="modal-header">
+        <h2 id="modal-test-name">Package Name</h2>
+        <a id="modal-book-link" class="book-now-btn" target="_blank">Book Now</a>
+      </div>
+
+      <!-- Scrollable Body -->
+      <div id="modal-body" class="modal-body-scroll"></div>
+    </div>
   </div>
-</div>
 </div>
 <div id="loading-message" style="
   position: fixed;
@@ -514,7 +616,7 @@ h1 { text-align: center; color: #00796b; font-size: 2rem; margin: 30px 0; }
 
   <div id="test-cards-container"></div>
 
-  <script>
+   <script>
 const sheetURL = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
 const container = document.getElementById("test-cards-container");
 let currentlyExpanded = null;
@@ -594,10 +696,16 @@ fetch(sheetURL)
       const testDetailSection = card.querySelector('.test-detail-section');
 
       knowMoreBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        document.getElementById("modal-body").innerHTML = testDetailsHTML;
-        document.getElementById("testDetailModal").style.display = "flex";
-      });
+  e.stopPropagation();
+  document.getElementById("modal-test-name").innerText = pkg.Package;
+document.getElementById("modal-book-link").href = pkg["Book Link"];
+document.getElementById("modal-body").innerHTML = testDetailsHTML;
+
+const modal = document.getElementById("testDetailModal");
+modal.style.display = "flex";
+setTimeout(() => modal.classList.add("show"), 10);
+});
+
 
       toggle.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -627,8 +735,16 @@ fetch(sheetURL)
 
 // ✅ Now define functions AFTER promise handling
 function closeModal() {
-  document.getElementById("testDetailModal").style.display = "none";
+  const modal = document.getElementById("testDetailModal");
+  modal.classList.remove("show");
+  setTimeout(() => { modal.style.display = "none"; }, 300); // Wait for animation
 }
+
+document.getElementById("testDetailModal").addEventListener("click", function (e) {
+  if (e.target.classList.contains("modal-overlay")) {
+    closeModal();
+  }
+});
 
 </script>
 
