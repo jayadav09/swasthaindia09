@@ -17,7 +17,7 @@
   <style>
    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-    body {
+   body {
       font-family: 'Poppins', sans-serif;
       background-color: #f4f6f8;
       padding: 30px 20px;
@@ -144,9 +144,8 @@
 }
 
 .expanded .package-details {
-  max-height: 1000px; /* enough height for content */
+  max-height: 10000px; /* enough height for content */
 }
-
     .package-details p {
       margin: 6px 0;
       font-size: 14px;
@@ -175,10 +174,22 @@
       text-decoration: none;
     }
 .test-detail-section {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.3s ease, transform 0.3s ease;
   background: #f9f9f9;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 10px;
+  margin-top: 15px;
+  padding: 0 16px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.test-detail-section.show {
+  max-height: 2000px;
+  padding: 15px 16px;
+  opacity: 1;
+  transform: translateY(0);
 }
 .test-details-header h3 {
   margin: 16px 0 10px;
@@ -186,6 +197,44 @@
   color: #2c3e50;
   border-bottom: 2px solid #eee;
   padding-bottom: 4px;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px 20px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 95%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.25);
+  position: relative;
+  animation: fadeSlide 0.4s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+.modal-close:hover {
+  color: #ff4d4f;
 }
 
 .test-box {
@@ -224,23 +273,23 @@
   line-height: 1.4;
 }
 
-.test-detail-section {
-  padding: 10px 12px;
-}
-
 .not-found {
   color: #888;
   font-size: 14px;
   margin-left: 12px;
 }
 
-.test-detail-section {
-  margin-top: 20px;
-  padding: 12px 8px;
-  background: #fff;
-  border-radius: 8px;
-}
 
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
     .book-now:hover {
       background-color: #d9363e;
@@ -292,7 +341,7 @@
         display: flex;
         animation: fadeIn 0.3s ease;
       }     
-
+ 
       .packages {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
@@ -430,15 +479,13 @@ h1 { text-align: center; color: #00796b; font-size: 2rem; margin: 30px 0; }
 <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
   <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
 </a>
-<!-- Modal for Test Details -->
-<div id="test-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
-  <div style="background:#fff; padding:20px 25px; border-radius:12px; max-width:500px; width:90%; position:relative;">
-    <h2 id="modal-test-name" style="margin-top:0;"></h2>
-    <p><strong>Description:</strong> <span id="modal-test-description"></span></p>
-    <p><strong>Parameters:</strong> <span id="modal-test-parameters"></span></p>
-    <p><strong>Purpose:</strong> <span id="modal-test-purpose"></span></p>
-    <button onclick="closeModal()" style="position:absolute; top:10px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">×</button>
+<!-- Modal -->
+<div id="testDetailModal" class="modal-overlay">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">×</span>
+    <div id="modal-body"></div>
   </div>
+</div>
 </div>
 <div id="loading-message" style="
   position: fixed;
@@ -468,36 +515,21 @@ h1 { text-align: center; color: #00796b; font-size: 2rem; margin: 30px 0; }
   <div id="test-cards-container"></div>
 
   <script>
-const sheetURL = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";  // Replace with your deployed Apps Script URL
+const sheetURL = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
 const container = document.getElementById("test-cards-container");
-
 let currentlyExpanded = null;
 
 fetch(sheetURL)
-  .then(res => {
-    return res.text().then(text => {
-      try {
-        return JSON.parse(text);
-      } catch (e) {
-        console.error("Not a valid JSON!", text);
-        throw new Error("Invalid JSON from API");
-      }
-    });
-  })
+  .then(res => res.json())
   .then(data => {
-const loader = document.getElementById("loading-message");
-loader.style.opacity = "0";
-setTimeout(() => {
-  loader.style.display = "none";
-}, 500); // matches transition duration
-
+    // ✅ Your data handling code
     const testsMap = {};
     data.tests.forEach(test => {
       const key = test["Test Name"]?.trim().toLowerCase();
       if (key) testsMap[key] = test;
     });
 
-    data.packages.forEach(pkg => {
+    data.packages.forEach((pkg, index) => {
       const card = document.createElement("div");
       card.className = "package-card";
 
@@ -509,31 +541,27 @@ setTimeout(() => {
         const test = testsMap[name.toLowerCase()];
         if (test) {
           const parameters = test.Parameters?.split(',').map(p => p.trim());
-          const paramList = parameters?.map((p, i) => `<li>${p}</li>`).join('') || '';
+          const paramList = parameters?.map((p, i) => `<li>${p}</li>`).join('') || "<p><i>No parameters listed.</i></p>";
           testDetailsHTML += `
             <div class="test-box">
-             <h4>${test["Test Name"]}</h4>
-             <p><strong>Description:</strong></p>
-             <p><i>${test.Description}</i></p>
-             ${paramList ? `<p><strong>Parameters Included:</strong></p><ol>${paramList}</ol>` : ""}
-${test.Purpose ? `<p><strong>Purpose:</strong></p>
-<p>${test.Purpose}</p>` : ""}
-
+              <h4>${test["Test Name"]}</h4>
+              <p><strong>Description:</strong></p>
+              <p><i>${test.Description || "No description available"}</i></p>
+              <p><strong>Parameters Included:</strong></p>
+              <ol>${paramList}</ol>
+              <p><strong>Purpose:</strong></p>
+              <p>${test.Purpose || "No purpose mentioned."}</p>
             </div>
             <hr/>
           `;
         } else {
-          testDetailsHTML += `<p style="color:#999;">❌ <strong>${name}</strong> – not found in Sheet2</p>`;
+          testDetailsHTML += `<p style="color:#ff4d4f; font-weight: 600;">❌ <strong>${name}</strong> – not found in Sheet2</p>`;
         }
       });
-if (testDetailsHTML) {
-  testDetailsHTML = `
-    <div class="test-details-header">
-      <h3>Test Details:</h3>
-    </div>
-    ${testDetailsHTML}
-  `;
-}
+
+      if (!testDetailsHTML.trim()) {
+        testDetailsHTML = `<p style="color:#888;">No test details found for this package.</p>`;
+      }
 
       card.innerHTML = `
         <div class="package-header">
@@ -545,38 +573,31 @@ if (testDetailsHTML) {
             <div class="expand-icon">+</div>
           </div>
         </div>
-
         <div class="package-details">
-          <p><span class="icon-label">Tests Included:</span> ${pkg["Tests Included"]}</p>
-<p><span class="icon-label">No. of Parameters:</span> ${pkg["No. of Parameters"]}</p>
-<p><span class="icon-label">Sample Type:</span> ${pkg["Sample Type"]}</p>
-<p><span class="icon-label">Fasting Required:</span> ${pkg["Fasting Required"]}</p>
-<p><span class="icon-label">Report Time:</span> ${pkg["Report Time"]}</p>
-<p><span class="icon-label">Collection Timing:</span> ${pkg["Collection Timing"]}</p>
-<p><span class="icon-label">Home Collection:</span> ${pkg["Home Collection"] === "Yes" ? "Yes" : "No"}</p>
-<p><span class="icon-label">Description:</span> ${pkg.Description}</p>
-
-
+          <p><strong>Tests Included:</strong> ${pkg["Tests Included"]}</p>
+          <p><strong>No. of Parameters:</strong> ${pkg["No. of Parameters"]}</p>
+          <p><strong>Sample Type:</strong> ${pkg["Sample Type"]}</p>
+          <p><strong>Fasting Required:</strong> ${pkg["Fasting Required"]}</p>
+          <p><strong>Report Time:</strong> ${pkg["Report Time"]}</p>
+          <p><strong>Collection Timing:</strong> ${pkg["Collection Timing"]}</p>
+          <p><strong>Home Collection:</strong> ${pkg["Home Collection"]}</p>
+          <p><strong>Description:</strong> ${pkg.Description}</p>
           <hr/>
-                   <button class="know-more-toggle">Know More</button>
-<div class="test-detail-section" style="display: none;">
-  ${testDetailsHTML}
-</div>
-
+          <button class="know-more-toggle">Know More</button>
+          <div class="test-detail-section">${testDetailsHTML}</div>
           <a href="${pkg["Book Link"]}" class="book-now" target="_blank">Book Now</a>
         </div>
       `;
 
       const toggle = card.querySelector('.expand-icon');
-const knowMoreBtn = card.querySelector('.know-more-toggle');
-const testDetailSection = card.querySelector('.test-detail-section');
+      const knowMoreBtn = card.querySelector('.know-more-toggle');
+      const testDetailSection = card.querySelector('.test-detail-section');
 
-knowMoreBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  const isVisible = testDetailSection.style.display === "block";
-  testDetailSection.style.display = isVisible ? "none" : "block";
-  knowMoreBtn.textContent = isVisible ? "Know More" : "Hide Details";
-});
+      knowMoreBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        document.getElementById("modal-body").innerHTML = testDetailsHTML;
+        document.getElementById("testDetailModal").style.display = "flex";
+      });
 
       toggle.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -588,20 +609,26 @@ knowMoreBtn.addEventListener("click", (e) => {
       });
 
       container.appendChild(card);
-    });
-  })
-  .catch(error => {
-  console.error("Error fetching data:", error);
-  document.getElementById("loading-message").innerHTML = "❌ Failed to load packages. Please try again later.";
-});
 
-// Collapse any open card when clicking outside
-document.addEventListener("click", e => {
-  if (currentlyExpanded && !currentlyExpanded.contains(e.target)) {
-    currentlyExpanded.classList.remove("expanded");
-    currentlyExpanded = null;
-  }
-});
+      if (index === data.packages.length - 1) {
+        const loader = document.getElementById("loading-message");
+        loader.style.opacity = "0";
+        setTimeout(() => {
+          loader.style.display = "none";
+        }, 500);
+      }
+    });
+  })  // ✅ correctly closing the .then
+  .catch(err => {
+    console.error("Failed to fetch data:", err);
+    const loader = document.getElementById("loading-message");
+    loader.innerHTML = "<div style='color:red;'>❌ Failed to load packages. Please try again later.</div>";
+  });
+
+// ✅ Now define functions AFTER promise handling
+function closeModal() {
+  document.getElementById("testDetailModal").style.display = "none";
+}
 
 </script>
 
