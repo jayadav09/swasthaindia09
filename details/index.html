@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+ <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SwasthaIndia – Affordable Blood Tests & Health Packages in Delhi</title>
 <!-- ✅ Canonical link -->
@@ -16,13 +16,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
    <style>
-body {
+    body {
       font-family: 'Inter', sans-serif;
       background-color: #f5fcff;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-
     header {
       background: white;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -31,38 +33,32 @@ body {
       z-index: 1000;
       width: 100%;
     }
-
     .topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 32px;
-  background: #fff;
-  flex-wrap: wrap;
-  position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: #fff;
+      flex-wrap: wrap;
+      position: relative;
     }
-
-    .logo img {
-      height: 48px;
-    }
+    .logo img 
+   { height: 48px; }
 
     .hamburger {
-  font-size: 1.8rem;
-  color: #007c91;
-  cursor: pointer;
-  display: none;
-  margin-left: auto; /* ✅ Ensures it's aligned to the far right */
-  position: absolute;
-  right: 32px; /* ✅ Aligns with padding */
+      font-size: 1.8rem;
+      color: #007c91;
+      cursor: pointer;
+      display: none;
+      position: absolute;
+      right: 32px;
     }
-
     .nav-links {
- display: flex;
-  gap: 24px;
-  align-items: center;
-  margin-right: 12px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      margin-right: 12px;
     }
-
     .nav-links a {
       text-decoration: none;
       color: #007c91;
@@ -70,56 +66,26 @@ body {
       font-size: 16px;
       transition: color 0.3s;
     }
-    .nav-links a:hover {
-      color: #00bfa5;
-    }
-
+    .nav-links 
+     a:hover { color: #00bfa5; }
     @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
-
+      .hamburger { display: block; }
       .nav-links {
-  flex-direction: column;
-  display: none;
-  background: white;
-  padding: 16px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  width: 200px;
-  border-radius: 8px;
-  z-index: 9999;  /* ✅ ADD this line */
-}
-      .nav-links a {
-        margin: 10px 0;
+        flex-direction: column;
+        display: none;
+        background: white;
+        padding: 16px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        width: 200px;
+        border-radius: 8px;
+        z-index: 9999;
       }
-
-      .nav-links.active {
-        display: flex;
-        animation: fadeIn 0.3s ease;
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+      .nav-links.active { display: flex; }
     }
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
-    body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f5fcff;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* ✅ add this */
-}
-main {
-  flex: 1;
-}
+
     .sticky-header {
       position: sticky;
       top: 0;
@@ -128,11 +94,7 @@ main {
       padding: 12px 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    .search-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
+    .search-container { display: flex; justify-content: center; margin-bottom: 10px; }
     .search-box {
       width: 100%;
       max-width: 600px;
@@ -157,11 +119,9 @@ main {
       padding: 12px 18px;
       border-bottom: 1px solid #eee;
       cursor: pointer;
-      transition: background 0.2s ease;
     }
-    .suggestion:hover {
-      background: #f5faff;
-    }
+    .suggestion:hover { background: #f5faff; }
+
     .details-card {
       max-width: 700px;
       margin: 20px auto;
@@ -170,27 +130,11 @@ main {
       border-radius: 16px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     }
-    .details-card h2 {
-      margin-top: 0;
-      font-size: 24px;
-      color: #222;
-    }
-    .price-line {
-      font-size: 17px;
-      margin: 12px 0;
-    }
-    .price-line s {
-      color: #999;
-    }
-    .price-line strong {
-      color: #d32f2f;
-      margin-left: 10px;
-    }
-    .discount-tag {
-      color: #2e7d32;
-      font-weight: bold;
-      margin-left: 12px;
-    }
+    .details-card h2 { margin-top: 0; font-size: 24px; color: #222; }
+    .price-line { font-size: 17px; margin: 12px 0; }
+    .price-line s { color: #999; }
+    .price-line strong { color: #d32f2f; margin-left: 10px; }
+    .discount-tag { color: #2e7d32; font-weight: bold; margin-left: 12px; }
     .book-btn {
       display: inline-block;
       margin-top: 24px;
@@ -200,11 +144,9 @@ main {
       text-decoration: none;
       border-radius: 8px;
       font-weight: 500;
-      transition: 0.2s ease;
     }
-    .book-btn:hover {
-      background: #0d47a1;
-    }
+    .book-btn:hover { background: #0d47a1; }
+
     .test-details {
       max-width: 700px;
       margin: 24px auto;
@@ -212,30 +154,46 @@ main {
       border: 1px solid #ddd;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
     }
-    .test-details h3 {
-      margin-bottom: 12px;
-      color: #333;
+
+    .loader-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 0;
     }
-    .test-details h4 {
-      margin: 10px 0 4px;
-      color: #444;
+    .loader-spinner::after {
+      content: "";
+      width: 50px;
+      height: 50px;
+      border: 6px solid #ccc;
+      border-top-color: #007bff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
-    .test-details p {
-      margin: 4px 0;
-      font-size: 15px;
-    }
-    .whatsapp-float {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 100;
-    }
-    .whatsapp-float img {
-      width: 40px;
-      height: 40px;
-    }
+#suggestions {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  display: none;
+  position: relative;
+  z-index: 1000;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+#suggestions.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     footer {
       background: #222;
       color: #ccc;
@@ -244,7 +202,7 @@ main {
       font-size: 14px;
       margin-top: auto;
     }
-    footer .social-icons {
+footer .social-icons {
       margin-top: 8px;
     }
     footer .social-icons a {
@@ -256,68 +214,81 @@ main {
       height: 24px;
       vertical-align: middle;
     }
-.loader-spinner {
+/* WhatsApp Floating Button */
+.wa-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;   /* ✅ Ensure it's on the right */
+  width: 60px;
+  height: 60px;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 0;
-}
-
-.loader-spinner::after {
-  content: "";
-  width: 50px;
-  height: 50px;
-  border: 6px solid #ccc;
-  border-top-color: #007bff;
+  background: #25d366;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.wa-float img {
+  width: 32px;
+  height: 32px;
+}
+/* Add smooth fade animation */
+.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+.fade-in {
+  animation: fadeIn 0.3s forwards;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes fadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.98); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
 }
   </style>
 </head>
 <body>
+
 <header>
-   <div class="topbar">
+  <div class="topbar">
     <a href="/" class="logo">
       <img src="/logo.png" alt="SwasthaIndia Logo" />
     </a>
-     <nav class="nav-links" id="navLinks">
-    <a href="/">Home</a>
-    <a href="/my-packages/">Packages</a>
-    <a href="/book-test/">Book Test</a>
-    <a href="/contact/">Contact</a>
-    <a href="/about/">About</a>
-      </nav>
- <div class="hamburger" id="hamburger">
-  <i class="fas fa-bars"></i>
-</div>
-
+    <nav class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/my-packages/">Packages</a>
+      <a href="/book-test/">Book Test</a>
+      <a href="/contact/">Contact</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+  </div>
 </header>
 
-  <div class="sticky-header">
-    <div class="search-container">
-      <input type="text" id="searchInput" class="search-box" placeholder="Search test or package..." />
-    </div>
-    <div id="suggestions"></div>
+<div class="sticky-header">
+  <div class="search-container">
+    <input type="text" id="searchInput" class="search-box" placeholder="Search test or package..." />
   </div>
+  <div id="suggestions"></div>
+</div>
 
-  <main>
-    <div id="detailsContainer">
-      <div class="loader-spinner"></div>
-    </div>
-  </main>
+<main>
+  <div id="detailsContainer">
+    <div class="loader-spinner"></div>
+  </div>
+</main>
 
-  <!-- WhatsApp Floating Button -->
+<!-- WhatsApp Floating Button -->
 <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
   <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
 </a>
 
-  <footer>
+ <footer>
     &copy; 2025 SwasthaIndia. All rights reserved. | Care at your doorstep.<br/>
     E-6/158 Sangam Vihar, New Delhi - 80 | 📞 9911990556 | 📧 info@swasthaindia.in
     <div class="social-icons">
@@ -326,21 +297,168 @@ main {
       <a href="https://twitter.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
     </div>
   </footer>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const navLinks = document.getElementById("navLinks");
-    const hamburger = document.getElementById("hamburger");
 
-    // Toggle menu
-    hamburger.addEventListener("click", function (e) {
-      e.stopPropagation();
-      navLinks.classList.toggle("active");
+<script>
+  const testAPI = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
+  const packageAPI = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
+
+  let allData = [];
+  let testDetails = [];
+  let bookTestDetails = [];
+
+  async function fetchData() {
+    const [testRes, packageRes] = await Promise.all([fetch(testAPI), fetch(packageAPI)]);
+    const testData = await testRes.json();
+    const packageData = await packageRes.json();
+
+    const tests = (testData.tests || []).map(t => ({
+      type: 'Test',
+      name: t["Test Name"],
+      data: t
+    }));
+
+    const packages = (packageData.packages || []).map(p => ({
+      type: 'Package',
+      name: p["Package"],
+      data: p
+    }));
+
+    allData = [...tests, ...packages];
+    bookTestDetails = testData.tests || [];
+    testDetails = packageData.tests || [];
+  }
+
+  function renderDetails(item) {
+    const container = document.getElementById("detailsContainer");
+    
+    // Clear old content with fade-out
+    container.classList.add("fade-out");
+    setTimeout(() => {
+      if (!item) {
+        container.innerHTML = "<p style='text-align:center;'>No details found.</p>";
+      } else {
+        const data = item.data;
+        const name = data["Test Name"] || data["Package"];
+        const mrp = parseFloat(data["MRP"] || 0);
+        const offer = parseFloat(data["Offer Price"] || data["Offer_Price"] || 0);
+        const discount = mrp && offer ? Math.round(((mrp - offer) / mrp) * 100) : 0;
+        const bookLink = data["Booking Link"] || "#";
+
+        const fieldsOrder = ["Tests Included", "No. of Parameters", "Sample Type", "Fasting Required", "Report Time", "Collection Timing", "Home Collection", "Description"];
+        const fields = fieldsOrder.map(k => data[k] ? `<p><strong>${k}:</strong> ${data[k]}</p>` : "").join('');
+
+        let html = `
+          <div class="details-card">
+            <h2>${name}</h2>
+            <div class="price-line">
+              MRP: <s>₹${mrp}</s> <strong>₹${offer}</strong> 
+              <span class="discount-tag">(${discount}% OFF)</span>
+            </div>
+            ${fields}
+            <a class="book-btn" href="${bookLink}" target="_blank">Book Now</a>
+          </div>
+        `;
+
+        // For Packages (Sheet2)
+        if (item.type === "Package") {
+          const includedTests = (data["Tests Included"] || "").split(",").map(t => t.trim().toLowerCase());
+          const breakdown = testDetails.filter(t => includedTests.includes((t["Test Name"] || "").toLowerCase()));
+
+          if (breakdown.length > 0) {
+            html += `<div class="test-details"><h3>Test Details:</h3>`;
+            breakdown.forEach(test => {
+              const parameters = test.Parameters 
+                ? `<ul>${test.Parameters.split(",").map(p => `<li>${p.trim()}</li>`).join("")}</ul>` 
+                : "<i>No parameters listed</i>";
+              
+              html += `
+                <div class="test-box">
+                  <h4>${test["Test Name"]}</h4>
+                  ${test.Description ? `<p><strong>Description:</strong> ${test.Description}</p>` : ""}
+                  ${test.Purpose ? `<p><strong>Purpose:</strong> ${test.Purpose}</p>` : ""}
+                  <p><strong>Parameters:</strong></p>
+                  ${parameters}
+                </div>`;
+            });
+            html += `</div>`;
+          }
+        }
+
+        // For Tests (Sheet2)
+        if (item.type === "Test") {
+          const testName = (data["Test Name"] || "").toLowerCase();
+          const details = bookTestDetails.find(t => (t["Test Name"] || "").toLowerCase() === testName);
+
+          if (details) {
+            const parameters = details.Parameters 
+              ? `<ul>${details.Parameters.split(",").map(p => `<li>${p.trim()}</li>`).join("")}</ul>` 
+              : "<i>No parameters listed</i>";
+            
+            html += `
+              <div class="test-details">
+                <h3>More Details:</h3>
+                <div class="test-box">
+                  ${details.Description ? `<p><strong>Description:</strong> ${details.Description}</p>` : ""}
+                  ${details.Purpose ? `<p><strong>Purpose:</strong> ${details.Purpose}</p>` : ""}
+                  <p><strong>Parameters:</strong></p>
+                  ${parameters}
+                </div>
+              </div>
+            `;
+          }
+        }
+
+        container.innerHTML = html;
+      }
+
+      // Apply fade-in after content update
+      container.classList.remove("fade-out");
+      container.classList.add("fade-in");
+    }, 300);
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.getElementById("detailsContainer");
+    container.innerHTML = `<div class="loader-spinner"></div>`;
+
+    await fetchData();
+
+    const queryName = new URLSearchParams(window.location.search).get("name")?.toLowerCase();
+    const result = allData.find(item => item.name?.toLowerCase() === queryName);
+    renderDetails(result);
+
+    // Search logic
+    const input = document.getElementById("searchInput");
+    const suggestionsBox = document.getElementById("suggestions");
+
+    input.addEventListener("input", e => {
+      document.getElementById("detailsContainer").innerHTML = "";
+
+      const q = e.target.value.toLowerCase();
+      if (!q) {
+        suggestionsBox.innerHTML = "";
+        suggestionsBox.style.display = "none";
+        return;
+      }
+      const matches = allData.filter(item => item.name?.toLowerCase().includes(q));
+      suggestionsBox.innerHTML = matches.map(item => `<div class='suggestion' data-name="${item.name}">${item.name}</div>`).join('');
+      if (matches.length) {
+  suggestionsBox.classList.add("show");
+} else {
+  suggestionsBox.classList.remove("show");
+}
+
     });
 
-    // Close menu if clicked outside
-    document.body.addEventListener("click", function (e) {
-      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-        navLinks.classList.remove("active");
+    suggestionsBox.addEventListener("click", e => {
+      if (e.target.classList.contains("suggestion")) {
+        const name = e.target.dataset.name.toLowerCase();
+        const match = allData.find(item => item.name.toLowerCase() === name);
+
+        // Clear search bar & suggestions + show new result with animation
+        input.value = "";
+        suggestionsBox.classList.remove("show");
+        renderDetails(match);
       }
     });
   });
@@ -348,133 +466,5 @@ main {
 
 
 
-  <script>
-    const testAPI = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
-    const packageAPI = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
-
-    let allData = [], testDetails = [];
-
-    async function fetchData() {
-      const [testRes, packageRes] = await Promise.all([
-        fetch(testAPI),
-        fetch(packageAPI)
-      ]);
-      const testData = await testRes.json();
-const packageData = await packageRes.json();
-
-// ✅ Correctly access the tests array from testData
-const tests = testData.tests.map(t => ({
-  type: 'Test',
-  name: t["Test Name"],
-  data: t
-}));
-
-// ✅ Access packages and tests from packageData
-const packages = packageData.packages.map(p => ({
-  type: 'Package',
-  name: p["Package"],
-  data: p
-}));
-
-allData = [...tests, ...packages];
-testDetails = packageData.tests;  // For Package breakdown
-
-    }
-
-    function getQueryParam(param) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(param);
-    }
-
-    function renderDetails(item) {
-      const container = document.getElementById("detailsContainer");
-      if (!item) {
-        container.innerHTML = "<p style='text-align:center;'>No details found.</p>";
-        return;
-      }
-
-      const data = item.data;
-      const name = data["Test Name"] || data["Package"] || "Details";
-      const mrp = parseFloat(data["MRP"] || 0);
-      const offer = parseFloat(data["Offer Price"] || data["Offer_Price"] || 0);
-      const discount = mrp && offer ? Math.round(((mrp - offer) / mrp) * 100) : 0;
-      const bookLink = data["Booking Link"] || "#";
-
-      const fieldsOrder = ["Tests Included", "No. of Parameters", "Sample Type", "Fasting Required", "Report Time", "Collection Timing", "Home Collection", "Description"];
-      const fields = fieldsOrder.map(k => data[k] ? `<p><strong>${k}:</strong> ${data[k]}</p>` : "").join('');
-
-      let html = `
-        <div class="details-card">
-          <h2>${name}</h2>
-          <div class="price-line">
-            MRP: <s>₹${mrp}</s> <strong>₹${offer}</strong> <span class="discount-tag">(${discount}% OFF)</span>
-          </div>
-          ${fields}
-          <a class="book-btn" href="${bookLink}" target="_blank">Book Now</a>
-        </div>
-      `;
-
-      if (item.type === "Package") {
-        const includedTests = (data["Tests Included"] || "").split(",").map(t => t.trim().toLowerCase());
-        const breakdown = testDetails.filter(t => includedTests.includes((t["Test Name"] || "").toLowerCase()));
-
-        if (breakdown.length > 0) {
-          html += `<div class="test-details"><h3>Test Details:</h3>`;
-          breakdown.forEach(test => {
-            html += `
-              <div style="margin-bottom: 16px;">
-                <h4>${test["Test Name"]}</h4>
-                ${test["Description"] ? `<p><strong>Description:</strong> ${test["Description"]}</p>` : ""}
-                ${test["Parameters Included"] ? `<p><strong>Parameters Included:</strong> ${test["Parameters Included"]}</p>` : ""}
-                ${test["Purpose"] ? `<p><strong>Purpose:</strong> ${test["Purpose"]}</p>` : ""}
-              </div>
-            `;
-          });
-          html += `</div>`;
-        }
-      }
-
-      container.innerHTML = html;
-    }
-
-    document.addEventListener("DOMContentLoaded", async () => {
-      const container = document.getElementById("detailsContainer");
-container.innerHTML = `<div class="loader-spinner"></div>`; // Show spinner
-
-await fetchData();
-
-const queryName = getQueryParam("name")?.toLowerCase();
-const result = allData.find(item => item.name?.toLowerCase() === queryName);
-
-container.innerHTML = ""; // Clear spinner
-renderDetails(result);
-
-
-      const input = document.getElementById("searchInput");
-      const suggestionsBox = document.getElementById("suggestions");
-
-      input.addEventListener("input", e => {
-        const q = e.target.value.toLowerCase();
-        if (!q) {
-          suggestionsBox.innerHTML = "";
-          suggestionsBox.style.display = "none";
-          return;
-        }
-        const matches = allData.filter(item => item.name?.toLowerCase().includes(q));
-        suggestionsBox.innerHTML = matches.map(item => `<div class='suggestion' data-name="${item.name}" data-type="${item.type}">${item.name}</div>`).join('');
-        suggestionsBox.style.display = matches.length ? "block" : "none";
-      });
-
-      suggestionsBox.addEventListener("click", function(e) {
-        if (e.target.classList.contains("suggestion")) {
-          const name = e.target.dataset.name.toLowerCase();
-          const match = allData.find(item => item.name.toLowerCase() === name);
-          document.getElementById("searchInput").value = e.target.dataset.name;
-          suggestionsBox.style.display = "none";
-          renderDetails(match);
-        }
-      });
-    });
-  </script>
 </body>
 </html>
