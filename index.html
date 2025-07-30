@@ -603,6 +603,92 @@ text-align: center;
     max-width: none !important;
   }
 }
+.diabetes-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 40px 60px;
+  background: #f8f9fa;
+  flex-wrap: wrap;
+}
+
+.diabetes-image img {
+  width: 680px; /* wider horizontally */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.diabetes-features {
+  flex: 1;
+  max-width: 550px;
+}
+
+.diabetes-features h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 40px;
+  margin-bottom: 30px;
+}
+
+.features div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.features .icon {
+  font-size: 20px;
+  color: #ff5e57;
+}
+
+.btn-red {
+  background: #ff5e57;
+  color: #fff;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* MOBILE VIEW FIX */
+@media (max-width: 768px) {
+  .diabetes-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    gap: 30px;
+  }
+
+  .diabetes-image img {
+    width: 100%; /* full width on mobile */
+    max-width: 95%;
+  }
+
+  .diabetes-features {
+    max-width: 100%;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: left;
+    padding: 0 10px;
+  }
+
+  .btn-red {
+    width: 90%;
+    font-size: 16px;
+  }
+}
+
 
   </style>
 </head>
@@ -624,6 +710,25 @@ text-align: center;
     </div>
   </div>  
 </header>
+<section class="diabetes-section">
+  <div class="diabetes-image">
+    <img src="diabetes-package.png" alt="Diabetes Health Package">
+  </div>
+
+  <div class="diabetes-features">
+    <h2>SwasthaIndia</h2>
+    <div class="features">
+      <div><i class="fa-solid fa-shield-heart icon"></i> 100% Safe & Hygienic</div>
+      <div><i class="fa-solid fa-truck-medical icon"></i> Home Sample Pick Up</div>
+      <div><i class="fa-solid fa-laptop-medical icon"></i> View Reports Online</div>
+      <div><i class="fa-solid fa-user-doctor icon"></i> Free Doctor Consultation</div>
+      <div><i class="fa-solid fa-tags icon"></i> Best Prices Guaranteed</div>
+    </div>
+
+    <button class="btn-red">VIEW POPULAR PACKAGES</button>
+  </div>
+</section>
+
   <section class="hero-section">
   <div class="hero-inner">
     <h1>Health Tests at Your Doorstep</h1>
@@ -916,6 +1021,26 @@ text-align: center;
       }
     });
   });
+</script>
+<script>
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slide");
+const next = document.querySelector(".next");
+const prev = document.querySelector(".prev");
+
+function showSlide(n) {
+  slides.forEach(slide => slide.classList.remove("active"));
+  slideIndex = (n + slides.length) % slides.length;
+  slides[slideIndex].classList.add("active");
+}
+
+next.addEventListener("click", () => showSlide(slideIndex + 1));
+prev.addEventListener("click", () => showSlide(slideIndex - 1));
+
+// Auto slide
+setInterval(() => showSlide(slideIndex + 1), 5000);
+
+showSlide(slideIndex);
 </script>
 
 </body>
