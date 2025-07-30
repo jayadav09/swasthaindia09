@@ -360,11 +360,25 @@ main {
         fetch(packageAPI)
       ]);
       const testData = await testRes.json();
-      const packageData = await packageRes.json();
-      const tests = testData.map(t => ({ type: 'Test', name: t["Test Name"], data: t }));
-      const packages = packageData.packages.map(p => ({ type: 'Package', name: p["Package"], data: p }));
-      allData = [...tests, ...packages];
-      testDetails = packageData.tests;
+const packageData = await packageRes.json();
+
+// ✅ Correctly access the tests array from testData
+const tests = testData.tests.map(t => ({
+  type: 'Test',
+  name: t["Test Name"],
+  data: t
+}));
+
+// ✅ Access packages and tests from packageData
+const packages = packageData.packages.map(p => ({
+  type: 'Package',
+  name: p["Package"],
+  data: p
+}));
+
+allData = [...tests, ...packages];
+testDetails = packageData.tests;  // For Package breakdown
+
     }
 
     function getQueryParam(param) {
