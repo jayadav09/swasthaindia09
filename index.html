@@ -453,61 +453,37 @@ h2 {
       border-radius: 6px;
       font-size: 14px;
     }
-.search-card:hover {
-  transform: translateY(-5px);
+    .search-container {
+  display: flex;
+  justify-content: center;
+  position: relative; /* ✅ Needed for absolute positioning */
+  width: 100%;
 }
 
-.search-card h3 {
-  font-size: 17px;
-  font-weight: 600;
-  color: #0f2f48;
-  margin-bottom: 10px;
+#suggestions {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px; /* Match search box width */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  display: none;
+  z-index: 1000;
 }
 
-.search-card .price {
-  font-size: 15px;
-  margin-bottom: 10px;
+.suggestion {
+  padding: 12px 18px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+.suggestion:hover {
+  background: #f5faff;
 }
 
-.search-card .mrp {
-  text-decoration: line-through;
-  color: #999;
-  font-size: 13px;
-}
-
-.search-card .offer {
-  color: #d32f2f;
-  font-weight: bold;
-  margin-left: 6px;
-  font-size: 14px;
-}
-
-.search-card .discount-tag {
-  background: #28a745;
-  color: white;
-  font-size: 11px;
-  padding: 3px 6px;
-  border-radius: 4px;
-  margin-left: 8px;
-  font-weight: 600;
-}
-
-.search-card .book-btn {
-  display: inline-block;
-  background-color: #007bff;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 14px;
-  text-decoration: none;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.search-card .book-btn:hover {
-  background-color: #0056b3;
-}
     /* ✅ MOBILE OPTIMIZATION */
 @media (max-width: 768px) {
   h1 {
@@ -662,10 +638,9 @@ text-align: center;
 </section>
   <!-- 🔍 Modern Search Section -->
 <div class="search-container">
-    <input type="text" id="searchInput" class="search-box" placeholder="Search tests or packages..." />
-    <div id="suggestions"></div>
-  </div>
- 
+  <input type="text" id="searchInput" class="search-box" placeholder="Search test or package..." />
+  <div id="suggestions"></div> <!-- ✅ Must be inside here -->
+</div> 
 
   <!-- Results will appear below -->
   <div id="search-results" style="display: none; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 40px;"></div>
@@ -865,50 +840,36 @@ text-align: center;
       });
     });
 </script>
- <script>
+<script>
   const testAPI = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
   const packageAPI = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
 
   let allData = [];
 
   async function loadData() {
-    const [testRes, packageRes] = await Promise.all([
-      fetch(testAPI), fetch(packageAPI)
-    ]);
+    const [testRes, packageRes] = await Promise.all([fetch(testAPI), fetch(packageAPI)]);
 
-    const tests = await testRes.json();
-    const packages = (await packageRes.json()).packages;
+    const testData = await testRes.json();
+    const packageData = await packageRes.json();
 
-    allData = [
-      ...tests.map(t => ({ ...t, type: "Test", name: t["Test Name"] })),
-      ...packages.map(p => ({ ...p, type: "Package", name: p["Package"] }))
-    ];
-  }
+    // Prepare combined data
+    const tests = (testData.tests || testData).map(t => ({
+      type: "Test", name: t["Test Name"]
+    }));
+    const packages = (packageData.packages || []).map(p => ({
+      type: "Package", name: p["Package"]
+    }));
 
-  function createCard(item) {
-    const mrp = item["MRP"] || item["Offer_Price"] || item["Offer Price"] || "N/A";
-    const offer = item["Offer_Price"] || item["Offer Price"] || "N/A";
-    const discount = (mrp && offer && !isNaN(mrp) && !isNaN(offer)) ?
-      Math.round(((parseFloat(mrp) - parseFloat(offer)) / parseFloat(mrp)) * 100) : 0;
-
-    return `
-      <div style="border: 1px solid #ddd; border-radius: 12px; background: #fff; padding: 20px; max-width: 280px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); text-align: center;">
-        <h3 style="color: #007c91;">${item.name}</h3>
-        <p><s>₹${mrp}</s> <strong style="color:#d32f2f;">₹${offer}</strong></p>
-        ${discount > 0 ? `<span style="color: green;">(${discount}% OFF)</span>` : ""}
-        <br><br>
-        <a href="details.html?name=${encodeURIComponent(item.name)}" class="book-btn" style="background:#007c91;color:white;padding:8px 16px;text-decoration:none;border-radius:6px;">View Details</a>
-      </div>
-    `;
+    allData = [...tests, ...packages];
   }
 
   document.addEventListener("DOMContentLoaded", async () => {
     const input = document.getElementById("searchInput");
     const suggestions = document.getElementById("suggestions");
-    const results = document.getElementById("search-results");
 
     await loadData();
 
+    // Handle typing
     input.addEventListener("input", e => {
       const q = e.target.value.trim().toLowerCase();
       if (!q) {
@@ -918,21 +879,24 @@ text-align: center;
       }
 
       const matches = allData.filter(item => item.name.toLowerCase().includes(q));
-      suggestions.innerHTML = matches.map(item => `<div class="suggestion" style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;" data-name="${item.name}">${item.name}</div>`).join('');
+      suggestions.innerHTML = matches.map(item => 
+        `<div class="suggestion" style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;" data-name="${item.name}">
+          ${item.name}
+        </div>`
+      ).join('');
       suggestions.style.display = matches.length ? "block" : "none";
     });
 
+    // Handle click on suggestion
     suggestions.addEventListener("click", e => {
       if (!e.target.classList.contains("suggestion")) return;
-
+      
       const name = e.target.dataset.name;
-      const match = allData.find(item => item.name === name);
-
-      input.value = name;
+      input.value = "";
       suggestions.style.display = "none";
 
-      results.innerHTML = createCard(match);
-      results.style.display = "flex";
+      // ✅ Redirect to details.html
+      window.location.href = `details.html?name=${encodeURIComponent(name)}`;
     });
   });
 </script>
