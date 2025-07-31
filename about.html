@@ -158,29 +158,84 @@
       left: 0;
       top: 0;
     }
+/* Footer Styles */
+.swastha-footer {
+  background: linear-gradient(to right, #000000, #1c1c1c);
+  color: #fff;
+  padding: 50px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    footer {
-      background: #007c91;
-      color: white;
-      text-align: center;
-      padding: 28px 10px;
-      margin-top: 60px;
-    }
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
 
-    footer .social-icons {
-      margin-top: 12px;
-    }
+.footer-column {
+  flex: 1 1 300px;
+  margin: 20px;
+}
 
-    footer .social-icons a {
-      color: white;
-      margin: 0 14px;
-      font-size: 20px;
-      transition: color 0.3s ease;
-    }
+.footer-column h3, .footer-column h4 {
+  color: #00c6a9;
+  margin-bottom: 15px;
+}
 
-    footer .social-icons a:hover {
-      color: #ffeb3b;
-    }
+.footer-column p, .footer-column a {
+  color: #ccc;
+  font-size: 15px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-column a:hover {
+  color: #00ffd5;
+  transition: 0.3s;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.social-icons a {
+  font-size: 20px;
+  color: #ccc;
+  margin-right: 15px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: #00ffd5;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #333;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+    
 </style>
 </head>
 <body onclick="handleOutsideClick(event)">
@@ -220,15 +275,42 @@
     </div>
   </main>
 
-  <footer>
-    <p>© 2025 SwasthaIndia. All rights reserved.</p>
-    <div class="social-icons">
-      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://wa.me/919911990556" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+  <footer class="swastha-footer">
+  <div class="footer-container">
+    <div class="footer-column about">
+      <h3>SwasthaIndia</h3>
+      <p>Where Healing Meets Innovation. Your trusted platform for reliable blood tests and health packages.</p>
     </div>
-  </footer>
+
+    <div class="footer-column links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/book-test.html">Book Test</a></li>
+        <li><a href="/my-packages.html">Health Packages</a></li>
+        <li><a href="/privacy.html">Privacy Policy</a></li>
+        <li><a href="/contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column contact">
+      <h4>Contact</h4>
+      <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
+      <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
+      <div class="social-icons">
+        <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 SwasthaIndia. All rights reserved.</p>
+  </div>
+</footer>
+
 
   <script>
     function toggleMenu(event) {
