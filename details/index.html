@@ -329,93 +329,56 @@ footer .social-icons {
   }
 
   function renderDetails(item) {
-    const container = document.getElementById("detailsContainer");
-    
-    // Clear old content with fade-out
-    container.classList.add("fade-out");
-    setTimeout(() => {
-      if (!item) {
-        container.innerHTML = "<p style='text-align:center;'>No details found.</p>";
-      } else {
-        const data = item.data;
-        const name = data["Test Name"] || data["Package"];
-        const mrp = parseFloat(data["MRP"] || 0);
-        const offer = parseFloat(data["Offer Price"] || data["Offer_Price"] || 0);
-        const discount = mrp && offer ? Math.round(((mrp - offer) / mrp) * 100) : 0;
-        const bookLink = data["Booking Link"] || "#";
+  console.log("renderDetails updated"); // debug
+  const container = document.getElementById("detailsContainer");
 
-        const fieldsOrder = ["Tests Included", "No. of Parameters", "Sample Type", "Fasting Required", "Report Time", "Collection Timing", "Home Collection", "Description"];
-        const fields = fieldsOrder.map(k => data[k] ? `<p><strong>${k}:</strong> ${data[k]}</p>` : "").join('');
+  // Clear old content with fade-out
+  container.classList.add("fade-out");
+  setTimeout(() => {
+    if (!item) {
+      container.innerHTML = "<p style='text-align:center;'>No details found.</p>";
+    } else {
+      const data = item.data;
+      const name = data["Test Name"] || data["Package"];
+      const mrp = parseFloat(data["MRP"] || 0);
+      const offer = parseFloat(data["Offer Price"] || data["Offer_Price"] || 0);
+      const discount = mrp && offer ? Math.round(((mrp - offer) / mrp) * 100) : 0;
 
-        let html = `
-          <div class="details-card">
-            <h2>${name}</h2>
-            <div class="price-line">
-              MRP: <s>₹${mrp}</s> <strong>₹${offer}</strong> 
-              <span class="discount-tag">(${discount}% OFF)</span>
-            </div>
-            ${fields}
-            <a class="book-btn" href="${bookLink}" target="_blank">Book Now</a>
+      // ✅ Force WhatsApp link if booking link is missing
+      const whatsappNumber = "919911990556";
+      const bookLink = data["Booking Link"] && data["Booking Link"].trim() !== "#"
+        ? data["Booking Link"]
+        : `https://wa.me/${whatsappNumber}?text=I%20want%20to%20book%20the%20${encodeURIComponent(name)}`;
+
+      const fieldsOrder = [
+        "Tests Included", "No. of Parameters", "Sample Type",
+        "Fasting Required", "Report Time", "Collection Timing",
+        "Home Collection", "Description"
+      ];
+      const fields = fieldsOrder
+        .map(k => data[k] ? `<p><strong>${k}:</strong> ${data[k]}</p>` : "")
+        .join('');
+
+      let html = `
+        <div class="details-card">
+          <h2>${name}</h2>
+          <div class="price-line">
+            MRP: <s>₹${mrp}</s> <strong>₹${offer}</strong>
+            <span class="discount-tag">(${discount}% OFF)</span>
           </div>
-        `;
+          ${fields}
+          <a class="book-btn" href="${bookLink}" target="_blank">Book Now</a>
+        </div>
+      `;
 
-        // For Packages (Sheet2)
-        if (item.type === "Package") {
-          const includedTests = (data["Tests Included"] || "").split(",").map(t => t.trim().toLowerCase());
-          const breakdown = testDetails.filter(t => includedTests.includes((t["Test Name"] || "").toLowerCase()));
+      container.innerHTML = html;
+    }
 
-          if (breakdown.length > 0) {
-            html += `<div class="test-details"><h3>Test Details:</h3>`;
-            breakdown.forEach(test => {
-              const parameters = test.Parameters 
-                ? `<ul>${test.Parameters.split(",").map(p => `<li>${p.trim()}</li>`).join("")}</ul>` 
-                : "<i>No parameters listed</i>";
-              
-              html += `
-                <div class="test-box">
-                  <h4>${test["Test Name"]}</h4>
-                  ${test.Description ? `<p><strong>Description:</strong> ${test.Description}</p>` : ""}
-                  ${test.Purpose ? `<p><strong>Purpose:</strong> ${test.Purpose}</p>` : ""}
-                  <p><strong>Parameters:</strong></p>
-                  ${parameters}
-                </div>`;
-            });
-            html += `</div>`;
-          }
-        }
-
-        // For Tests (Sheet2)
-        if (item.type === "Test") {
-          const testName = (data["Test Name"] || "").toLowerCase();
-          const details = bookTestDetails.find(t => (t["Test Name"] || "").toLowerCase() === testName);
-
-          if (details) {
-            const parameters = details.Parameters 
-              ? `<ul>${details.Parameters.split(",").map(p => `<li>${p.trim()}</li>`).join("")}</ul>` 
-              : "<i>No parameters listed</i>";
-            
-            html += `
-              <div class="test-details">
-                <h3>More Details:</h3>
-                <div class="test-box">
-                  ${details.Description ? `<p><strong>Description:</strong> ${details.Description}</p>` : ""}
-                  ${details.Purpose ? `<p><strong>Purpose:</strong> ${details.Purpose}</p>` : ""}
-                  <p><strong>Parameters:</strong></p>
-                  ${parameters}
-                </div>
-              </div>
-            `;
-          }
-        }
-
-        container.innerHTML = html;
-      }
-
-      // Apply fade-in after content update
-      container.classList.remove("fade-out");
-      container.classList.add("fade-in");
-    }, 300);
-  }
+    // Apply fade-in after content update
+    container.classList.remove("fade-out");
+    container.classList.add("fade-in");
+  }, 300);
+}
 
   document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("detailsContainer");
