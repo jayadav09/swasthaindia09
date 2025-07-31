@@ -158,6 +158,112 @@
       left: 0;
       top: 0;
     }
+.about-hero-image {
+  width: 100%;
+  height: 350px; /* adjust height as needed */
+  object-fit: cover;
+  object-position: 5px 70%;; /* this will crop the top */
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+}
+
+
+.about-hero-modern {
+  background: linear-gradient(to right, #f8f9fa, #eaf4ff);
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.about-hero-modern h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #0d3c61;
+}
+
+.about-hero-modern p {
+  font-size: 1.2rem;
+  color: #555;
+  max-width: 700px;
+  margin: auto;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.highlight-box {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+  align-items: center;
+}
+
+.highlight-box img {
+  width: 60px;
+  height: 60px;
+}
+
+.highlight-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #0d3c61;
+}
+
+.about-feature-section {
+  background-color: #f9f9f9;
+  padding: 60px 20px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.grid-2 h2 {
+  color: #0d3c61;
+  margin-bottom: 20px;
+}
+
+.grid-2 ul {
+  list-style: none;
+  padding: 0;
+}
+
+.grid-2 li {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.about-vision-section {
+  background: #fff;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.about-vision-section h2 {
+  color: #0d3c61;
+  margin-bottom: 20px;
+}
+
+.about-cta-section {
+  background: #0d3c61;
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.about-cta-section a {
+  color: #ffd700;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 /* Footer Styles */
 .swastha-footer {
   background: linear-gradient(to right, #000000, #1c1c1c);
@@ -257,23 +363,84 @@
     </div>
   </div>
   </header>
+<section class="about-hero">
+  <img src="about.jpg" alt="Happy family at home" class="about-hero-image" />
+  <div class="about-hero-text">
+      
+  </div>
+</section>
+  <section class="about-hero-modern">
+  <div class="container">
+    <h1>About SwasthaIndia</h1>
+    <p>Your trusted partner in preventive healthcare. We make diagnostic testing simple, affordable, and accessible to all.</p>
+  </div>
+</section>
 
-  <main>
-    <div class="about-card">
-      <h1>About Us</h1>
-      <p><strong>SwasthaIndia</strong> is your trusted health partner, bringing diagnostic care to your doorstep. Our mission is to simplify medical testing for every family across India by making it fast, affordable, and accessible from home.</p>
+<section class="about-highlight-section">
+  <div class="container">
+    <div class="highlight-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Mission Icon">
+      <div>
+   <h2>Our Mission</h2>
+<p>
+  At <strong>SwasthaIndia</strong>, our mission is to transform the way healthcare is delivered in India—starting with diagnostics. 
+  We aim to eliminate the barriers of time, distance, and affordability by bringing high-quality blood tests and full-body health checkups right to people’s doorsteps. 
+  Our focus is on building a system that is <strong>reliable, transparent, and patient-first</strong>, ensuring every Indian, regardless of location, can access timely diagnostic care without compromise.
+</p>
+<p>
+  By leveraging trusted lab partners using smart digital tools, we are creating a seamless experience—from booking to sample collection to getting reports—so that healthcare becomes more proactive, not reactive.
+</p>
 
-      <h3>We specialize in:</h3>
-      <ul>
-        <li>Blood test sample collection at home</li>
-        <li>Affordable health packages with reliable lab reports</li>
-        <li>CT scans, MRI, and other imaging test bookings</li>
-        <li>Doctor consultation and personalized health advice</li>
-      </ul>
-
-      <p>Founded by <strong>Jai Yadav &amp; Anoop Singh</strong>, SwasthaIndia is driven by the values of care, trust, and service. We believe everyone deserves access to quality diagnostics without the stress of traveling to a lab or hospital.</p>
+      </div>
     </div>
-  </main>
+
+    <div class="highlight-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Who We Are Icon">
+      <div>
+        <h2>Who We Are</h2>
+        <p>SwasthaIndia is a digital-first health platform that partners with NABL-accredited labs to deliver trusted results, every time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-feature-section">
+  <div class="container grid-2">
+    <div>
+      <h2>What We Offer</h2>
+      <ul>
+        <li>✅ Full Body Checkups & Blood Tests</li>
+        <li>✅ Free Home Sample Collection</li>
+        <li>✅ Fast Reports (Email & WhatsApp)</li>
+        <li>✅ NABL Certified Partners</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Why Choose Us</h2>
+      <ul>
+        <li>✔️ Transparent Pricing (No Fake Discounts)</li>
+        <li>✔️ Tech-powered Booking & Tracking</li>
+        <li>✔️ Trusted Lab Partners Only</li>
+        <li>✔️ Personalized Health Support</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="about-vision-section">
+  <div class="container">
+    <h2>Our Vision</h2>
+    <p>We envision a healthier India—where diagnostic care is no longer a luxury, but a right. SwasthaIndia aims to be the most trusted name in preventive healthcare across the nation.</p>
+  </div>
+</section>
+
+<section class="about-cta-section">
+  <div class="container">
+    <h2>Get Started with SwasthaIndia</h2>
+    <p>Ready to take a step towards better health? <a href="/book-test.html">Book a test</a> or <a href="/contact.html">get in touch</a>—we’re here for you.</p>
+  </div>
+</section>
+
 
   <footer class="swastha-footer">
   <div class="footer-container">
