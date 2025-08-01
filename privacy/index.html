@@ -233,8 +233,8 @@
     <a href="/about/">About</a>
          </nav>
     <div class="hamburger">
-      <i class="fas fa-bars"></i>
-    </div>
+  <i class="fas fa-bars"></i>
+</div>
   </div>  
 </header>
 
@@ -364,7 +364,22 @@
     <p>© 2025 SwasthaIndia. All rights reserved.</p>
   </div>
 </footer>
+  <script>
+  function toggleMenu(event) {
+    event.stopPropagation();
+    document.getElementById("navLinks").classList.toggle("active");
+  }
 
+  function handleOutsideClick(e) {
+    const nav = document.getElementById("navLinks");
+    const hamburger = document.querySelector(".hamburger");
+    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+      nav.classList.remove("active");
+    }
+  }
 
+  document.querySelector('.hamburger').addEventListener('click', toggleMenu);
+  document.addEventListener('click', handleOutsideClick);
+</script>
 </body>
 </html>
