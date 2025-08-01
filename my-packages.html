@@ -752,30 +752,30 @@ fetch(sheetURL)
         </div>
       `;
 
-      const toggle = card.querySelector('.expand-icon');
-      const knowMoreBtn = card.querySelector('.know-more-toggle');
-      const testDetailSection = card.querySelector('.test-detail-section');
+      const header = card.querySelector('.package-header');
+const knowMoreBtn = card.querySelector('.know-more-toggle');
+const testDetailSection = card.querySelector('.test-detail-section');
 
-      knowMoreBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
+knowMoreBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // Prevent closing the expanded card
   document.getElementById("modal-test-name").innerText = pkg.Package;
-document.getElementById("modal-book-link").href = pkg["Book Link"];
-document.getElementById("modal-body").innerHTML = testDetailsHTML;
+  document.getElementById("modal-book-link").href = pkg["Book Link"];
+  document.getElementById("modal-body").innerHTML = testDetailsHTML;
 
-const modal = document.getElementById("testDetailModal");
-modal.style.display = "flex";
-setTimeout(() => modal.classList.add("show"), 10);
+  const modal = document.getElementById("testDetailModal");
+  modal.style.display = "flex";
+  setTimeout(() => modal.classList.add("show"), 10);
 });
 
-
-      toggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (currentlyExpanded && currentlyExpanded !== card) {
-          currentlyExpanded.classList.remove("expanded");
-        }
-        card.classList.toggle("expanded");
-        currentlyExpanded = card.classList.contains("expanded") ? card : null;
-      });
+// Make entire header clickable (including + icon)
+header.style.cursor = "pointer";
+header.addEventListener("click", () => {
+  if (currentlyExpanded && currentlyExpanded !== card) {
+    currentlyExpanded.classList.remove("expanded");
+  }
+  card.classList.toggle("expanded");
+  currentlyExpanded = card.classList.contains("expanded") ? card : null;
+});
 
       container.appendChild(card);
 
