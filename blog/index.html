@@ -334,6 +334,42 @@ showRelatedPosts(posts, slug, currentTags);
     loadBlogPost();
   });
 </script>
+      <script>
+async function loadBlog() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+
+  if (!slug) {
+    document.body.innerHTML = "<h2>No blog selected</h2>";
+    return;
+  }
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwX1UPxYVJxawevF9MjOqjSbgF7ED2ekklq576LUIfb-lN_wlwCtHZFfIYRG77Z0yc/exec");
+    const blogs = await response.json();
+    const post = blogs.find(p => p.Slug === slug);
+
+    if (!post) {
+      document.body.innerHTML = "<h2>Blog not found</h2>";
+      return;
+    }
+
+    document.getElementById("blog-title").innerText = post.Title;
+    document.getElementById("blog-date").innerText = new Date(post.Date).toDateString();
+    document.getElementById("blog-author").innerText = post.Author;
+    document.getElementById("blog-tags").innerText = post.Tags;
+    document.getElementById("blog-image").src = post["Image URL"];
+    document.getElementById("blog-content").innerHTML = post.Content;
+
+  } catch (err) {
+    console.error(err);
+    document.body.innerHTML = "<h2>Failed to load blog</h2>";
+  }
+}
+
+loadBlog();
+</script>
+
 
 </body>
 </html>
