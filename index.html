@@ -1076,7 +1076,7 @@ header {
             const name = item.name;
             const desc = item.data.Description || "";
             const mrp = parseFloat(item.data.MRP || 0);
-            const offer = parseFloat(item.data["Offer Price"] || 0);
+            const offer = parseFloat(item.data["Offer_Price"] || 0);
             const imageUrl = item.data.Image || 'https://via.placeholder.com/400x200.png?text=Package+Image'; // Default placeholder image
             
             const card = document.createElement("a");
@@ -1205,4 +1205,5 @@ header {
 </script>
 </body>
 </html>
+
 
