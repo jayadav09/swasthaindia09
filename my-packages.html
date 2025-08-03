@@ -1057,6 +1057,49 @@
         // Initial fetch
         document.addEventListener('DOMContentLoaded', fetchAndRenderPackages);
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // This function reads the URL for a category parameter and filters packages.
+    const filterPackagesByCategory = () => {
+        // Get the category from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+
+        // Select all package cards on the page
+        const packageCards = document.querySelectorAll('.package-card');
+        const container = document.getElementById('packages-container'); // Assuming your cards are inside a container with this ID
+
+        // If no category is specified in the URL, show all packages
+        if (!category) {
+            packageCards.forEach(card => card.style.display = 'block');
+            return;
+        }
+
+        // If a category is found, filter the packages
+        let foundCategory = false;
+        packageCards.forEach(card => {
+            // Check if the card's data-category matches the URL category
+            if (card.getAttribute('data-category') === category) {
+                card.style.display = 'block'; // Show matching card
+                foundCategory = true;
+            } else {
+                card.style.display = 'none'; // Hide non-matching cards
+            }
+        });
+
+        // Optional: Show a message if no packages are found for that category
+        if (!foundCategory) {
+            if (container) {
+                container.innerHTML = '<p style="text-align: center; font-size: 1.2rem; color: #666; padding: 40px;">No packages found for this category.</p>';
+            }
+        }
+    };
+
+    // Run the filter function when the page loads
+    filterPackagesByCategory();
+});
+</script>
 
 </body>
 </html>
+
