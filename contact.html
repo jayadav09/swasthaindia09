@@ -1,412 +1,523 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- SEO Meta Tags -->
-<title>SwasthaIndia – Affordable Blood Tests & Health Packages in Delhi</title>
-<!-- ✅ Canonical link -->
-  <link rel="canonical" href="https://swasthaindia.in/" />
-<meta name="description" content="SwasthaIndia provides home blood test services, affordable diagnostic packages, and surgical supplies in Delhi. Care at your doorstep.">
-<meta name="keywords" content="blood test at home, affordable blood test, SwasthaIndia, diagnostic, surgical items, health checkups, Delhi">
-<meta name="author" content="SwasthaIndia">
-<meta property="og:title" content="SwasthaIndia – Blood Test & Surgical Services in Delhi">
-<meta property="og:description" content="Care at your doorstep – book blood tests online or shop surgical items. Trusted healthcare service in Delhi.">
-<meta property="og:url" content="https://swasthaindia.in/">
-<meta property="og:type" content="website">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - SwasthaIndia</title>
+    <link rel="canonical" href="https://swasthaindia.in/contact/" />
+    <meta name="description" content="Contact SwasthaIndia for reliable home blood tests, health packages, or any inquiries. Find our address, phone, and email details here.">
+    <meta name="keywords" content="contact SwasthaIndia, SwasthaIndia phone number, SwasthaIndia address, customer care, support, diagnostic services">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #007c91;
+            --secondary-color: #00bfa5;
+            --dark-color: #1a1a1a;
+            --text-color: #333;
+            --light-bg: #f5f9fc;
+            --card-bg: #ffffff;
+            --accent-color: #0d3c61;
+            --danger-color: #ff4d4f;
+        }
 
-  <style>
-body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f5fcff;
-      margin: 0;
-      padding: 0;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+        
+        body.no-scroll {
+            overflow: hidden;
+        }
 
-    header {
-      background: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      width: 100%;
-    }
+        header {
+            background: var(--card-bg);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    .topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 32px;
-  background: #fff;
-  flex-wrap: wrap;
-    }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            background: var(--card-bg);
+            padding: 0 20px;
+        }
 
-    .logo img {
-      height: 48px;
-    }
+        .logo img {
+            width: 180px;
+        }
 
-    .hamburger {
-  font-size: 1.8rem;
-  color: #007c91;
-  cursor: pointer;
-  display: none;
-  margin-left: auto; /* ✅ Ensures it's aligned to the far right */
-  position: absolute;
-  right: 32px; /* ✅ Aligns with padding */
-    }
+        .nav-links {
+            display: flex;
+        }
 
-    .nav-links {
- display: flex;
-  gap: 24px;
-  align-items: center;
-  margin-right: 12px;
-    }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 16px;
+            margin-left: 24px;
+            transition: color 0.3s, transform 0.3s;
+        }
 
-    .nav-links a {
-      text-decoration: none;
-      color: #007c91;
-      font-weight: 600;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover {
-      color: #00bfa5;
-    }
+        .nav-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
 
-    @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .nav-close {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+        }
 
-      .nav-links {
-        flex-direction: column;
-        display: none;
-        background: white;
-        padding: 16px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        position: absolute;
-        top: 70px;
-        right: 20px;
-        width: 200px;
-        border-radius: 8px;
-      }
+        /* --- Main Content --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .contact-hero {
+            background: linear-gradient(to right, #f8f9fa, #eaf4ff);
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .contact-hero p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 700px;
+            margin: auto;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        .contact-form, .contact-details {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            height: fit-content;
+        }
+        
+        .contact-form h2, .contact-details h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
 
-      .nav-links a {
-        margin: 10px 0;
-      }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-      .nav-links.active {
-        display: flex;
-        animation: fadeIn 0.3s ease;
-      }
+        input, textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            width: 100%;
+            resize: vertical;
+        }
 
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-    }
-    * {
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(0, 191, 165, 0.2);
+        }
 
-          background: #f7fafc;
-      margin: 0;
-      padding: 0;
-    }
+        button {
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
 
-    header {
-      background: #004d40;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .contact-info-item .icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+        
+        .contact-info-item h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+        }
+        
+        .contact-info-item p, .contact-info-item a {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #555;
+            text-decoration: none;
+        }
+        
+        .contact-info-item a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .map-container {
+            margin-top: 30px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
+        .map-container iframe {
+            width: 100%;
+            height: 300px;
+            border: 0;
+        }
+        
+        /* --- Footer Styles --- */
+        .swastha-footer {
+            background: linear-gradient(to right, #000000, #1c1c1c);
+            color: #fff;
+            padding: 50px 20px 20px;
+            font-family: 'Inter', sans-serif;
+            margin-top: 60px;
+        }
 
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
+        }
 
-    h2 {
-      text-align: center;
-      color: #00796b;
-      margin-bottom: 20px;
-    }
+        .footer-column {
+            flex: 1 1 300px;
+            margin: 20px;
+        }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+        .footer-column h3, .footer-column h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
 
-    label {
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            font-size: 15px;
+            line-height: 1.6;
+            text-decoration: none;
+        }
 
-    input, textarea {
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-      width: 100%;
-      resize: vertical;
-    }
+        .footer-column a:hover {
+            color: #00ffd5;
+            transition: 0.3s;
+        }
 
-    button {
-      padding: 12px;
-      background-color: #00796b;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
 
-    button:hover {
-      background-color: #004d40;
-    }
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
 
-    .contact-info {
-      margin-top: 30px;
-      font-size: 15px;
-      line-height: 1.6;
-      color: #444;
-    }
+        .social-icons a {
+            font-size: 20px;
+            color: #ccc;
+            margin-right: 15px;
+            transition: transform 0.3s, color 0.3s;
+        }
 
-    .contact-info strong {
-      color: #000;
-    }
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #00ffd5;
+        }
 
-    .social-icons {
-      margin-top: 20px;
-      text-align: center;
-    }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* --- General Utilities --- */
+        .wa-float { 
+            position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 9999; 
+            background-color: #25d366; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .wa-float img { 
+            width: 70%; height: auto; 
+        }
 
-    .social-icons a {
-      margin: 0 10px;
-      color: #00796b;
-      font-size: 24px;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
+        /* --- Back to Top Button --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 999;
+        }
 
-    .social-icons a:hover {
-      color: #004d40;
-    }
- 
-    @media screen and (max-width: 600px) {
-      .container {
-        margin: 20px;
-        padding: 20px;
-      }
-    }
-    /* Footer Styles */
-.swastha-footer {
-  background: linear-gradient(to right, #000000, #1c1c1c);
-  color: #fff;
-  padding: 50px 20px 20px;
-  font-family: 'Segoe UI', sans-serif;
-}
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
 
-.footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: auto;
-}
+        /* --- Media Queries for Mobile --- */
+        @media (max-width: 768px) {
+            .contact-hero h1 { font-size: 2rem; }
+            .contact-hero p { font-size: 1rem; }
+            .logo img { width: 140px; }
+            .footer-container { flex-direction: column; align-items: center; text-align: center; }
 
-.footer-column {
-  flex: 1 1 300px;
-  margin: 20px;
-}
-
-.footer-column h3, .footer-column h4 {
-  color: #00c6a9;
-  margin-bottom: 15px;
-}
-
-.footer-column p, .footer-column a {
-  color: #ccc;
-  font-size: 15px;
-  line-height: 1.6;
-  text-decoration: none;
-}
-
-.footer-column a:hover {
-  color: #00ffd5;
-  transition: 0.3s;
-}
-
-.footer-column ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-column ul li {
-  margin-bottom: 10px;
-}
-
-.social-icons a {
-  font-size: 20px;
-  color: #ccc;
-  margin-right: 15px;
-  transition: transform 0.3s, color 0.3s;
-}
-
-.social-icons a:hover {
-  transform: scale(1.2);
-  color: #00ffd5;
-}
-
-.footer-bottom {
-  text-align: center;
-  margin-top: 30px;
-  padding-top: 15px;
-  border-top: 1px solid #333;
-  color: #999;
-  font-size: 14px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-}
-
-  </style>
+            /* Mobile Nav Overlay */
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(5px);
+                z-index: 999;
+                transform: translateX(100%);
+                transition: transform 0.4s ease-in-out;
+            }
+            .nav-links.active {
+                transform: translateX(0);
+            }
+            .nav-links a {
+                color: white;
+                font-size: 2rem;
+                margin: 20px 0;
+            }
+            .nav-close {
+                display: block;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
-<header>
-  <div class="topbar">
-    <a href="/" class="logo">
-      <img src="/logo.png" alt="SwasthaIndia Logo" />
+
+    <header>
+        <div class="topbar">
+            <a href="/" class="logo">
+                <img src="/logo.png" alt="SwasthaIndia Logo" />
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links" id="navLinks">
+                <button class="nav-close" id="navClose">&times;</button>
+                <a href="/">Home</a>
+                <a href="/my-packages/">Packages</a>
+                <a href="/book-test/">Book Test</a>
+                <a href="/contact/">Contact</a>
+                <a href="/about/">About</a>
+                <a href="/blogs/">Blog</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="contact-hero">
+            <h1>Get in Touch with Us</h1>
+            <p>We're here to help! Whether you have a question about a test, need assistance, or just want to say hello, feel free to reach out.</p>
+        </section>
+        
+        <div class="contact-content">
+            <div class="contact-form">
+                <h2>Send us a Message</h2>
+                <form action="https://formspree.io/f/your-id" method="POST">
+                    <label for="name" class="sr-only">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your full name" required>
+
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Your email address" required>
+                    
+                    <label for="phone" class="sr-only">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Your phone number">
+
+                    <label for="message" class="sr-only">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+            
+            <div class="contact-details">
+                <h2>Our Contact Details</h2>
+                <div class="contact-info-item">
+                    <i class="fas fa-map-marker-alt icon"></i>
+                    <div>
+                        <h3>Address</h3>
+                        <p>E-6/158 Sangam Vihar, New Delhi - 80</p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-phone-alt icon"></i>
+                    <div>
+                        <h3>Phone</h3>
+                        <p><a href="tel:+919911990556">+91 99119 90556</a></p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-envelope icon"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505.748113401777!2d77.26620577551061!3d28.508573175785087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce7663e46c7cf%3A0xc66579a4055f1f92!2sE-6%2F158%2C%20Sangam%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110080!5e0!3m2!1sen!2sin!4v1722687114660!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
     </a>
-     <nav class="nav-links" id="navLinks">
-    <a href="/">Home</a>
-    <a href="/my-packages/">Packages</a>
-    <a href="/book-test/">Book Test</a>
-    <a href="/contact/">Contact</a>
-    <a href="/about/">About</a>
-      </nav>
- <div class="hamburger">
-      <i class="fas fa-bars"></i>
-    </div>
-  </div>
-</header>
 
-  <div class="container">
-    <h2>Get in Touch</h2>
-    <form action="https://formspree.io/f/your-id" method="POST">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" placeholder="Your full name" required>
+    <a href="#top" class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </a>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Your email address">
+    <footer class="swastha-footer">
+        <div class="footer-container">
+            <div class="footer-column about">
+                <h3>SwasthaIndia</h3>
+                <p>Where Healing Meets Innovation. Your trusted platform for reliable blood tests and health packages.</p>
+            </div>
+            <div class="footer-column links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/my-packages.html">Health Packages</a></li>
+                    <li><a href="/book-test.html">Book Test</a></li>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column contact">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
+                <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
+                <div class="social-icons">
+                    <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 SwasthaIndia. All rights reserved.</p>
+        </div>
+    </footer>
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+    <script>
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const navClose = document.getElementById('navClose');
 
-      <button type="submit">Send Message</button>
-    </form>
-
-    <div class="contact-info">
-      <p><strong>Address:</strong> E-6/158 Sangam Vihar, New Delhi - 80</p>
-      <p><strong>Phone:</strong> <a href="tel:9911990556" style="color:#00796b; text-decoration:none;">+91-9911990556</a></p>
-      <p><strong>Email:</strong> <a href="mailto:info@swasthaindia.in" style="color:#00796b; text-decoration:none;">info@swasthaindia.in</a></p>
-    </div>
-
-    <div class="social-icons">
-      <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram">
-  <i class="fab fa-instagram"></i>
-</a>
-
-      <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook">
-  <i class="fab fa-facebook"></i>
-</a>
-
-      <a href="https://twitter.com/" target="_blank"><i class="fab fa-x-twitter"></i></a>
-      <a href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
-    </div>
-  </div>
-
- <footer class="swastha-footer">
-  <div class="footer-container">
-    <div class="footer-column about">
-      <h3>SwasthaIndia</h3>
-      <p>Where Healing Meets Innovation. Your trusted platform for reliable blood tests and health packages.</p>
-    </div>
-
-    <div class="footer-column links">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="/index.html">Home</a></li>
-        <li><a href="/book-test.html">Book Test</a></li>
-        <li><a href="/my-packages.html">Health Packages</a></li>
-        <li><a href="/privacy.html">Privacy Policy</a></li>
-        <li><a href="/contact.html">Contact Us</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-column contact">
-      <h4>Contact</h4>
-      <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
-      <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
-      <div class="social-icons">
-        <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram">
-  <i class="fab fa-instagram"></i>
-</a>
-
-        <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook">
-  <i class="fab fa-facebook"></i>
-</a>
-
-        <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2025 SwasthaIndia. All rights reserved.</p>
-  </div>
-</footer>
-  <!-- JavaScript to Load Test Cards + Hamburger Function -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    function toggleMenu(event) {
-      event.stopPropagation();
-      document.getElementById("navLinks").classList.toggle("active");
-    }
-
-    function handleOutsideClick(e) {
-      const nav = document.getElementById("navLinks");
-      const hamburger = document.querySelector(".hamburger");
-      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-        nav.classList.remove("active");
-      }
-    }
-
-    document.querySelector(".hamburger").addEventListener("click", toggleMenu);
-    document.body.addEventListener("click", handleOutsideClick);
-  });
-</script>
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.add('active');
+            document.body.classList.add('no-scroll');
+        });
+        navClose.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        });
+        
+        // Back to Top functionality
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>
