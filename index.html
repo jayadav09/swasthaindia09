@@ -45,8 +45,9 @@
             background: var(--light-bg);
             color: var(--text-color);
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
-
+        
         main {
             padding: 20px 0;
         }
@@ -73,7 +74,7 @@
         .topbar {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: center; /* Ensures vertical alignment */
             height: 70px;
             padding: 0 20px;
         }
@@ -230,6 +231,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background 0.2s;
         }
         .suggestion:last-child { border-bottom: none; }
         .suggestion:hover { background: #f5faff; }
@@ -439,6 +441,50 @@
             text-align: center;
         }
 
+        /* --- FAQ Section --- */
+        .faq-section {
+            background-color: white;
+        }
+        .faq-accordion {
+            max-width: 800px;
+            margin: auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid #ddd;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            transition: color 0.3s;
+        }
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+        .faq-question .icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .faq-item.active .faq-question .icon {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            color: #555;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust as needed for content */
+            padding: 10px 20px 20px;
+        }
+
         /* --- Testimonial Section --- */
         .testimonial-section {
             background: white;
@@ -536,6 +582,36 @@
             .footer-column { margin: 20px 0; }
         }
 
+        /* --- Animated WhatsApp Banner --- */
+        .whatsapp-banner {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .whatsapp-banner a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color: var(--secondary-color);
+            border-radius: 50px;
+            transition: background-color 0.3s, transform 0.3s;
+            white-space: nowrap;
+        }
+        .whatsapp-banner a:hover {
+            background-color: #008f7a;
+            transform: translateY(-2px);
+        }
+        .whatsapp-banner .fa-whatsapp {
+            font-size: 1.5rem;
+        }
+
         /* --- Popup --- */
         .popup-overlay {
             position: fixed;
@@ -603,6 +679,32 @@
             transform: translateY(-50%);
             color: #777;
         }
+        
+        /* Floating WhatsApp Button with SVG */
+        .whatsapp-float-btn {
+            position:fixed;
+            width:60px;
+            height:60px;
+            bottom:20px;
+            right:20px;
+            background:#25D366;
+            border-radius:50px;
+            text-align:center;
+            box-shadow:0 4px 8px rgba(0,0,0,0.3);
+            z-index:9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+        .whatsapp-float-btn:hover {
+            transform: scale(1.1);
+        }
+        .whatsapp-float-btn svg {
+            width: 34px;
+            height: 34px;
+            fill: white;
+        }
     </style>
 </head>
 <body>
@@ -627,13 +729,13 @@
 <main>
     <section class="hero-section">
         <div class="container">
-            <h1>Health Tests at Your Doorstep</h1>
-            <p>Book trusted lab tests and packages with doorstep sample collection and same-day reports. Care at your doorstep.</p>
+            <h1 data-aos="fade-up">Health Tests at Your Doorstep</h1>
+            <p data-aos="fade-up" data-aos-delay="100">Book trusted lab tests and packages with doorstep sample collection and same-day reports. Care at your doorstep.</p>
             <div class="search-box-container" data-aos="fade-up" data-aos-delay="200">
                 <input type="text" id="searchInput" class="search-box" placeholder="Search test or package..." autocomplete="off" />
                 <i class="fas fa-search search-icon"></i>
+                <div id="suggestions"></div>
             </div>
-            <div id="suggestions"></div>
             <div class="cta-buttons" data-aos="fade-up" data-aos-delay="400">
                 <a href="/book-test/" class="hero-btn">Book a Test Now</a>
                 <a href="https://wa.me/919911990556?text=Hi%20SwasthaIndia%2C%20I%20want%20to%20know%20more%20about%20your%20services" target="_blank" class="hero-btn">
@@ -644,7 +746,7 @@
     </section>
 
     <section class="diabetes-section section-padding">
-        <div class="container">
+        <div class="container" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 40px;">
             <div class="diabetes-features" data-aos="fade-right">
                 <h2>SwasthaIndia</h2>
                 <div class="features">
@@ -744,57 +846,57 @@
         </div>
     </section>
 
-    <section id="how-it-works" class="section-padding">
+    <section id="faq-section" class="faq-section section-padding">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2>How It Works</h2>
-                <p>Simple and convenient, from booking to receiving your report.</p>
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about our services.</p>
             </div>
-            <div class="cards-grid">
-                <div class="card" data-aos="fade-up">
-                    <i class="fas fa-calendar-check icon"></i>
-                    <h3>1. Book a Test</h3>
-                    <p>Choose your test or package and book online or via WhatsApp.</p>
+            <div class="faq-accordion" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I book a blood test at home?</span>
+                        <span class="icon fas fa-chevron-down"></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can book a test by calling us at <a href="tel:+919911990556">+91 99119 90556</a>, sending a message on WhatsApp, or using our website's booking form. Our representative will contact you to confirm the booking and schedule a home visit.</p>
+                    </div>
                 </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-vial icon"></i>
-                    <h3>2. Sample Collection</h3>
-                    <p>Our professional phlebotomist visits your home at the scheduled time.</p>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Are your labs certified?</span>
+                        <span class="icon fas fa-chevron-down"></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we partner with only the best NABL-certified laboratories to ensure the highest standards of accuracy and reliability for all your test reports.</p>
+                    </div>
                 </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-file-medical icon"></i>
-                    <h3>3. Get Your Report</h3>
-                    <p>Receive your detailed report digitally within 24–48 hours.</p>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How will I receive my reports?</span>
+                        <span class="icon fas fa-chevron-down"></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Your detailed test reports will be delivered to your registered email address within 24–48 hours of sample collection.</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="testimonial-section section-padding" style="background-color: var(--light-bg);" data-aos="fade-in">
-        <div class="container">
-            <div class="section-header">
-                <h2>What Our Customers Say</h2>
-            </div>
-            <div class="testimonial-carousel" id="testimonialCarousel">
-                <div class="testimonial-slide active">
-                    “The collection was timely and very hygienic. Great service!”
-                    <strong>– Ravi M.</strong>
-                </div>
-                <div class="testimonial-slide">
-                    “I booked a full body test for my parents. Professional and quick!”
-                    <strong>– Megha S.</strong>
-                </div>
-                <div class="testimonial-slide">
-                    “Affordable prices and excellent communication on WhatsApp.”
-                    <strong>– Pooja K.</strong>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is home sample collection free?</span>
+                        <span class="icon fas fa-chevron-down"></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer free home sample collection for all our packages and tests. Our team will visit you at your scheduled time at no extra cost.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <div class="whatsapp-banner" data-aos="fade-up">
-        Need help booking? Chat with us on WhatsApp:
-        <a href="https://wa.me/919911990556" target="_blank">+91-9911990556</a>
+        <i class="fab fa-whatsapp"></i>
+        <span>Need help booking? Chat with us on WhatsApp:</span>
+        <a href="https://wa.me/919911990556" target="_blank" class="whatsapp-chat-link">Chat Now</a>
     </div>
 </main>
 
@@ -832,8 +934,10 @@
     </div>
 </footer>
 
-<a href="https://wa.me/919911990556" style="position:fixed;width:60px;height:60px;bottom:20px;right:20px;background:#25D366;border-radius:50px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.3);z-index:9999; display: flex; align-items: center; justify-content: center;">
-    <i class="fab fa-whatsapp" style="color: white; font-size: 30px;"></i>
+<a href="https://wa.me/919911990556" target="_blank" class="whatsapp-float-btn" title="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24">
+        <path d="M12.04 2.82c-5.83 0-10.58 4.75-10.58 10.58 0 1.98.54 3.91 1.58 5.64l-1.63 4.2 4.31-1.13c1.68.96 3.55 1.47 5.28 1.47 5.83 0 10.58-4.75 10.58-10.58S17.87 2.82 12.04 2.82zm.02 19.34c-1.69 0-3.32-.48-4.71-1.38l-.34-.2-3.5 1.09 1.13-3.37-.22-.36c-1.02-1.69-1.56-3.62-1.56-5.58 0-4.83 3.92-8.75 8.75-8.75 2.36 0 4.58.92 6.26 2.59a8.77 8.77 0 0 1 2.56 6.24c0 4.83-3.92 8.75-8.75 8.75zm5.17-6.2c-.28-.15-1.64-.81-1.9-.91-.26-.1-.45-.15-.65.15-.2.3-.77.91-.94 1.09-.18.18-.36.2-.66.08-.29-.12-1.2-.44-2.28-1.42-.84-.74-1.4-1.67-1.57-1.95-.17-.28 0-.43.12-.55.11-.11.26-.29.38-.44.13-.15.17-.28.25-.43.08-.15.04-.28-.02-.43-.07-.15-.65-1.54-.88-2.11-.23-.55-.47-.47-.65-.48-.18-.01-.39-.01-.6-.01-.2 0-.53.07-.81.35-.29.28-1.1 1.07-1.1 2.61s1.13 3.03 1.29 3.24c.16.21 2.19 3.33 5.34 4.67 3.14 1.34 3.79 1.17 4.47 1.08.68-.09 1.9-.78 2.16-1.53.27-.75.27-1.39.18-1.53-.08-.14-.29-.22-.6-.38z"/>
+    </svg>
 </a>
 
 <div id="callbackPopup" class="popup-overlay">
@@ -869,7 +973,7 @@
     // Google Sheets API URLs
     const testAPI = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
     const packageAPI = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
-    const callbackFormUrl = "https://script.google.com/macros/s/AKfycbwTNz_4qqA3m0hI4sOtaGFdQwxXGVP6Fn4OhI6WOVov6G7IflGl-PtPG0x3mACkiFJDYA/exec";
+    const callbackFormUrl = "https://script.google.com/macros/s/AKfycbwTNz_4qqA3m0hI4sOtaGFdQwxXGVP6Fn4OhI6WOVov6G7IflGl-PtPG0x3mACkiJDA/exec";
     
     // Global data variables
     let allData = [];
@@ -913,8 +1017,9 @@
             const mrp = parseFloat(item.data.MRP || 0);
             const offer = parseFloat(item.data["Offer Price"] || 0);
             
-            const card = document.createElement("div");
+            const card = document.createElement("a");
             card.className = "card card-popular";
+            card.href = `/details.html?name=${encodeURIComponent(name)}`;
             card.setAttribute("data-aos", "fade-up");
             
             card.innerHTML = `
@@ -925,10 +1030,12 @@
                         ${mrp > offer && mrp > 0 ? `<s>₹${mrp}</s> ` : ''}₹${offer}
                     </p>
                 </div>
-                <a href="https://wa.me/919911990556?text=Hi%20SwasthaIndia%2C%20I%20want%20to%20book%20the%20${encodeURIComponent(name)}%20test."
-                    target="_blank" class="hero-btn popular-cta" style="background: var(--primary-color); color: white; padding: 10px 20px;">
-                    Book Now
-                </a>
+                <div class="popular-cta">
+                    <a href="https://wa.me/919911990556?text=Hi%20SwasthaIndia%2C%20I%20want%20to%20book%20the%20${encodeURIComponent(name)}%20package."
+                        target="_blank" class="hero-btn" style="background: var(--primary-color); color: white; padding: 10px 20px;">
+                        Book Now
+                    </a>
+                </div>
             `;
             container.appendChild(card);
         });
@@ -967,18 +1074,31 @@
                 const name = suggestionDiv.dataset.name;
                 searchInput.value = "";
                 suggestionsBox.style.display = "none";
-                window.location.href = `details.html?name=${encodeURIComponent(name)}`;
+                window.location.href = `/details.html?name=${encodeURIComponent(name)}`;
             }
         });
         
         // Testimonial Carousel
         let currentSlide = 0;
         const slides = document.querySelectorAll('.testimonial-slide');
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, 4000);
+        if (slides.length > 0) {
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 4000);
+        }
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
 
         // Hamburger Menu
         const hamburger = document.getElementById('hamburger');
