@@ -71,98 +71,101 @@
             z-index: 1000;
         }
 
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px; /* Enforces a fixed height for better alignment */
-            padding: 0 20px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
-
-        .logo img {
-            width: 180px;
-            height: auto;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-            height: 100%; /* Ensures nav links are vertically centered */
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 16px;
-            transition: color 0.3s, transform 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: var(--primary-color);
-        }
-        
-        .nav-close {
-            display: none;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 3rem;
-            color: white;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(5px);
-                z-index: 999;
-                transform: translateX(100%);
-                transition: transform 0.4s ease-in-out;
-            }
-            .nav-links.active {
-                transform: translateX(0);
-            }
-            .nav-links a {
-                color: white;
-                font-size: 2rem;
-                margin: 20px 0;
-            }
-            .nav-close {
-                display: block;
-            }
-            .hamburger {
-                display: block;
-            }
-            .logo img {
-                width: 140px;
-            }
-        }
-
+        /* --- Header CSS Fix --- */
+header {
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px !important; /* Force a consistent height */
+    padding: 0 20px;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.logo img {
+    width: 180px;
+    height: auto;
+    vertical-align: middle; /* Ensure vertical alignment */
+}
+.nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    height: 100%;
+}
+.nav-links a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.nav-links a:hover {
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--primary-color);
+}
+.nav-close {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+}
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+    }
+    .nav-links.active {
+        transform: translateX(0);
+    }
+    .nav-links a {
+        color: white;
+        font-size: 2rem;
+        margin: 20px 0;
+    }
+    .nav-close {
+        display: block;
+    }
+    .hamburger {
+        display: block;
+    }
+    .logo img {
+        width: 140px;
+    }
+}
         /* --- Hero Section --- */
         .hero-section {
             background: linear-gradient(120deg, #e0f7fa, #ffffff);
@@ -1202,3 +1205,4 @@
 </script>
 </body>
 </html>
+
