@@ -36,6 +36,11 @@
             color: var(--text-color);
         }
 
+        /* Prevent scrolling when modal is open */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         header {
             background: white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -67,11 +72,12 @@
             font-weight: 600;
             font-size: 16px;
             margin-left: 24px;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
         }
 
         .nav-links a:hover {
             color: var(--secondary-color);
+            transform: translateY(-2px);
         }
 
         .hamburger {
@@ -80,6 +86,19 @@
             font-size: 24px;
             color: var(--primary-color);
         }
+        
+        /* Mobile nav close button - Hidden by default on desktop */
+        .nav-close {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            z-index: 1001; /* Ensure it's above the nav links */
+        }
+
 
         /* --- Hero Section --- */
         .hero-section {
@@ -504,20 +523,42 @@
             transform: translateY(0); opacity: 1;
         }
         .modal-header {
-            padding: 16px 20px; display: flex; justify-content: space-between;
-            align-items: center; border-bottom: 1px solid #f0f0f0; background: var(--card-bg);
-            position: sticky; top: 0; z-index: 10;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column; /* Stack elements on mobile */
+            gap: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            background: var(--card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         .modal-header h2 {
             font-size: 18px; font-weight: 600; color: var(--accent-color);
-            margin: 0; flex-grow: 1;
+            margin: 0;
         }
         .modal-close {
+            position: absolute; /* Fix alignment on mobile */
+            top: 10px;
+            right: 10px;
             width: 32px; height: 32px;
             display: flex; align-items: center; justify-content: center;
             font-size: 28px; color: #999; cursor: pointer;
             border: none; background: transparent;
-            margin-left: 10px;
+            z-index: 10;
+        }
+        .modal-book-now {
+            background-color: var(--danger-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .modal-book-now:hover {
+            background-color: #d9363e;
         }
         .modal-body-scroll {
             flex-grow: 1; overflow-y: auto; padding: 20px;
@@ -535,19 +576,6 @@
         .modal-body-scroll li {
             margin-bottom: 5px;
         }
-        .modal-book-now {
-            background-color: var(--danger-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.3s;
-            margin-left: 10px;
-        }
-        .modal-book-now:hover {
-            background-color: #d9363e;
-        }
 
         /* --- Loading and Animations --- */
         .loading-overlay {
@@ -563,37 +591,45 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes bounceIn {
-            0% { transform: scale(0.1); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-        }
 
         /* --- Media Queries for Mobile --- */
         @media (max-width: 768px) {
             .hero-section h1 { font-size: 2rem; }
             .hero-section p { font-size: 1rem; }
             .logo img { width: 140px; }
+
+            /* Mobile Nav Overlay */
             .nav-links {
-                display: none;
-                position: absolute;
-                top: 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
                 left: 0;
                 width: 100%;
-                background-color: white;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                flex-direction: column;
-                padding: 10px 0;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(5px);
+                z-index: 999;
+                transform: translateX(100%);
+                transition: transform 0.4s ease-in-out;
             }
             .nav-links.active {
-                display: flex;
+                transform: translateX(0);
             }
             .nav-links a {
-                margin: 10px 20px;
+                color: white;
+                font-size: 2rem;
+                margin: 20px 0;
+            }
+            .nav-close {
+                display: block; /* Show close button on mobile */
             }
             .hamburger {
-                display: block;
+                display: block; /* Show hamburger on mobile */
             }
+
             .packages-grid { padding: 1rem; }
             .package-header { flex-direction: column; align-items: flex-start; gap: 10px; }
             .package-name { font-size: 18px; }
@@ -614,6 +650,7 @@
                 <i class="fas fa-bars"></i>
             </div>
             <nav class="nav-links" id="navLinks">
+                <button class="nav-close" id="navClose">&times;</button>
                 <a href="/">Home</a>
                 <a href="/my-packages/">Packages</a>
                 <a href="/book-test/">Book Test</a>
@@ -678,11 +715,9 @@
         <div class="modal-container">
             <div class="modal-header">
                 <h2 id="modal-test-name"></h2>
-                <div>
-                    <a id="modal-book-link" class="modal-book-now" target="_blank">Book Now</a>
-                    <button class="modal-close" onclick="closeModal()">×</button>
-                </div>
+                <a id="modal-book-link" class="modal-book-now" target="_blank">Book Now</a>
             </div>
+            <button class="modal-close" onclick="closeModal()">×</button>
             <div id="modal-body" class="modal-body-scroll"></div>
         </div>
     </div>
@@ -810,11 +845,13 @@
 
             modal.style.display = "flex";
             setTimeout(() => modal.classList.add("show"), 10);
+            document.body.classList.add('no-scroll');
         }
 
         function closeModal() {
             const modal = document.getElementById("testDetailModal");
             modal.classList.remove("show");
+            document.body.classList.remove('no-scroll');
             setTimeout(() => {
                 modal.style.display = "none";
             }, 400); // Wait for the fade-out animation
@@ -848,9 +885,15 @@
         // Hamburger menu functionality
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
-        
+        const navClose = document.getElementById('navClose');
+
         hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+            navLinks.classList.add('active');
+            document.body.classList.add('no-scroll');
+        });
+        navClose.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            document.body.classList.remove('no-scroll');
         });
 
         // Back to Top functionality
