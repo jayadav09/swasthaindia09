@@ -4,62 +4,109 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title id="page-title">SwasthaIndia Blog</title>
-
+    
     <meta name="description" id="meta-description" content="Read health blogs, tips, and awareness articles from SwasthaIndia.">
     <meta property="og:title" id="og-title" content="SwasthaIndia Blog" />
     <meta property="og:description" id="og-desc" content="Stay informed with SwasthaIndia health blogs." />
     <meta property="og:image" id="og-image" content="https://example.com/default-thumbnail.jpg" />
     <meta property="og:url" id="og-url" content="" />
     <meta property="og:type" content="article" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
     <style>
+        :root {
+            --primary-color: #007c91;
+            --secondary-color: #00bfa5;
+            --dark-color: #1a1a1a;
+            --text-color: #333;
+            --light-bg: #f5f9fc;
+            --card-bg: #ffffff;
+            --accent-color: #004d40;
+        }
+
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            background: #f9f9f9;
-            color: #333;
+            background: var(--light-bg);
+            color: var(--text-color);
         }
         header {
-            background: #004d40;
-            color: #fff;
-            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 60px;
+            background: var(--card-bg);
+            padding: 0 20px;
         }
-        header h1 {
-            margin: 0;
-            font-size: 1.5rem;
+        .logo img {
+            width: 180px;
         }
-        nav a {
-            color: #fff;
-            margin-left: 20px;
+        .nav-links a {
             text-decoration: none;
-            font-weight: 500;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 16px;
+            margin-left: 24px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--secondary-color);
         }
         .container {
-            max-width: 800px;
+            max-width: 850px;
             margin: auto;
             padding: 2rem;
+            background: var(--card-bg);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            margin-top: 2rem;
         }
-        .blog-post h2 {
-            font-size: 2rem;
-            color: #00796b;
+        .blog-post h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
         }
         .blog-post .meta {
-            color: #777;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
         }
-        .blog-post img {
-            max-width: 100%;
+        .blog-post img.featured-image {
+            width: 100%;
             height: auto;
             border-radius: 10px;
             display: block;
+            margin-bottom: 2rem;
+        }
+        .blog-content h2, .blog-content h3 {
+            color: var(--accent-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .blog-content p {
+            line-height: 1.8;
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+        .blog-content ul, .blog-content ol {
+            line-height: 1.8;
+            color: #555;
+            padding-left: 20px;
+        }
+        .blog-content ul li, .blog-content ol li {
+            margin-bottom: 10px;
         }
         .tags {
             margin-top: 20px;
@@ -67,56 +114,34 @@
         .tag {
             display: inline-block;
             background: #e0f2f1;
-            color: #00796b;
-            padding: 5px 10px;
+            color: var(--accent-color);
+            padding: 5px 12px;
             margin: 0 5px 5px 0;
-            border-radius: 5px;
+            border-radius: 20px;
             font-size: 0.85rem;
+            font-weight: 600;
         }
         .share-buttons {
             margin-top: 2rem;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
+        }
+        .share-buttons p {
+            font-weight: 600;
+            color: #444;
+            margin: 0 0 1rem;
         }
         .share-buttons a {
-            margin-right: 10px;
+            margin-right: 15px;
             text-decoration: none;
-            font-size: 1.5rem;
-            color: #555;
+            font-size: 1.6rem;
+            color: #888;
             transition: color 0.2s;
         }
-        .share-buttons a:hover {
-            color: #00796b;
-        }
-        footer {
-            background: #004d40;
-            color: #fff;
-            padding: 2rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-        #comment-form {
-            margin-top: 2rem;
-        }
-        #comment-form textarea {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        #comment-form button {
-            background: #00796b;
-            color: #fff;
-            padding: 10px 20px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        #comment-form button:hover {
-            background: #004d40;
-        }
+        .share-buttons .fa-whatsapp:hover { color: #25D366; }
+        .share-buttons .fa-facebook:hover { color: #3b5998; }
+        .share-buttons .fa-twitter:hover { color: #00acee; }
+        
         .related-posts {
             margin-top: 40px;
             padding-top: 20px;
@@ -125,67 +150,138 @@
         .related-posts h3 {
             margin-bottom: 20px;
             font-size: 24px;
-            color: #333;
+            color: var(--accent-color);
         }
         .related-posts-list {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
         .related-card {
-            width: 100%;
-            max-width: 300px;
-            background: #fff;
-            border: 1px solid #eee;
+            background: var(--light-bg);
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            text-decoration: none;
+            color: inherit;
         }
         .related-card:hover {
             transform: translateY(-4px);
         }
         .related-card img {
             width: 100%;
-            height: 160px;
+            height: 120px;
             object-fit: cover;
         }
-        .related-card a {
-            text-decoration: none;
-            color: inherit;
+        .related-card-content {
+            padding: 15px;
         }
         .related-card h4 {
-            padding: 10px;
-            font-size: 18px;
-            color: #222;
-            margin: 0;
+            font-size: 16px;
+            color: var(--accent-color);
+            margin: 0 0 5px;
         }
         .related-card p {
-            padding: 0 10px 10px;
-            font-size: 14px;
+            font-size: 12px;
             color: #777;
             margin: 0;
+        }
+
+        /* Footer Styles - Same as blogs.html */
+        .swastha-footer {
+            background: var(--dark-color);
+            color: #fff;
+            padding: 50px 20px 20px;
+            font-family: 'Inter', sans-serif;
+            margin-top: 60px;
+        }
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .footer-column {
+            flex: 1 1 300px;
+            margin: 20px;
+        }
+        .footer-column h3, .footer-column h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            font-size: 15px;
+            line-height: 1.6;
+            text-decoration: none;
+        }
+        .footer-column a:hover {
+            color: #00ffd5;
+            transition: 0.3s;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        .social-icons a {
+            font-size: 20px;
+            color: #ccc;
+            margin-right: 15px;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #00ffd5;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>SwasthaIndia Blog</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/packages">Packages</a>
-            <a href="/contact">Contact</a>
-        </nav>
+        <div class="topbar">
+            <a href="/" class="logo">
+                <img src="/logo.png" alt="SwasthaIndia Logo" />
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/my-packages/">Packages</a>
+                <a href="/book-test/">Book Test</a>
+                <a href="/contact/">Contact</a>
+                <a href="/about/">About</a>
+                <a href="/blogs/">Blog</a>
+            </nav>
+        </div>
     </header>
 
     <div class="container">
-        <div id="blog-post" class="blog-post"></div>
+        <div id="blog-post" class="blog-post">
+            <p>Loading blog post...</p>
+        </div>
 
         <div class="share-buttons">
             <p><strong>Share this article:</strong></p>
-            <a id="whatsapp-share" href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
-            <a id="facebook-share" href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a id="twitter-share" href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a id="whatsapp-share" href="#" target="_blank" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a id="facebook-share" href="#" target="_blank" title="Share on Facebook"><i class="fab fa-facebook"></i></a>
+            <a id="twitter-share" href="#" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i></a>
         </div>
         
         <div id="related-posts" class="related-posts">
@@ -194,10 +290,40 @@
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2025 SwasthaIndia. All rights reserved.</p>
+    <footer class="swastha-footer">
+        <div class="footer-container">
+            <div class="footer-column about">
+                <h3>SwasthaIndia</h3>
+                <p>Where Healing Meets Innovation. Your trusted platform for reliable blood tests and health packages.</p>
+            </div>
+            <div class="footer-column links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/book-test.html">Book Test</a></li>
+                    <li><a href="/my-packages.html">Health Packages</a></li>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                    <li><a href="/blogs/">Blog</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column contact">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
+                <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
+                <div class="social-icons">
+                    <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 SwasthaIndia. All rights reserved.</p>
+        </div>
     </footer>
-
+    
     <script>
         async function fetchBlogPosts() {
             try {
@@ -212,41 +338,43 @@
 
         function getSlugFromUrl() {
             const urlParams = new URLSearchParams(window.location.search);
-            let slug = urlParams.get("slug");
-            if (!slug) {
-                const parts = window.location.pathname.split("/");
-                slug = parts[parts.length - 1];
+            return urlParams.get("slug")?.toLowerCase().trim();
+        }
+
+        function getExcerpt(content, maxLength = 160) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            if (textContent.length > maxLength) {
+                return textContent.substring(0, maxLength) + '...';
             }
-            return slug?.toLowerCase().trim();
+            return textContent;
         }
 
         function updateMetaTags(post) {
+            const currentUrl = window.location.origin + `/blog.html?slug=${post.Slug}`;
+            const excerpt = getExcerpt(post.Content);
+
             document.title = post.Title + " - SwasthaIndia Blog";
-            document.getElementById("page-title").textContent = post.Title;
-            document.getElementById("meta-description").setAttribute("content", post.Content.substring(0, 150));
+            document.getElementById("meta-description").setAttribute("content", excerpt);
             document.getElementById("og-title").setAttribute("content", post.Title);
-            document.getElementById("og-desc").setAttribute("content", post.Content.substring(0, 150));
+            document.getElementById("og-desc").setAttribute("content", excerpt);
             document.getElementById("og-image").setAttribute("content", post["Image URL"]);
-            document.getElementById("og-url").setAttribute("content", window.location.href);
+            document.getElementById("og-url").setAttribute("content", currentUrl);
         }
 
         function renderBlogPost(post, relatedPosts) {
             const blogContainer = document.getElementById("blog-post");
+            
             const tagsHtml = post.Tags.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
             
             blogContainer.innerHTML = `
-                <h2>${post.Title}</h2>
+                <h1>${post.Title}</h1>
                 <p class="meta">By ${post.Author} | ${post.Date}</p>
-                <img src="${post["Image URL"]}" alt="${post.Title}" class="blog-image" />
-                <div class="content">${post.Content}</div>
+                <img src="${post["Image URL"]}" alt="${post.Title}" class="featured-image" />
+                <div class="blog-content">${post.Content}</div>
                 <div class="tags">${tagsHtml}</div>
-                <p><a href="/blogs" style="color:#00796b; font-weight:bold;">&larr; Back to all blogs</a></p>
-                <hr>
-                <h3>Leave a Comment</h3>
-                <form id="comment-form">
-                    <textarea id="comment" rows="3" placeholder="Your comment here..." required></textarea><br>
-                    <button type="submit">Submit</button>
-                </form>
+                <p style="margin-top: 2rem;"><a href="/blogs/" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">&larr; Back to all blogs</a></p>
             `;
 
             renderRelatedPosts(relatedPosts);
@@ -260,20 +388,23 @@
             }
 
             container.innerHTML = posts.map(post => `
-                <div class="related-card">
-                    <a href="blog.html?slug=${post.Slug}">
-                        <img src="${post["Image URL"]}" alt="${post.Title}" />
+                <a href="/blog.html?slug=${post.Slug}" class="related-card">
+                    <img src="${post["Image URL"]}" alt="${post.Title}" />
+                    <div class="related-card-content">
                         <h4>${post.Title}</h4>
                         <p>${post.Date}</p>
-                    </a>
-                </div>
+                    </div>
+                </a>
             `).join('');
         }
 
         function setupShareButtons(post) {
-            document.getElementById("whatsapp-share").href = `https://wa.me/?text=${encodeURIComponent(post.Title + ' - ' + window.location.href)}`;
-            document.getElementById("facebook-share").href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-            document.getElementById("twitter-share").href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.Title)}`;
+            const pageUrl = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(post.Title);
+            
+            document.getElementById("whatsapp-share").href = `https://wa.me/?text=${title} - ${pageUrl}`;
+            document.getElementById("facebook-share").href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+            document.getElementById("twitter-share").href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${title}`;
         }
 
         async function loadBlogPost() {
@@ -282,16 +413,16 @@
             const blogContainer = document.getElementById("blog-post");
 
             if (!posts) {
-                blogContainer.innerHTML = "<p>Failed to load blog posts.</p>";
+                blogContainer.innerHTML = "<p style='color: #ff5555;'>Failed to load blog posts. Please check your network or try again later.</p>";
                 return;
             }
 
             const post = posts.find(p => p.Slug?.toLowerCase().trim() === slug);
             if (!post) {
-                blogContainer.innerHTML = "<p>Blog not found.</p>";
+                blogContainer.innerHTML = "<p>Blog post not found.</p>";
                 return;
             }
-
+            
             updateMetaTags(post);
             setupShareButtons(post);
             
@@ -304,18 +435,7 @@
             renderBlogPost(post, relatedPosts);
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            loadBlogPost();
-
-            document.addEventListener("submit", function (e) {
-                if (e.target && e.target.id === "comment-form") {
-                    e.preventDefault();
-                    const comment = document.getElementById("comment").value;
-                    alert("Thank you for your feedback! (Comment saved locally)");
-                    document.getElementById("comment").value = "";
-                }
-            });
-        });
+        document.addEventListener("DOMContentLoaded", loadBlogPost);
     </script>
 </body>
 </html>
