@@ -134,7 +134,7 @@
                 posts.forEach(post => {
                     const postCard = document.createElement("a");
                     postCard.className = "blog-card";
-                    postCard.href = `blog.html?slug=${post.Slug}`;
+                    postCard.href = `/blog.html?slug=${post.Slug}`;
                     
                     const excerpt = post.Content.substring(0, 150) + '...';
 
