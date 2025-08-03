@@ -229,8 +229,7 @@
       const data = await response.json();
 const posts = data.blogs || data; // support both formats
 
-      const post = posts.find(p => p.Slug === slug);
-
+      const post = posts.find(p => p.Slug?.toLowerCase().trim() === slug?.toLowerCase().trim());
       if (!post) {
         blogContainer.innerHTML = "<p>Blog not found.</p>";
         return;
