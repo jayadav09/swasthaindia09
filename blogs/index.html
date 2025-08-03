@@ -7,16 +7,26 @@
     <meta name="description" content="Read all the latest health blogs, tips, and awareness articles from SwasthaIndia." />
     
     <link rel="canonical" href="https://swasthaindia.in/blogs/" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+        :root {
+            --primary-color: #007c91;
+            --secondary-color: #00bfa5;
+            --dark-color: #1a1a1a;
+            --text-color: #333;
+            --light-bg: #f5f9fc;
+            --card-bg: #ffffff;
+            --accent-color: #004d40;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            background: #f5f9fc;
-            color: #333;
+            background: var(--light-bg);
+            color: var(--text-color);
         }
         header {
             background: white;
@@ -24,14 +34,13 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            width: 100%;
         }
         .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 60px;
-            background: #fff;
+            background: var(--card-bg);
             padding: 0 20px;
         }
         .logo img {
@@ -39,14 +48,14 @@
         }
         .nav-links a {
             text-decoration: none;
-            color: #007c91;
+            color: var(--primary-color);
             font-weight: 600;
             font-size: 16px;
             margin-left: 24px;
             transition: color 0.3s;
         }
         .nav-links a:hover {
-            color: #00bfa5;
+            color: var(--secondary-color);
         }
         .container {
             max-width: 1100px;
@@ -54,7 +63,7 @@
             padding: 2rem;
         }
         .hero-banner {
-            background: url('https://raw.githubusercontent.com/jayadav09/swasthaindia09/main/images/hero-bg.png') no-repeat center center/cover;
+            background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
             padding: 80px 20px;
             text-align: center;
             color: white;
@@ -73,13 +82,48 @@
             max-width: 600px;
             margin: 0 auto;
         }
+        .search-filter-container {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        #searchInput {
+            width: 100%;
+            max-width: 600px;
+            padding: 12px 20px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: box-shadow 0.3s;
+        }
+        #searchInput:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 124, 145, 0.2);
+        }
+        .tags-container {
+            margin-top: 20px;
+        }
+        .tag {
+            display: inline-block;
+            background: #e0f2f1;
+            color: var(--accent-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin: 4px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .tag:hover {
+            background: #b2dfdb;
+            transform: translateY(-2px);
+        }
         .blog-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
         .blog-card {
-            background: #fff;
+            background: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             overflow: hidden;
@@ -107,7 +151,7 @@
         }
         .blog-card h3 {
             margin: 0 0 10px;
-            color: #004d40;
+            color: var(--accent-color);
             font-size: 1.5rem;
             line-height: 1.3;
         }
@@ -119,7 +163,7 @@
         }
         .read-more {
             display: inline-block;
-            background: #00796b;
+            background: var(--primary-color);
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
@@ -130,12 +174,70 @@
         .read-more:hover {
             background: #005f53;
         }
-        footer {
-            background: #004d40;
+        /* Footer Styles */
+        .swastha-footer {
+            background: var(--dark-color);
             color: #fff;
-            padding: 2rem;
+            padding: 50px 20px 20px;
+            font-family: 'Inter', sans-serif;
+            margin-top: 60px;
+        }
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .footer-column {
+            flex: 1 1 300px;
+            margin: 20px;
+        }
+        .footer-column h3, .footer-column h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            font-size: 15px;
+            line-height: 1.6;
+            text-decoration: none;
+        }
+        .footer-column a:hover {
+            color: #00ffd5;
+            transition: 0.3s;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        .social-icons a {
+            font-size: 20px;
+            color: #ccc;
+            margin-right: 15px;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #00ffd5;
+        }
+        .footer-bottom {
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -161,16 +263,54 @@
             <h1>Our Health Blog</h1>
             <p>Your one-stop destination for trusted health tips, insights, and medical news from our experts.</p>
         </div>
+        
+        <div class="search-filter-container">
+            <input type="text" id="searchInput" placeholder="Search blog posts..." />
+            <div id="tags-container" class="tags-container"></div>
+        </div>
+
         <div id="blog-list-container" class="blog-list">
             <p style="text-align: center; font-size: 1.2rem; color: #555;">Loading blog posts...</p>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2025 SwasthaIndia. All rights reserved.</p>
+    <footer class="swastha-footer">
+        <div class="footer-container">
+            <div class="footer-column about">
+                <h3>SwasthaIndia</h3>
+                <p>Where Healing Meets Innovation. Your trusted platform for reliable blood tests and health packages.</p>
+            </div>
+            <div class="footer-column links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/book-test.html">Book Test</a></li>
+                    <li><a href="/my-packages.html">Health Packages</a></li>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                    <li><a href="/blogs/">Blog</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column contact">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
+                <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
+                <div class="social-icons">
+                    <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 SwasthaIndia. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
+        let allPosts = [];
+
         async function fetchAllBlogPosts() {
             const container = document.getElementById("blog-list-container");
             container.innerHTML = "<p style='text-align: center; font-size: 1.2rem; color: #555;'>Loading blog posts...</p>";
@@ -178,42 +318,84 @@
             try {
                 const response = await fetch("https://script.google.com/macros/s/AKfycbwX1UPxYVJxawevF9MjOqjSbgF7ED2ekklq576LUIfb-lN_wlwCtHZFfIYRG77Z0yc/exec");
                 const data = await response.json();
-                const posts = data.blogs || data;
+                allPosts = data.blogs || data;
 
-                if (!posts || posts.length === 0) {
+                if (!allPosts || allPosts.length === 0) {
                     container.innerHTML = "<p style='text-align: center;'>No blog posts found.</p>";
                     return;
                 }
 
-                posts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-
-                container.innerHTML = "";
-
-                posts.forEach(post => {
-                    const postCard = document.createElement("a");
-                    postCard.className = "blog-card";
-                    postCard.href = `/blog.html?slug=${post.Slug}`;
-                    
-                    // Use a simple text excerpt for the homepage
-                    const excerpt = post.Content.split("</p>")[0].replace(/<[^>]*>/g, '').substring(0, 150) + '...';
-
-                    postCard.innerHTML = `
-                        <img src="${post["Image URL"]}" alt="${post.Title}" />
-                        <div class="blog-card-content">
-                            <p class="meta">By ${post.Author} | ${post.Date}</p>
-                            <h3>${post.Title}</h3>
-                            <p>${excerpt}</p>
-                            <span class="read-more">Read More &rarr;</span>
-                        </div>
-                    `;
-                    container.appendChild(postCard);
-                });
+                allPosts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+                
+                renderPosts(allPosts);
+                renderTags(allPosts);
 
             } catch (err) {
                 console.error("Failed to load blog posts:", err);
                 container.innerHTML = "<p style='text-align: center; color: #ff5555;'>Failed to load blog posts. Please try again later.</p>";
             }
         }
+
+        function renderPosts(postsToRender) {
+            const container = document.getElementById("blog-list-container");
+            container.innerHTML = "";
+
+            if (postsToRender.length === 0) {
+                container.innerHTML = "<p style='text-align: center;'>No matching blog posts found.</p>";
+                return;
+            }
+
+            postsToRender.forEach(post => {
+                const postCard = document.createElement("a");
+                postCard.className = "blog-card";
+                postCard.href = `/blog.html?slug=${post.Slug}`;
+                
+                const excerpt = post.Content.split("</p>")[0].replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+
+                postCard.innerHTML = `
+                    <img src="${post["Image URL"]}" alt="${post.Title}" />
+                    <div class="blog-card-content">
+                        <p class="meta">By ${post.Author} | ${post.Date}</p>
+                        <h3>${post.Title}</h3>
+                        <p>${excerpt}</p>
+                        <span class="read-more">Read More &rarr;</span>
+                    </div>
+                `;
+                container.appendChild(postCard);
+            });
+        }
+        
+        function renderTags(posts) {
+            const tagsContainer = document.getElementById('tags-container');
+            const allTags = new Set();
+            posts.forEach(post => {
+                if (post.Tags) {
+                    post.Tags.split(',').map(tag => tag.trim()).forEach(tag => {
+                        if (tag) allTags.add(tag);
+                    });
+                }
+            });
+
+            tagsContainer.innerHTML = '';
+            allTags.forEach(tag => {
+                const tagSpan = document.createElement('span');
+                tagSpan.className = 'tag';
+                tagSpan.textContent = tag;
+                tagSpan.onclick = () => filterByTag(tag);
+                tagsContainer.appendChild(tagSpan);
+            });
+        }
+        
+        function filterByTag(selectedTag) {
+            const filteredPosts = allPosts.filter(post => post.Tags && post.Tags.includes(selectedTag));
+            renderPosts(filteredPosts);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredPosts = allPosts.filter(post => post.Title.toLowerCase().includes(searchTerm) || post.Content.toLowerCase().includes(searchTerm) || (post.Tags && post.Tags.toLowerCase().includes(searchTerm)));
+            renderPosts(filteredPosts);
+        });
 
         document.addEventListener("DOMContentLoaded", fetchAllBlogPosts);
     </script>
