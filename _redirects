@@ -1,1 +1,4 @@
 /blog  /blog/index.html  200
+git add _redirects
+git commit -m "Fix redirects for blog slugs"
+git push
