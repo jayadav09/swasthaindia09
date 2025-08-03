@@ -1,1064 +1,893 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SwasthaIndia – Full Body Test Packages</title>
-<!-- ✅ Canonical link -->
-  <link rel="canonical" href="https://swasthaindia.in/" />
-  <meta name="description" content="Affordable full body test packages in Delhi by SwasthaIndia. Book health checkups online with doorstep sample collection.">
-  <meta name="keywords" content="full body test, blood test, SwasthaIndia packages, health checkup, Delhi">
-  <meta property="og:title" content="SwasthaIndia – Full Body Health Packages">
-  <meta property="og:description" content="Book full body blood tests and diagnostic packages at home. Trusted & affordable service in Delhi.">
-  <meta property="og:url" content="https://swasthaindia.in/">
-  <meta property="og:type" content="website">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SwasthaIndia – Blood Tests & Health Screenings</title>
+    <link rel="canonical" href="https://swasthaindia.in/my-packages/" />
+    <meta name="description" content="Affordable blood tests and health screenings in Delhi by SwasthaIndia. Book your tests online with doorstep sample collection.">
+    <meta name="keywords" content="blood test, health screening, SwasthaIndia, health checkup, Delhi">
+    <meta property="og:title" content="SwasthaIndia – Blood Tests & Health Screenings">
+    <meta property="og:description" content="Book affordable blood tests and diagnostic screenings at home. Trusted & professional service in Delhi.">
+    <meta property="og:url" content="https://swasthaindia.in/my-packages/">
+    <meta property="og:type" content="website">
 
-   body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f5fcff;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      width: 100%;
-    }
-
-    .topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 32px;
-  background: #fff;
-  flex-wrap: wrap;
-    }
-    .logo img {
-      height: 48px;
-    }
-    .hamburger {
-  font-size: 1.8rem;
-  color: #007c91;
-  cursor: pointer;
-  display: none;
-  margin-left: auto; /* ✅ Ensures it's aligned to the far right */
-  position: absolute;
-  right: 32px; /* ✅ Aligns with padding */
-    }
-    .nav-links {
- display: flex;
-  gap: 24px;
-  align-items: center;
-  margin-right: 12px;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: #007c91;
-      font-weight: 600;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover {
-      color: #00bfa5;
-    }
-.package-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .package-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .package-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    .package-name {
-      font-size: 20px;
-      font-weight: 600;
-      color: #222;
-      margin-right: auto;
-    }
-
-    .price-section {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: 20px;
-    }
-
-    .mrp {
-      color: #999;
-      text-decoration: line-through;
-      font-size: 14px;
-    }
-
-    .offer-price {
-      color: #333;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .discount-tag {
-      background: #ff4d4f;
-      color: #fff;
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 5px;
-      font-weight: 600;
-    }
-
-    .expand-icon {
-      font-size: 24px;
-      cursor: pointer;
-      margin-left: 15px;
-    }
-
-    .test-details {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.9s ease;
-}
-
-.expanded .package-details {
-  max-height: 10000px; /* enough height for content */
-}
-    .package-details p {
-      margin: 6px 0;
-      font-size: 14px;
-      color: #444;
-      display: flex;
-    }
-
-    .icon-label {
-      font-weight: 600;
-      color: #000;
-      width: 160px;
-      display: inline-block;
-    }
-
-    .book-now {
-      display: block;
-      margin: 20px auto 0;
-      background-color: #ff4d4f;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      text-align: center;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-.test-detail-section {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease, opacity 0.3s ease, transform 0.3s ease;
-  background: #f9f9f9;
-  margin-top: 15px;
-  padding: 0 16px;
-  border-radius: 8px;
-  opacity: 0;
-  transform: translateY(-6px);
-}
-
-.test-detail-section.show {
-  max-height: 2000px;
-  padding: 15px 16px;
-  opacity: 1;
-  transform: translateY(0);
-}
-.test-details-header h3 {
-  margin: 16px 0 10px;
-  font-size: 20px;
-  color: #2c3e50;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 4px;
-}
-
-.test-box {
-  background: #f9f9f9;
-  padding: 12px 16px;
-  border-left: 4px solid #ff5e5e;
-  border-radius: 8px;
-  margin: 12px 0;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-
-.test-box h4 {
-  font-size: 16px;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #222;
-}
-
-.test-box p {
-  margin: 4px 0;
-  font-size: 14px;
-  font-weight: 400;
-  color: #555;
-  line-height: 1.4;
-}
-
-.test-box ol {
-  margin: 4px 0 8px 18px;
-  padding-left: 0;
-}
-
-.test-box ol li {
-  font-size: 14px;
-  color: #444;
-  margin-bottom: 3px;
-  line-height: 1.4;
-}
-
-.not-found {
-  color: #888;
-  font-size: 14px;
-  margin-left: 12px;
-}
-
-
-    @keyframes fadeSlide {
-      from {
-        opacity: 0;
-        transform: translateY(-5px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .book-now:hover {
-      background-color: #d9363e;
-    }
-.know-more-toggle {
-  background-color: #ffffff;
-  color: #ff4d4f;
-  border: 2px solid #ff4d4f;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 15px 0 0;
-  display: inline-block;
-}
-
-.know-more-toggle:hover {
-  background-color: #181a19;
-  color: #ffffff;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-    @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
-      .nav-links {
-        flex-direction: column;
-        display: none;
-        background: white;
-        padding: 16px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        position: absolute;
-        top: 70px;
-        right: 20px;
-        width: 200px;
-        border-radius: 8px;
-      }
-      .nav-links a {
-        margin: 10px 0;
-      }
-      .nav-links.active {
-        display: flex;
-        animation: fadeIn 0.3s ease;
-      }     
- 
-      .test {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 16px;
-        padding: 0 12px !important;
-      }
-    }    
-    .hero-btn {
-      background: #007f5f;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 17px;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: background 0.3s ease;
-    }
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    .hero-whatsapp {
-      margin-top: 20px;
-    }
-    .hero-whatsapp a {
-      display: inline-flex;
-      align-items: center;
-      background: #25d366;
-      padding: 10px 16px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      color: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .hero-whatsapp img {
-      width: 24px;
-      height: 24px;
-      margin-right: 8px;
-    }
-    .section {
-      margin-top: 40px;
-    }
-    @media (max-width: 600px) {
-  .package-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    <style>
+        :root {
+            --primary-color: #007c91;
+            --secondary-color: #00bfa5;
+            --dark-color: #1a1a1a;
+            --text-color: #333;
+            --light-bg: #f5f9fc;
+            --card-bg: #ffffff;
+            --accent-color: #004d40;
+            --danger-color: #ff4d4f;
+            --highlight-color: #ffeb3b;
+        }
 
-  .package-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
 
-  .pricing-info {
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 8px;
-  }
+        header {
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-  .price-box {
-    text-align: left;
-    margin-bottom: 8px;
-  }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            background: var(--card-bg);
+            padding: 0 20px;
+        }
 
-  .test-name {
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
+        .logo img {
+            width: 180px;
+        }
 
-  .discount-tag {
-    align-self: flex-start;
-    margin-bottom: 8px;
-  }
+        .nav-links {
+            display: flex;
+        }
 
-  .expand-icon {
-    align-self: flex-end;
-  }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 16px;
+            margin-left: 24px;
+            transition: color 0.3s;
+        }
 
-  .test-details {
-    font-size: 14px;
-    line-height: 1.6;
-    padding-top: 10px;
-  }
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
 
-  .book-now {
-    display: block;
-    margin: 20px auto 10px;
-    text-align: center;
-  }
-}
-.test-details {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease, padding 0.3s ease;
-  padding: 0 16px;
-}
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
 
-.package-card.expanded .test-details {
-  max-height: 500px;  /* enough height for content */
-  padding: 12px 16px;
-}
+        /* --- Hero Section --- */
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://img.freepik.com/free-photo/doctor-s-hand-holding-bottle-with-red-pills_1170-1376.jpg?w=1800');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0 0 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
 
-@media (max-width: 600px) {
-  .know-more-toggle {
-    width: 100%;
-    text-align: center;
-  }
-}
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
 
-    @media (max-width: 768px) {
-      .hero-section h1 { font-size: 28px; }
-      .hero-btn { font-size: 16px; padding: 12px 24px; }
-    }
-h1 { text-align: center; color: #00796b; font-size: 2rem; margin: 30px 0; }
-.floating-banner { position: sticky; top: 0; z-index: 999; background: #004d40; color: white; padding: 12px; font-size: 15px; text-align: center; font-weight: 500; }
-    .floating-banner a { color: #ffeb3b; font-weight: bold; text-decoration: underline; }    
-    .wa-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 9999; }
-    .wa-float img { width: 100%; height: auto; }
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.5);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  padding: 20px;
-}
+        .hero-whatsapp a {
+            display: inline-flex;
+            align-items: center;
+            background: #25d366;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: background 0.3s ease;
+        }
+        
+        .hero-whatsapp a:hover {
+            background: #128C7E;
+        }
 
-.modal-container {
-  background: white;
-  width: 95%;
-  max-width: 720px;
-  height: 90vh;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
+        .hero-whatsapp img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
 
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  position: relative;
-}
+        /* --- Promotional Banner Section --- */
+        .promo-banner {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 1200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .promo-banner h2 {
+            font-size: 2rem;
+            margin: 0 0 10px;
+        }
+        .promo-banner p {
+            font-size: 1.1rem;
+            margin: 0 0 20px;
+        }
+        .promo-banner .cta-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            font-weight: 700;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .promo-banner .cta-button:hover {
+            background: #008f7a;
+        }
 
-.modal-close {
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  width: 36px;
-  height: 36px;
-  background: #ff4d4f;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 1001;
-  border: 3px solid white;
-}
+        /* --- Testimonial Section --- */
+        .testimonials-section {
+            padding: 60px 20px;
+            background-color: var(--card-bg);
+            text-align: center;
+            max-width: 1200px;
+            margin: 40px auto;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
 
-.modal-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #ffffff;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
+        .testimonials-section h2 {
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            margin-bottom: 50px;
+        }
 
-.modal-header h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #00796b;
-  margin: 0;
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+        .testimonial-card {
+            max-width: 700px;
+            margin: auto;
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .testimonial-card blockquote {
+            font-style: italic;
+            color: #555;
+            line-height: 1.7;
+            margin: 0;
+            position: relative;
+            padding: 0 20px;
+        }
 
-.book-now-btn {
-  background-color: #ff4d4f;
-  color: white;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 6px;
-  text-decoration: none;
-  margin-left: 12px;
-  transition: background 0.3s ease;
-}
+        .testimonial-card blockquote::before, .testimonial-card blockquote::after {
+            content: '"';
+            font-size: 4rem;
+            color: #ddd;
+            position: absolute;
+            line-height: 1;
+            top: -20px;
+        }
+        .testimonial-card blockquote::before { left: -10px; }
+        .testimonial-card blockquote::after { right: -10px; }
+        
+        .testimonial-card .author {
+            margin-top: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
 
-.book-now-btn:hover {
-  background-color: #d9363e;
-}
+        /* --- Search & Filters --- */
+        .search-container {
+            max-width: 600px;
+            margin: 40px auto 20px;
+            position: relative;
+        }
 
-.modal-body-scroll {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  scroll-behavior: smooth;
-}
-@media (max-width: 600px) {
-  .modal-container {
-    height: 95vh;
-    border-radius: 16px 16px 0 0;
-    margin-top: auto;
-  }
-}
-.modal-overlay.show {
-  backdrop-filter: blur(5px); /* ✅ background blur */
-  animation: fadeIn 0.3s ease;
-}
+        #searchInput {
+            width: 100%;
+            padding: 12px 40px 12px 20px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: border-color 0.3s;
+        }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    backdrop-filter: blur(0px);
-  }
-  to {
-    opacity: 1;
-    backdrop-filter: blur(5px);
-  }
-}
+        #searchInput:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            pointer-events: none;
+            font-size: 18px;
+        }
 
-.modal-container {
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.4s ease;
-}
+        /* --- Package Cards Grid --- */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
 
-.modal-overlay.show .modal-container {
-  transform: translateY(0);
-  opacity: 1;
-}
-.know-more-toggle {
-  background-color: #ffffff;
-  color: #ff4d4f;
-  border: 2px solid #ff4d4f;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 15px 0 0;
-  display: inline-block;
-}
+        .package-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
-.know-more-toggle:hover {
-  background-color: #ff4d4f;
-  color: #ffffff;
-}
-.search-container {
-  position: relative;
-  max-width: 400px;
-  margin: 20px auto;
-}
+        .package-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-#searchInput {
-  width: 100%;
-  padding: 12px 40px 12px 16px;
-  border-radius: 30px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: border 0.3s ease;
-}
+        .package-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
 
-#searchInput:focus {
-  border-color: #007bff;
-}
+        .package-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #f0f0f0;
+        }
 
-.search-icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #007bff;
-  font-size: 18px;
-}
-/* General modal overlay - works for desktop and mobile */
-#testDetailModal.modal-overlay {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 95% !important;
-  max-width: 420px !important;
-  max-height: 92vh !important;
-  background: #fff !important;
-  border-radius: 12px !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2) !important;
-  display: none;
-  overflow: hidden;
-  z-index: 9999;
-}
+        .package-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.3;
+        }
+        
+        .price-section {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        
+        .mrp {
+            color: #888;
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+        
+        .offer-price {
+            color: var(--danger-color);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .discount-tag {
+            background: var(--danger-color);
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+        
+        .know-more-toggle {
+            width: 100%;
+            background-color: transparent;
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
 
-/* Modal container */
-#testDetailModal .modal-container {
-  position: relative;
-  width: 100%;
-}
+        .know-more-toggle:hover {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .book-now {
+            display: block;
+            margin-top: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .book-now:hover {
+            background-color: #005f53;
+        }
 
-/* Close button - center top */
-#testDetailModal .modal-close {
-  position: absolute !important;
-  top: -28px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  font-size: 28px !important;
-  background: none !important;
-  color: #000 !important;
-  cursor: pointer;
-  z-index: 10000;
-}
+        /* --- Footer Styles --- */
+        .swastha-footer {
+            background: linear-gradient(to right, #000000, #1c1c1c);
+            color: #fff;
+            padding: 50px 20px 20px;
+            font-family: 'Inter', sans-serif;
+            margin-top: 60px;
+        }
 
-/* Header */
-#testDetailModal .modal-header {
-  padding: 12px 16px !important;
-  border-bottom: 1px solid #f0f0f0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
+        }
 
-#testDetailModal .modal-header h2 {
-  font-size: 18px;
-  margin: 0;
-  line-height: 1.4;
-  text-align: left;
-}
+        .footer-column {
+            flex: 1 1 300px;
+            margin: 20px;
+        }
 
-/* Book now button full width */
-#testDetailModal .modal-header .book-now-btn {
-  width: 100% !important;
-  font-size: 15px !important;
-  padding: 10px 0;
-  background: #ff5e57;
-  border-radius: 6px;
-  color: #fff;
-  text-align: center;
-  font-weight: 600;
-}
+        .footer-column h3, .footer-column h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
 
-/* Scrollable content */
-#testDetailModal .modal-body-scroll {
-  max-height: 60vh;
-  overflow-y: auto;
-  padding: 10px 16px;
-}
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            font-size: 15px;
+            line-height: 1.6;
+            text-decoration: none;
+        }
 
-/* Prevent body scroll when modal open */
-body.modal-open {
-  overflow: hidden;
-}
-/* Footer Styles */
-.swastha-footer {
-  background: linear-gradient(to right, #000000, #1c1c1c);
-  color: #fff;
-  padding: 50px 20px 20px;
-  font-family: 'Segoe UI', sans-serif;
-}
+        .footer-column a:hover {
+            color: #00ffd5;
+            transition: 0.3s;
+        }
 
-.footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: auto;
-}
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
 
-.footer-column {
-  flex: 1 1 300px;
-  margin: 20px;
-}
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
 
-.footer-column h3, .footer-column h4 {
-  color: #00c6a9;
-  margin-bottom: 15px;
-}
+        .social-icons a {
+            font-size: 20px;
+            color: #ccc;
+            margin-right: 15px;
+            transition: transform 0.3s, color 0.3s;
+        }
 
-.footer-column p, .footer-column a {
-  color: #ccc;
-  font-size: 15px;
-  line-height: 1.6;
-  text-decoration: none;
-}
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #00ffd5;
+        }
 
-.footer-column a:hover {
-  color: #00ffd5;
-  transition: 0.3s;
-}
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* --- General Utilities --- */
+        .floating-banner { 
+            position: sticky; top: 0; z-index: 999; 
+            background: var(--accent-color); color: white; 
+            padding: 12px; font-size: 15px; text-align: center; 
+            font-weight: 500; 
+        }
+        .floating-banner a { 
+            color: var(--highlight-color); font-weight: bold; text-decoration: underline; 
+        }
+        .wa-float { 
+            position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 9999; 
+            background-color: #25d366; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .wa-float img { 
+            width: 70%; height: auto; 
+        }
 
-.footer-column ul {
-  list-style: none;
-  padding: 0;
-}
+        /* --- Back to Top Button --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 999;
+        }
 
-.footer-column ul li {
-  margin-bottom: 10px;
-}
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
 
-.social-icons a {
-  font-size: 20px;
-  color: #ccc;
-  margin-right: 15px;
-  transition: transform 0.3s, color 0.3s;
-}
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); display: none; align-items: center;
+            justify-content: center; z-index: 9999; padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        .modal-container {
+            background: white; width: 95%; max-width: 450px;
+            max-height: 90vh; border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
+            transform: translateY(20px); opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .modal-overlay.show .modal-container {
+            transform: translateY(0); opacity: 1;
+        }
+        .modal-header {
+            padding: 16px 20px; display: flex; justify-content: space-between;
+            align-items: center; border-bottom: 1px solid #f0f0f0; background: var(--card-bg);
+            position: sticky; top: 0; z-index: 10;
+        }
+        .modal-header h2 {
+            font-size: 18px; font-weight: 600; color: var(--accent-color);
+            margin: 0; flex-grow: 1;
+        }
+        .modal-close {
+            width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; color: #999; cursor: pointer;
+            border: none; background: transparent;
+            margin-left: 10px;
+        }
+        .modal-body-scroll {
+            flex-grow: 1; overflow-y: auto; padding: 20px;
+        }
+        .modal-body-scroll h4 {
+            font-size: 16px; font-weight: 600; color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .modal-body-scroll ul, .modal-body-scroll p {
+            font-size: 14px; color: #555; line-height: 1.6;
+        }
+        .modal-body-scroll ul {
+            padding-left: 20px;
+        }
+        .modal-body-scroll li {
+            margin-bottom: 5px;
+        }
+        .modal-book-now {
+            background-color: var(--danger-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-left: 10px;
+        }
+        .modal-book-now:hover {
+            background-color: #d9363e;
+        }
 
-.social-icons a:hover {
-  transform: scale(1.2);
-  color: #00ffd5;
-}
+        /* --- Loading and Animations --- */
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.8); display: flex;
+            align-items: center; justify-content: center; z-index: 9999;
+            flex-direction: column; transition: opacity 0.5s ease;
+        }
+        .spinner {
+            border: 6px solid #f3f3f3; border-top: 6px solid var(--primary-color);
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bounceIn {
+            0% { transform: scale(0.1); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
 
-.footer-bottom {
-  text-align: center;
-  margin-top: 30px;
-  padding-top: 15px;
-  border-top: 1px solid #333;
-  color: #999;
-  font-size: 14px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-}
-
-  </style>
+        /* --- Media Queries for Mobile --- */
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 2rem; }
+            .hero-section p { font-size: 1rem; }
+            .logo img { width: 140px; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                flex-direction: column;
+                padding: 10px 0;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links a {
+                margin: 10px 20px;
+            }
+            .hamburger {
+                display: block;
+            }
+            .packages-grid { padding: 1rem; }
+            .package-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .package-name { font-size: 18px; }
+            .price-section { width: 100%; justify-content: space-between; }
+            .know-more-toggle, .book-now { width: 100%; text-align: center; }
+            .footer-container { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <div class="topbar">
-    <a href="/" class="logo">
-      <img src="/logo.png" alt="SwasthaIndia Logo" />
+    <header>
+        <div class="topbar">
+            <a href="/" class="logo">
+                <img src="/logo.png" alt="SwasthaIndia Logo" />
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/my-packages/">Packages</a>
+                <a href="/book-test/">Book Test</a>
+                <a href="/contact/">Contact</a>
+                <a href="/about/">About</a>
+                <a href="/blogs/">Blog</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero-section">
+        <h1>Your Path to a Healthier You</h1>
+        <p>Explore our comprehensive range of blood tests and health screenings, designed for a complete health overview.</p>
+        <div class="hero-whatsapp">
+            <a href="https://wa.me/919911990556" target="_blank">
+                <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+                Book Your Blood Test Now
+            </a>
+        </div>
+    </div>
+    
+    <section class="promo-banner">
+        <h2>Exclusive Limited-Time Offer!</h2>
+        <p>Get a free personalized health consultation with every blood test booking.</p>
+        <a href="https://wa.me/919911990556" class="cta-button" target="_blank">Claim Your Offer Now</a>
+    </section>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Looking for a test..." />
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div id="test-cards-container" class="packages-grid">
+            </div>
+    </div>
+
+    <section class="testimonials-section">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-card">
+            <blockquote>
+                SwasthaIndia made my health checkup so easy and stress-free. The phlebotomist was professional, and the reports were delivered right on time. Highly recommended!
+            </blockquote>
+            <div class="author">- Ankit Sharma, Delhi</div>
+        </div>
+    </section>
+    
+    <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
     </a>
-     <nav class="nav-links" id="navLinks">
-    <a href="/">Home</a>
-    <a href="/my-packages/">Packages</a>
-    <a href="/book-test/">Book Test</a>
-    <a href="/contact/">Contact</a>
-    <a href="/about/">About</a>
-      </nav>
- <div class="hamburger">
-      <i class="fas fa-bars"></i>
+
+    <a href="#top" class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <div id="loading-message" class="loading-overlay">
+        <div class="spinner"></div>
+        <div>Loading packages...</div>
     </div>
-  </div>
-</header>
-
-<div class="floating-banner">
-  💬 Looking for more tests or full body packages?
-  <strong>Chat with us</strong> on
-  <a href="https://wa.me/919911990556" target="_blank">+91-9911990556</a>
-</div>
-
-<a href="https://wa.me/919911990556" class="wa-float" target="_blank">
-  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
-</a>
-<!-- Modal -->
-<div id="testDetailModal" class="modal-overlay">
-  <div class="modal-container">
-    <div class="modal-content">
-      <!-- Close Button OUTSIDE Top Right -->
-      <span class="modal-close" onclick="closeModal()">×</span>
-
-      <!-- Sticky Header -->
-      <div class="modal-header">
-        <h2 id="modal-test-name">Package Name</h2>
-        <a id="modal-book-link" class="book-now-btn" target="_blank">Book Now</a>
-      </div>
-
-      <!-- Scrollable Body -->
-      <div id="modal-body" class="modal-body-scroll"></div>
-    </div>
-  </div>
-</div>
-<div id="loading-message" style="
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  flex-direction: column;
-  transition: opacity 0.5s ease;
-">
-  <div class="spinner" style="
-    border: 6px solid #f3f3f3;
-    border-top: 6px solid #007bff;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 15px;
-  "></div>
-  <div style="font-size: 16px; color: #333;">loading please wait...</div>
-</div>
-<div class="search-container">
-  <input type="text" id="searchInput" placeholder="Looking for a test..." />
-  <i class="fas fa-search search-icon"></i>
-</div>
-
-
-  <div id="test-cards-container"></div>
-  <footer class="swastha-footer">
-  <div class="footer-container">
-    <div class="footer-column about">
-      <h3>SwasthaIndia</h3>
-      <p>Where Healing Meets Innovation. Your trusted platform for reliable blood tests and health packages.</p>
-    </div>
-
-    <div class="footer-column links">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="/index.html">Home</a></li>
-        <li><a href="/book-test.html">Book Test</a></li>
-        <li><a href="/my-packages.html">Health Packages</a></li>
-        <li><a href="/privacy.html">Privacy Policy</a></li>
-        <li><a href="/contact.html">Contact Us</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-column contact">
-      <h4>Contact</h4>
-      <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
-      <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
-      <div class="social-icons">
-        <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram">
-  <i class="fab fa-instagram"></i>
-</a>
-
-        <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook">
-  <i class="fab fa-facebook"></i>
-</a>
-
-        <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2025 SwasthaIndia. All rights reserved.</p>
-  </div>
-</footer>
-
-<script>
-const sheetURL = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec"; // ✅ Use the API that returns { tests: [], details: [] }
-const container = document.getElementById("test-cards-container");
-let currentlyExpanded = null;
-let testDetailsMap = {}; // Store Sheet2 data here
-
-fetch(sheetURL)
-  .then(res => res.json())
-  .then(data => {
-    const tests = data.tests || [];
-    const details = data.details || [];
-
-    // ✅ Create a map for Sheet2 data
-    details.forEach(d => {
-      const key = d["Test Name"].trim().toLowerCase();
-      testDetailsMap[key] = d;
-    });
-
-    // ✅ Loop through Sheet1 and build cards
-    tests.forEach((test, index) => {
-      const mrp = parseFloat(test["MRP"]) || 0;
-      const offer = parseFloat(test["Offer Price"]) || 0;
-      const discount = mrp > 0 && offer > 0 ? Math.round(((mrp - offer) / mrp) * 100) : 0;
-
-      const card = document.createElement("div");
-      card.className = "package-card";
-      card.innerHTML = `
-        <div class="package-header">
-          <div class="package-name">${test["Test Name"]}</div>
-          <div class="price-section">
-            <div class="mrp">${mrp ? `₹${mrp}` : ""}</div>
-            <div class="offer-price">${offer ? `₹${offer}` : ""}</div>
-            ${discount ? `<div class="discount-tag">${discount}% OFF</div>` : ""}
-            <div class="expand-icon">+</div>
-          </div>
+    
+    <div id="testDetailModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-test-name"></h2>
+                <div>
+                    <a id="modal-book-link" class="modal-book-now" target="_blank">Book Now</a>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                </div>
+            </div>
+            <div id="modal-body" class="modal-body-scroll"></div>
         </div>
-        <div class="test-details">
-          <p><span class="icon-label">Sample Type:</span> ${test["Sample Type"] || "N/A"}</p>
-          <p><span class="icon-label">Fasting Required:</span> ${test["Fasting Required"] || "N/A"}</p>
-          <p><span class="icon-label">Category:</span> ${test.Category || "N/A"}</p>
-          <p><span class="icon-label">Description:</span> ${test.Description || "N/A"}</p>
-          <button class="know-more-toggle">Know More</button>
-          <a href="${test["Booking Link"]}" class="book-now" target="_blank">Book Now</a>
-        </div>
-      `;
+    </div>
 
-      // Toggle expand/collapse
-      const toggle = card.querySelector(".expand-icon");
-      toggle.addEventListener("click", () => {
-        if (currentlyExpanded && currentlyExpanded !== card) {
-          currentlyExpanded.classList.remove("expanded");
+    <footer class="swastha-footer">
+        <div class="footer-container">
+            <div class="footer-column about">
+                <h3>SwasthaIndia</h3>
+                <p>Where Healing Meets Innovation. Your trusted platform for reliable blood tests and health packages.</p>
+            </div>
+            <div class="footer-column links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/my-packages.html">Health Packages</a></li>
+                    <li><a href="/book-test.html">Book Test</a></li>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column contact">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
+                <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
+                <div class="social-icons">
+                    <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 SwasthaIndia. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const sheetURL = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
+        const container = document.getElementById("test-cards-container");
+        let allTests = [];
+        let testDetailsMap = {};
+
+        async function fetchData() {
+            document.getElementById("loading-message").style.display = "flex";
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.json();
+                allTests = data.tests || [];
+                const details = data.details || [];
+                
+                details.forEach(d => {
+                    const key = d["Test Name"].trim().toLowerCase();
+                    testDetailsMap[key] = d;
+                });
+                
+                renderCards(allTests);
+            } catch (err) {
+                console.error("Failed to fetch data:", err);
+                document.getElementById("loading-message").innerHTML = "<div style='color:red;'>❌ Failed to load tests. Please try again later.</div>";
+            } finally {
+                document.getElementById("loading-message").style.display = "none";
+            }
         }
-        card.classList.toggle("expanded");
-        currentlyExpanded = card.classList.contains("expanded") ? card : null;
-      });
+        
+        function renderCards(testsToRender) {
+            container.innerHTML = "";
+            if (testsToRender.length === 0) {
+                container.innerHTML = "<p style='text-align: center; width: 100%;'>No matching packages found.</p>";
+                return;
+            }
+            
+            testsToRender.forEach(test => {
+                const mrp = parseFloat(test["MRP"]) || 0;
+                const offer = parseFloat(test["Offer Price"]) || 0;
+                const discount = mrp > 0 && offer > 0 ? Math.round(((mrp - offer) / mrp) * 100) : 0;
+                
+                const card = document.createElement("div");
+                card.className = "package-card";
+                card.innerHTML = `
+                    <div class="package-header">
+                        <div class="package-name">${test["Test Name"]}</div>
+                        <div class="price-section">
+                            ${mrp ? `<div class="mrp">₹${mrp}</div>` : ''}
+                            ${offer ? `<div class="offer-price">₹${offer}</div>` : ''}
+                            ${discount ? `<div class="discount-tag">${discount}% OFF</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p style="font-size: 14px; color: #555;">${test.Description || 'No description available.'}</p>
+                        <button class="know-more-toggle" data-test-name="${test['Test Name']}" data-booking-link="${test['Booking Link']}">Know More</button>
+                        <a href="${test['Booking Link']}" class="book-now" target="_blank">Book Now</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            observeCards();
+        }
+        
+        // Modal functions
+        function openModal(testName, bookingLink) {
+            const detailsData = testDetailsMap[testName.toLowerCase()];
+            const modalTitle = document.getElementById("modal-test-name");
+            const modalBody = document.getElementById("modal-body");
+            const modalBookLink = document.getElementById("modal-book-link");
+            const modal = document.getElementById("testDetailModal");
 
-      // Know More button
-      // Know More button
-const knowMoreBtn = card.querySelector(".know-more-toggle");
-knowMoreBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
+            modalTitle.innerText = testName;
+            modalBookLink.href = bookingLink;
+            
+            if (detailsData) {
+                const parametersList = detailsData.Parameters
+                    ? `<p><strong>Parameters:</strong></p><ul>${detailsData.Parameters.split(",").map(p => `<li>${p.trim()}</li>`).join("")}</ul>`
+                    : "<p><i>No parameters listed.</i></p>";
 
-  const testName = test["Test Name"].trim().toLowerCase();
-  const detailsData = testDetailsMap[testName];
+                modalBody.innerHTML = `
+                    <p><strong>Description:</strong> ${detailsData.Description || "Not available"}</p>
+                    <p><strong>Purpose:</strong> ${detailsData.Purpose || "Not available"}</p>
+                    <p><strong>Total Parameters:</strong> ${detailsData["Total Parameters"] || "N/A"}</p>
+                    ${parametersList}
+                `;
+            } else {
+                modalBody.innerHTML = `<p style="color:red;">❌ No details found for this package.</p>`;
+            }
 
-  if (detailsData) {
-    // Parameters as bullets
-    const parametersList = detailsData.Parameters
-      ? `<ol>${detailsData.Parameters.split(",").map(p => `<li>${p.trim()}</li>`).join("")}</ol>`
-      : "<p><i>No parameters listed.</i></p>";
+            modal.style.display = "flex";
+            setTimeout(() => modal.classList.add("show"), 10);
+        }
 
-    // Full structured popup like package.html
-    document.getElementById("modal-test-name").innerText = test["Test Name"];
-    document.getElementById("modal-book-link").href = test["Booking Link"];
-    document.getElementById("modal-body").innerHTML = `
-      <div class="test-box">
-        <h4>${detailsData["Test Name"]}</h4>
-        <p><strong>Description:</strong></p>
-        <p>${detailsData.Description || "Not available"}</p>
+        function closeModal() {
+            const modal = document.getElementById("testDetailModal");
+            modal.classList.remove("show");
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 400); // Wait for the fade-out animation
+        }
 
-        <p><strong>Parameters:</strong></p>
-        ${parametersList}
+        // Event listeners
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('know-more-toggle')) {
+                const testName = e.target.getAttribute('data-test-name');
+                const bookingLink = e.target.getAttribute('data-booking-link');
+                openModal(testName, bookingLink);
+            }
+        });
+        
+        document.getElementById("testDetailModal").addEventListener("click", function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
 
-        <p><strong>Total Parameters:</strong> ${detailsData["Total Parameters"] || "N/A"}</p>
-        <p><strong>Purpose:</strong></p>
-        <p>${detailsData.Purpose || "N/A"}</p>
-      </div>
-    `;
-  } else {
-    document.getElementById("modal-body").innerHTML =
-      `<p style="color:red;">❌ No details found in Sheet2 for <strong>${test["Test Name"]}</strong></p>`;
-  }
+        const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("input", function () {
+            const searchTerm = this.value.toLowerCase();
+            const filteredTests = allTests.filter(test => 
+                test["Test Name"].toLowerCase().includes(searchTerm) || 
+                (test.Description && test.Description.toLowerCase().includes(searchTerm))
+            );
+            renderCards(filteredTests);
+        });
+        
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
 
-  // Show modal
-  const modal = document.getElementById("testDetailModal");
-  modal.style.display = "flex";
-  setTimeout(() => modal.classList.add("show"), 10);
-});
+        // Back to Top functionality
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
+        // Intersection Observer for fade-in effect on cards
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
 
-
-      container.appendChild(card);
-
-      if (index === tests.length - 1) {
-        const loader = document.getElementById("loading-message");
-        loader.style.opacity = "0";
-        setTimeout(() => (loader.style.display = "none"), 500);
-      }
-    });
-  })
-  .catch(err => {
-    console.error("Failed to fetch data:", err);
-    document.getElementById("loading-message").innerHTML =
-      "<div style='color:red;'>❌ Failed to load tests. Please try again later.</div>";
-  });
-
-// Modal close
-function openModal() {
-  document.getElementById('testDetailModal').style.display = 'block';
-  document.body.classList.add('modal-open'); // disable background scroll
-}
-
-function closeModal() {
-  const modal = document.getElementById('testDetailModal');
-  
-  // Optional: add fade-out animation if using "show" class
-  modal.classList.remove("show");
-
-  // Hide modal after animation (if any)
-  setTimeout(() => {
-    modal.style.display = "none";
-    document.body.classList.remove('modal-open'); // enable background scroll
-  }, 300); // matches animation duration
-}
-
-document.getElementById("testDetailModal").addEventListener("click", function (e) {
-  if (e.target.classList.contains("modal-overlay")) {
-    closeModal();
-  }
-});
-</script>
-
-<script>
-  function toggleDetails(id) {
-    const allDetails = document.querySelectorAll('.test-details');
-    allDetails.forEach(detail => {
-      if (detail.id !== id) detail.style.display = 'none';
-    });
-    const el = document.getElementById(id);
-    el.style.display = el.style.display === 'block' ? 'none' : 'block';
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const nav = document.getElementById("navLinks");
-    const hamburger = document.querySelector(".hamburger");
-    hamburger.addEventListener("click", function (e) {
-      e.stopPropagation();
-      nav.classList.toggle("active");
-    });
-    document.body.addEventListener("click", function (e) {
-      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-        nav.classList.remove("active");
-      }
-    });
-  });
-const searchInput = document.getElementById("searchInput");
-
-// Test names for rotating placeholder
-const placeholderTexts = [
-  "Looking for CBC?",
-  "Looking for KFT?",
-  "Looking for HbA1c?",
-  "Looking for LFT?",
-  "Looking for Vitamin D?"
-];
-
-let index = 0;
-setInterval(() => {
-  searchInput.setAttribute("placeholder", placeholderTexts[index]);
-  index = (index + 1) % placeholderTexts.length;
-}, 2000); // Change every 2 sec
-
-// Filter test cards on input
-searchInput.addEventListener("input", function () {
-  const filter = this.value.toLowerCase();
-  document.querySelectorAll(".package-card").forEach(card => {
-    const name = card.querySelector(".package-name").innerText.toLowerCase();
-    card.style.display = name.includes(filter) ? "block" : "none";
-  });
-});
-
-</script>
+        function observeCards() {
+            document.querySelectorAll('.package-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+        
+        // Initial fetch and render
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchData();
+        });
+    </script>
 
 </body>
 </html>
