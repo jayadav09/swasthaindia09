@@ -221,7 +221,12 @@
 <script>
   async function loadBlogPost() {
     const urlParams = new URLSearchParams(window.location.search);
-    const slug = urlParams.get("slug");
+    let slug = urlParams.get("slug");
+if (!slug) {
+  const parts = window.location.pathname.split("/");
+  slug = parts[parts.length - 1];
+}
+
     const blogContainer = document.getElementById("blog-post");
 
     try {
