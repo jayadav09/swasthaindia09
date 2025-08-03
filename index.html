@@ -181,6 +181,7 @@
             position: relative;
             max-width: 600px;
             margin: 0px auto;
+            z-index: 10; /* Ensures search bar is above other elements */
         }
 
         .search-box {
@@ -223,6 +224,7 @@
             display: none;
             z-index: 1000;
             overflow: hidden;
+            text-align: left;
         }
         .suggestion {
             padding: 12px 18px;
@@ -971,6 +973,8 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     // Google Sheets API URLs
+    // NOTE: If you have a separate sheet for "CBC" or other tests, you must provide its API URL here.
+    // The current code only pulls data from these two sheets.
     const testAPI = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
     const packageAPI = "https://script.google.com/macros/s/AKfycbxYeKIG1T6qWOUjobP8Ou-qxYJxuOTfVVSSHkV6qQT6bQg8ltL4HsHfQqur6VnyGSRgFQ/exec";
     const callbackFormUrl = "https://script.google.com/macros/s/AKfycbwTNz_4qqA3m0hI4sOtaGFdQwxXGVP6Fn4OhI6WOVov6G7IflGl-PtPG0x3mACkiJDA/exec";
@@ -1011,6 +1015,11 @@
         
         container.innerHTML = "";
         
+        if (popularItems.length === 0) {
+            container.innerHTML = `<p style="text-align: center; color: #777;">No popular packages found. Please check your Google Sheet configuration.</p>`;
+            return;
+        }
+
         popularItems.slice(0, 6).forEach(item => { // Limit to top 6 items
             const name = item.name;
             const desc = item.data.Description || "";
@@ -1151,6 +1160,21 @@
             }, 5000); // 5-second delay
         }
     };
+
+    // This is the code snippet you need to add to your my-packages.html page
+    // to make the category filtering work.
+    /*
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        if (category) {
+            // Logic to filter and display packages based on the 'category' variable.
+            console.log(`Filtering packages for category: ${category}`);
+            // You would need to write code here to show/hide the relevant packages.
+            // Example: filterItemsByTag(category);
+        }
+    });
+    */
 </script>
 </body>
 </html>
