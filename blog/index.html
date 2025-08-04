@@ -8,7 +8,7 @@
     <meta name="description" id="meta-description" content="Read health blogs, tips, and awareness articles from SwasthaIndia.">
     <meta property="og:title" id="og-title" content="SwasthaIndia Blog" />
     <meta property="og:description" id="og-desc" content="Stay informed with SwasthaIndia health blogs." />
-    <meta property="og:image" id="og-image" content="https://example.com/default-thumbnail.jpg" />
+    <meta property="og:image" id="og-image" content="https://placehold.co/1200x630/007c91/ffffff?text=SwasthaIndia" />
     <meta property="og:url" id="og-url" content="" />
     <meta property="og:type" content="article" />
     
@@ -84,6 +84,9 @@
             cursor: pointer;
             z-index: 1001; 
         }
+        main {
+            padding: 2rem 0;
+        }
         .main-content-wrapper {
             max-width: 850px;
             margin: auto;
@@ -91,7 +94,6 @@
             background: var(--card-bg);
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             border-radius: 12px;
-            margin-top: 2rem;
             min-height: 50vh;
         }
         /* Loading Spinner */
@@ -117,6 +119,70 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Blog List Styles */
+        .blog-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .blog-card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .blog-card h2 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin: 0 0 0.5rem;
+        }
+        .blog-card .meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .blog-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+        .read-more-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        .read-more-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
         /* Blog Post Content Styles */
         .blog-post h1 {
             font-size: 2.5rem;
@@ -445,7 +511,13 @@
             text-decoration: none;
             cursor: pointer;
         }
-
+        .error-message {
+            text-align: center;
+            padding: 50px;
+            color: #e53e3e;
+            font-weight: bold;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .topbar { padding: 0 10px; }
@@ -485,11 +557,14 @@
                 align-items: center;
                 text-align: center;
             }
+            .main-content-wrapper {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-   <header>
+    <header>
         <div class="topbar">
             <a href="/" class="logo">
                 <img src="/logo.png" alt="SwasthaIndia Logo" />
@@ -509,15 +584,18 @@
         </div>
     </header>
 
-    <div class="main-content-wrapper">
-        <div id="blog-content" class="blog-post">
-            <div class="loading-container">
-                <div class="loader"></div>
-                <p>Healing takes time, and so does loading our page!</p>
-                <p>Please wait a moment while we fetch the latest health insights for you.</p>
+    <main>
+        <div class="main-content-wrapper">
+            <!-- Content will be loaded here dynamically -->
+            <div id="dynamic-content">
+                <div class="loading-container">
+                    <div class="loader"></div>
+                    <p>Healing takes time, and so does loading our page!</p>
+                    <p>Please wait a moment while we fetch the latest health insights for you.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <footer class="swastha-footer">
         <div class="footer-container">
@@ -562,8 +640,10 @@
     </div>
 
     <script>
+        // --- Globals ---
         // REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT URL
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk33c-tAQwT7bk2exDymm-6Mtxeyx_5AwH8Agv0cjVM2Xs526RntgeB5InWzXmjCgx/exec";
+        const dynamicContent = document.getElementById("dynamic-content");
 
         // --- User ID Logic for Likes (stored in local storage) ---
         let userId = localStorage.getItem('swasthaIndiaUserId');
@@ -599,13 +679,11 @@
             try {
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Required for Google Apps Script
+                    mode: 'no-cors',
                     cache: 'no-cache',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `action=${type}&data=${encodeURIComponent(JSON.stringify(payload))}`
                 });
-                // Note: The response will be opaque due to 'no-cors' mode. We can't read it,
-                // but the script will still run and save the data.
                 return response;
             } catch (err) {
                 console.error(`Failed to post ${type}:`, err);
@@ -656,13 +734,11 @@
         /**
          * Renders the main blog post content and related posts.
          * @param {object} post The blog post to render.
-         * @param {Array} relatedPosts An array of related posts.
          */
         function renderBlogPost(post) {
-            const blogContainer = document.getElementById("blog-content");
             const tagsHtml = post.Tags.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
             
-            blogContainer.innerHTML = `
+            dynamicContent.innerHTML = `
                 <div class="blog-post">
                     <h1>${post.Title}</h1>
                     <p class="meta">By ${post.Author} | ${post.Date}</p>
@@ -689,18 +765,56 @@
         }
 
         /**
-         * Renders the list of related posts.
-         * @param {Array} posts An array of related posts.
+         * Renders the blog list homepage.
+         * @param {Array} posts An array of all blog posts.
          */
-        function renderRelatedPosts(posts) {
+        function renderBlogList(posts) {
+            // Update page title and meta tags for the blog home page
+            document.title = "SwasthaIndia Blog Home";
+            document.getElementById("meta-description").setAttribute("content", "Browse all health and wellness articles from SwasthaIndia.");
+            document.getElementById("og-title").setAttribute("content", "SwasthaIndia Blog Home");
+            document.getElementById("og-url").setAttribute("content", window.location.href.split('?')[0]);
+            document.getElementById("og-image").setAttribute("content", "https://placehold.co/1200x630/007c91/ffffff?text=SwasthaIndia");
+
+            // Sort posts by date, newest first
+            posts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
+            const blogListHtml = posts.map(post => `
+                <a href="/blog.html?slug=${post.Slug}" class="blog-card">
+                    <img src="${post["Image URL"]}" alt="${post.Title}" />
+                    <div class="blog-card-content">
+                        <h2>${post.Title}</h2>
+                        <p class="meta">By ${post.Author} | ${post.Date}</p>
+                        <p>${getExcerpt(post.Content, 100)}</p>
+                        <span class="read-more-btn">Read More</span>
+                    </div>
+                </a>
+            `).join('');
+
+            dynamicContent.innerHTML = `
+                <div class="blog-list">
+                    ${blogListHtml}
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the list of related posts.
+         * @param {Array} posts An array of all posts.
+         * @param {string} currentSlug The slug of the current post.
+         */
+        function renderRelatedPosts(posts, currentSlug) {
             const container = document.querySelector(".related-posts-list");
             if (!container) return;
             
-            if (posts.length === 0) {
+            // Filter out the current post and get 3 other posts
+            const related = posts.filter(post => post.Slug !== currentSlug).slice(0, 3);
+            
+            if (related.length === 0) {
                 document.getElementById("related-posts").style.display = "none";
                 return;
             }
-            container.innerHTML = posts.map(post => `
+            container.innerHTML = related.map(post => `
                 <a href="/blog.html?slug=${post.Slug}" class="related-card">
                     <img src="${post["Image URL"]}" alt="${post.Title}" />
                     <div class="related-card-content">
@@ -712,7 +826,6 @@
         }
 
         // --- Likes System Functions ---
-
         /**
          * Toggles the like status for the current user on the post.
          * @param {string} blogSlug The slug of the blog post.
@@ -723,7 +836,7 @@
                 userId: userId
             };
             await postData('like', payload);
-            await loadPageData(); // Refresh the page data after a like
+            await loadPageContent(); // Refresh the page data after a like
         }
 
         /**
@@ -752,7 +865,6 @@
         }
 
         // --- Comments System Functions ---
-
         /**
          * Handles the comment form submission.
          * @param {Event} e The form submission event.
@@ -779,7 +891,7 @@
             await postData('comment', payload);
             commentInput.value = "";
             nameInput.value = "";
-            await loadPageData(); // Refresh the page data after a comment
+            await loadPageContent(); // Refresh the page data after a comment
         }
         
         /**
@@ -862,74 +974,59 @@
         }
 
         // --- Main Initialization Function ---
-        async function loadPageData() {
-            const blogContainer = document.getElementById("blog-content");
-            const slug = getSlugFromUrl();
-
-            if (!slug) {
-                blogContainer.innerHTML = "<p style='text-align:center; padding: 50px;'>No blog post selected. Please go to the <a href='/blogs/'>main blog page</a> to choose a post.</p>";
-                return;
-            }
+        async function loadPageContent() {
+            // Show the loading spinner
+            dynamicContent.innerHTML = `
+                <div class="loading-container">
+                    <div class="loader"></div>
+                    <p>Healing takes time, and so does loading our page!</p>
+                    <p>Please wait a moment while we fetch the latest health insights for you.</p>
+                </div>`;
 
             const allData = await fetchData();
+            const slug = getSlugFromUrl();
 
             if (!allData || !allData.blogs) {
-                blogContainer.innerHTML = "<p style='color: #ff5555;'>Failed to load blog posts. Please check your network or try again later.</p>";
+                dynamicContent.innerHTML = "<p class='error-message'>Failed to load blog posts. Please check your network or try again later.</p>";
                 return;
             }
 
-            const posts = allData.blogs;
-            const comments = allData.comments;
-            const likes = allData.likes;
-
-            const post = posts.find(p => p.Slug?.toLowerCase().trim() === slug);
-            if (!post) {
-                blogContainer.innerHTML = "<p style='text-align:center; padding: 50px;'>Blog post not found.</p>";
-                return;
+            if (slug) {
+                // This is a single blog post page
+                const post = allData.blogs.find(p => p.Slug.toLowerCase() === slug);
+                if (post) {
+                    renderBlogPost(post);
+                    updateMetaTags(post);
+                    updateLikesSection(post.Slug, allData.likes);
+                    renderCommentsSection(post.Slug, allData.comments);
+                    renderRelatedPosts(allData.blogs, post.Slug);
+                    setupShareButtons(post);
+                } else {
+                    dynamicContent.innerHTML = "<p class='error-message'>Blog post not found. Please check the URL or go back to all blogs.</p>";
+                }
+            } else {
+                // This is the blog list home page
+                renderBlogList(allData.blogs);
             }
-            
-            renderBlogPost(post);
-            updateMetaTags(post);
-            setupShareButtons(post);
-            renderCommentsSection(slug, comments);
-            updateLikesSection(slug, likes);
-            
-            // Find related posts
-            const currentTags = post.Tags?.toLowerCase().split(',').map(tag => tag.trim());
-            const relatedPosts = posts.filter(p =>
-                p.Slug?.toLowerCase().trim() !== slug &&
-                p.Tags?.toLowerCase().split(',').map(tag => tag.trim()).some(tag => currentTags?.includes(tag))
-            ).slice(0, 3);
-            
-            renderRelatedPosts(relatedPosts);
         }
-        
-        // --- Hamburger Menu Logic ---
-        function setupMobileNav() {
+
+        // --- Event Listeners for mobile navigation ---
+        document.addEventListener('DOMContentLoaded', () => {
             const hamburger = document.getElementById('hamburger');
             const navLinks = document.getElementById('navLinks');
             const navClose = document.getElementById('navClose');
-            
-            if (hamburger && navLinks && navClose) {
-                hamburger.addEventListener('click', () => {
-                    navLinks.classList.add('active');
-                });
-                navClose.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                });
-                navLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navLinks.classList.remove('active');
-                    });
-                });
-            }
-        }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            loadPageData();
-            setupMobileNav();
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.add('active');
+            });
+
+            navClose.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+
+            // Load content when the page is ready
+            loadPageContent();
         });
-
     </script>
 </body>
 </html>
