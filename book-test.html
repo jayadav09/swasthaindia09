@@ -2,20 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="page-title">SwasthaIndia Blog</title>
-    
-    <meta name="description" id="meta-description" content="Read health blogs, tips, and awareness articles from SwasthaIndia.">
-    <meta property="og:title" id="og-title" content="SwasthaIndia Blog" />
-    <meta property="og:description" id="og-desc" content="Stay informed with SwasthaIndia health blogs." />
-    <meta property="og:image" id="og-image" content="https://example.com/default-thumbnail.jpg" />
-    <meta property="og:url" id="og-url" content="" />
-    <meta property="og:type" content="article" />
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SwasthaIndia – Blood Tests & Health Screenings</title>
+    <link rel="canonical" href="https://swasthaindia.in/my-packages/" />
+    <meta name="description" content="Affordable blood tests and health screenings in Delhi by SwasthaIndia. Book your tests online with doorstep sample collection.">
+    <meta name="keywords" content="blood test, health screening, SwasthaIndia, health checkup, Delhi">
+    <meta property="og:title" content="SwasthaIndia – Blood Tests & Health Screenings">
+    <meta property="og:description" content="Book affordable blood tests and diagnostic screenings at home. Trusted & professional service in Delhi.">
+    <meta property="og:url" content="https://swasthaindia.in/my-packages/">
+    <meta property="og:type" content="website">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
+    
     <style>
         :root {
             --primary-color: #007c91;
@@ -25,15 +24,23 @@
             --light-bg: #f5f9fc;
             --card-bg: #ffffff;
             --accent-color: #004d40;
+            --danger-color: #ff4d4f;
+            --highlight-color: #ffeb3b;
         }
 
         body {
             font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
             margin: 0;
             padding: 0;
-            background: var(--light-bg);
             color: var(--text-color);
         }
+
+        /* Prevent scrolling when modal is open */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         header {
             background: white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -41,6 +48,7 @@
             top: 0;
             z-index: 1000;
         }
+
         .topbar {
             display: flex;
             justify-content: space-between;
@@ -90,139 +98,301 @@
             cursor: pointer;
             z-index: 1001; /* Ensure it's above the nav links */
         }
-        .container {
-            max-width: 850px;
-            margin: auto;
-            padding: 2rem;
-            background: var(--card-bg);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-radius: 12px;
-            margin-top: 2rem;
+
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://img.freepik.com/free-photo/doctor-s-hand-holding-bottle-with-red-pills_1170-1376.jpg?w=1800');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
-        .blog-post h1 {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
-        .blog-post .meta {
-            color: #888;
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-        .blog-post img.featured-image {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            display: block;
-            margin-bottom: 2rem;
-        }
-        .blog-content h2, .blog-content h3 {
-            color: var(--accent-color);
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-        .blog-content p {
-            line-height: 1.8;
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 1.5rem;
-        }
-        .blog-content ul, .blog-content ol {
-            line-height: 1.8;
-            color: #555;
-            padding-left: 20px;
-        }
-        .blog-content ul li, .blog-content ol li {
-            margin-bottom: 10px;
-        }
-        .tags {
-            margin-top: 20px;
-        }
-        .tag {
-            display: inline-block;
-            background: #e0f2f1;
-            color: var(--accent-color);
-            padding: 5px 12px;
-            margin: 0 5px 5px 0;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .share-buttons {
-            margin-top: 2rem;
-            border-top: 1px solid #eee;
-            padding-top: 1.5rem;
-        }
-        .share-buttons p {
-            font-weight: 600;
-            color: #444;
-            margin: 0 0 1rem;
-        }
-        .share-buttons a {
-            margin-right: 15px;
-            text-decoration: none;
-            font-size: 1.6rem;
-            color: #888;
-            transition: color 0.2s;
-        }
-        .share-buttons .fa-whatsapp:hover { color: #25D366; }
-        .share-buttons .fa-facebook:hover { color: #3b5998; }
-        .share-buttons .fa-twitter:hover { color: #00acee; }
         
-        .related-posts {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-        }
-        .related-posts h3 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: var(--accent-color);
-        }
-        .related-posts-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        .related-card {
-            background: var(--light-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-        .related-card:hover {
-            transform: translateY(-4px);
-        }
-        .related-card img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-        }
-        .related-card-content {
-            padding: 15px;
-        }
-        .related-card h4 {
-            font-size: 16px;
-            color: var(--accent-color);
-            margin: 0 0 5px;
-        }
-        .related-card p {
-            font-size: 12px;
-            color: #777;
-            margin: 0;
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0 0 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Footer Styles - Same as blogs.html */
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .hero-whatsapp a {
+            display: inline-flex;
+            align-items: center;
+            background: #25d366;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: background 0.3s ease;
+        }
+        
+        .hero-whatsapp a:hover {
+            background: #128C7E;
+        }
+
+        .hero-whatsapp img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        /* --- Promotional Banner Section --- */
+        .promo-banner {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 1200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .promo-banner h2 {
+            font-size: 2rem;
+            margin: 0 0 10px;
+        }
+        .promo-banner p {
+            font-size: 1.1rem;
+            margin: 0 0 20px;
+        }
+        .promo-banner .cta-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            font-weight: 700;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .promo-banner .cta-button:hover {
+            background: #008f7a;
+        }
+
+        /* --- Testimonial Section --- */
+        .testimonials-section {
+            padding: 60px 20px;
+            background-color: var(--card-bg);
+            text-align: center;
+            max-width: 1200px;
+            margin: 40px auto;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .testimonials-section h2 {
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            margin-bottom: 50px;
+        }
+
+        .testimonial-card {
+            max-width: 700px;
+            margin: auto;
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .testimonial-card blockquote {
+            font-style: italic;
+            color: #555;
+            line-height: 1.7;
+            margin: 0;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .testimonial-card blockquote::before, .testimonial-card blockquote::after {
+            content: '"';
+            font-size: 4rem;
+            color: #ddd;
+            position: absolute;
+            line-height: 1;
+            top: -20px;
+        }
+        .testimonial-card blockquote::before { left: -10px; }
+        .testimonial-card blockquote::after { right: -10px; }
+        
+        .testimonial-card .author {
+            margin-top: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* --- Search & Filters --- */
+        .search-container {
+            max-width: 600px;
+            margin: 40px auto 20px;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 40px 12px 20px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            pointer-events: none;
+            font-size: 18px;
+        }
+
+        /* --- Package Cards Grid --- */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .package-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .package-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .package-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .package-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .package-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.3;
+        }
+        
+        .price-section {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        
+        .mrp {
+            color: #888;
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+        
+        .offer-price {
+            color: var(--danger-color);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .discount-tag {
+            background: var(--danger-color);
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+        
+        .know-more-toggle {
+            width: 100%;
+            background-color: transparent;
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .know-more-toggle:hover {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .book-now {
+            display: block;
+            margin-top: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .book-now:hover {
+            background-color: #005f53;
+        }
+
+        /* --- Footer Styles --- */
         .swastha-footer {
-            background: var(--dark-color);
+            background: linear-gradient(to right, #000000, #1c1c1c);
             color: #fff;
             padding: 50px 20px 20px;
             font-family: 'Inter', sans-serif;
             margin-top: 60px;
         }
+
         .footer-container {
             display: flex;
             flex-wrap: wrap;
@@ -230,41 +400,50 @@
             max-width: 1200px;
             margin: auto;
         }
+
         .footer-column {
             flex: 1 1 300px;
             margin: 20px;
         }
+
         .footer-column h3, .footer-column h4 {
             color: var(--secondary-color);
             margin-bottom: 15px;
         }
+
         .footer-column p, .footer-column a {
             color: #ccc;
             font-size: 15px;
             line-height: 1.6;
             text-decoration: none;
         }
+
         .footer-column a:hover {
             color: #00ffd5;
             transition: 0.3s;
         }
+
         .footer-column ul {
             list-style: none;
             padding: 0;
         }
+
         .footer-column ul li {
             margin-bottom: 10px;
         }
+
         .social-icons a {
             font-size: 20px;
             color: #ccc;
             margin-right: 15px;
             transition: transform 0.3s, color 0.3s;
         }
+
         .social-icons a:hover {
             transform: scale(1.2);
             color: #00ffd5;
         }
+
         .footer-bottom {
             text-align: center;
             margin-top: 30px;
@@ -273,14 +452,148 @@
             color: #999;
             font-size: 14px;
         }
-        @media (max-width: 768px) {
-            .footer-container {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
+        
+        /* --- General Utilities --- */
+        .floating-banner { 
+            position: sticky; top: 0; z-index: 999; 
+            background: var(--accent-color); color: white; 
+            padding: 12px; font-size: 15px; text-align: center; 
+            font-weight: 500; 
         }
- @media (max-width: 768px) {
+        .floating-banner a { 
+            color: var(--highlight-color); font-weight: bold; text-decoration: underline; 
+        }
+        .wa-float { 
+            position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 9999; 
+            background-color: #25d366; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .wa-float img { 
+            width: 70%; height: auto; 
+        }
+
+        /* --- Back to Top Button --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); display: none; align-items: center;
+            justify-content: center; z-index: 9999; padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        .modal-container {
+            background: white; width: 95%; max-width: 450px;
+            max-height: 90vh; border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
+            transform: translateY(20px); opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .modal-overlay.show .modal-container {
+            transform: translateY(0); opacity: 1;
+        }
+        .modal-header {
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column; /* Stack elements on mobile */
+            gap: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            background: var(--card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .modal-header h2 {
+            font-size: 18px; font-weight: 600; color: var(--accent-color);
+            margin: 0;
+        }
+        .modal-close {
+            position: absolute; /* Fix alignment on mobile */
+            top: 10px;
+            right: 10px;
+            width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; color: #999; cursor: pointer;
+            border: none; background: transparent;
+            z-index: 10;
+        }
+        .modal-book-now {
+            background-color: var(--danger-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .modal-book-now:hover {
+            background-color: #d9363e;
+        }
+        .modal-body-scroll {
+            flex-grow: 1; overflow-y: auto; padding: 20px;
+        }
+        .modal-body-scroll h4 {
+            font-size: 16px; font-weight: 600; color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .modal-body-scroll ul, .modal-body-scroll p {
+            font-size: 14px; color: #555; line-height: 1.6;
+        }
+        .modal-body-scroll ul {
+            padding-left: 20px;
+        }
+        .modal-body-scroll li {
+            margin-bottom: 5px;
+        }
+
+        /* --- Loading and Animations --- */
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.8); display: flex;
+            align-items: center; justify-content: center; z-index: 9999;
+            flex-direction: column; transition: opacity 0.5s ease;
+        }
+        .spinner {
+            border: 6px solid #f3f3f3; border-top: 6px solid var(--primary-color);
+            border-radius: 50%; width: 50px; height: 50px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- Media Queries for Mobile --- */
+        @media (max-width: 768px) {
             .hero-section h1 { font-size: 2rem; }
             .hero-section p { font-size: 1rem; }
             .logo img { width: 140px; }
@@ -316,9 +629,18 @@
             .hamburger {
                 display: block; /* Show hamburger on mobile */
             }
+
+            .packages-grid { padding: 1rem; }
+            .package-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .package-name { font-size: 18px; }
+            .price-section { width: 100%; justify-content: space-between; }
+            .know-more-toggle, .book-now { width: 100%; text-align: center; }
+            .footer-container { flex-direction: column; align-items: center; text-align: center; }
+        }
     </style>
 </head>
 <body>
+
     <header>
         <div class="topbar">
             <a href="/" class="logo">
@@ -339,21 +661,64 @@
         </div>
     </header>
 
+    <div class="hero-section">
+        <h1>Your Path to a Healthier You</h1>
+        <p>Explore our comprehensive range of blood tests and health screenings, designed for a complete health overview.</p>
+        <div class="hero-whatsapp">
+            <a href="https://wa.me/919911990556" target="_blank">
+                <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+                Book Your Blood Test Now
+            </a>
+        </div>
+    </div>
+    
+    <section class="promo-banner">
+        <h2>Exclusive Limited-Time Offer!</h2>
+        <p>Get a free personalized health consultation with every blood test booking.</p>
+        <a href="https://wa.me/919911990556" class="cta-button" target="_blank">Claim Your Offer Now</a>
+    </section>
+
     <div class="container">
-        <div id="blog-post" class="blog-post">
-            <p>Loading blog post...</p>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Looking for a test..." />
+            <i class="fas fa-search search-icon"></i>
         </div>
 
-        <div class="share-buttons">
-            <p><strong>Share this article:</strong></p>
-            <a id="whatsapp-share" href="#" target="_blank" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a id="facebook-share" href="#" target="_blank" title="Share on Facebook"><i class="fab fa-facebook"></i></a>
-            <a id="twitter-share" href="#" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i></a>
+        <div id="test-cards-container" class="packages-grid">
+            </div>
+    </div>
+
+    <section class="testimonials-section">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-card">
+            <blockquote>
+                SwasthaIndia made my health checkup so easy and stress-free. The phlebotomist was professional, and the reports were delivered right on time. Highly recommended!
+            </blockquote>
+            <div class="author">- Ankit Sharma, Delhi</div>
         </div>
-        
-        <div id="related-posts" class="related-posts">
-            <h3>Related Posts</h3>
-            <div class="related-posts-list"></div>
+    </section>
+    
+    <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+    </a>
+
+    <a href="#top" class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <div id="loading-message" class="loading-overlay">
+        <div class="spinner"></div>
+        <div>Loading packages...</div>
+    </div>
+    
+    <div id="testDetailModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-test-name"></h2>
+                <a id="modal-book-link" class="modal-book-now" target="_blank">Book Now</a>
+            </div>
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modal-body" class="modal-body-scroll"></div>
         </div>
     </div>
 
@@ -367,10 +732,9 @@
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="/index.html">Home</a></li>
-                    <li><a href="/book-test.html">Book Test</a></li>
                     <li><a href="/my-packages.html">Health Packages</a></li>
+                    <li><a href="/book-test.html">Book Test</a></li>
                     <li><a href="/privacy.html">Privacy Policy</a></li>
-                    <li><a href="/blogs/">Blog</a></li>
                     <li><a href="/contact.html">Contact Us</a></li>
                 </ul>
             </div>
@@ -390,138 +754,183 @@
             <p>© 2025 SwasthaIndia. All rights reserved.</p>
         </div>
     </footer>
-    
+
     <script>
-    // --- Hamburger Menu Logic ---
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-    const navClose = document.getElementById('navClose');
-    
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.add('active');
-    });
-    navClose.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-    });
-    
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
+        const sheetURL = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
+        const container = document.getElementById("test-cards-container");
+        let allTests = [];
+        let testDetailsMap = {};
+
+        async function fetchData() {
+            document.getElementById("loading-message").style.display = "flex";
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.json();
+                allTests = data.tests || [];
+                const details = data.details || [];
+                
+                details.forEach(d => {
+                    const key = d["Test Name"].trim().toLowerCase();
+                    testDetailsMap[key] = d;
+                });
+                
+                renderCards(allTests);
+            } catch (err) {
+                console.error("Failed to fetch data:", err);
+                document.getElementById("loading-message").innerHTML = "<div style='color:red;'>❌ Failed to load tests. Please try again later.</div>";
+            } finally {
+                document.getElementById("loading-message").style.display = "none";
+            }
+        }
+        
+        function renderCards(testsToRender) {
+            container.innerHTML = "";
+            if (testsToRender.length === 0) {
+                container.innerHTML = "<p style='text-align: center; width: 100%;'>No matching packages found.</p>";
+                return;
+            }
+            
+            testsToRender.forEach(test => {
+                const mrp = parseFloat(test["MRP"]) || 0;
+                const offer = parseFloat(test["Offer Price"]) || 0;
+                const discount = mrp > 0 && offer > 0 ? Math.round(((mrp - offer) / mrp) * 100) : 0;
+                
+                const card = document.createElement("div");
+                card.className = "package-card";
+                card.innerHTML = `
+                    <div class="package-header">
+                        <div class="package-name">${test["Test Name"]}</div>
+                        <div class="price-section">
+                            ${mrp ? `<div class="mrp">₹${mrp}</div>` : ''}
+                            ${offer ? `<div class="offer-price">₹${offer}</div>` : ''}
+                            ${discount ? `<div class="discount-tag">${discount}% OFF</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p style="font-size: 14px; color: #555;">${test.Description || 'No description available.'}</p>
+                        <button class="know-more-toggle" data-test-name="${test['Test Name']}" data-booking-link="${test['Booking Link']}">Know More</button>
+                        <a href="${test['Booking Link']}" class="book-now" target="_blank">Book Now</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            observeCards();
+        }
+        
+        // Modal functions
+        function openModal(testName, bookingLink) {
+            const detailsData = testDetailsMap[testName.toLowerCase()];
+            const modalTitle = document.getElementById("modal-test-name");
+            const modalBody = document.getElementById("modal-body");
+            const modalBookLink = document.getElementById("modal-book-link");
+            const modal = document.getElementById("testDetailModal");
+
+            modalTitle.innerText = testName;
+            modalBookLink.href = bookingLink;
+            
+            if (detailsData) {
+                const parametersList = detailsData.Parameters
+                    ? `<p><strong>Parameters:</strong></p><ul>${detailsData.Parameters.split(",").map(p => `<li>${p.trim()}</li>`).join("")}</ul>`
+                    : "<p><i>No parameters listed.</i></p>";
+
+                modalBody.innerHTML = `
+                    <p><strong>Description:</strong> ${detailsData.Description || "Not available"}</p>
+                    <p><strong>Purpose:</strong> ${detailsData.Purpose || "Not available"}</p>
+                    <p><strong>Total Parameters:</strong> ${detailsData["Total Parameters"] || "N/A"}</p>
+                    ${parametersList}
+                `;
+            } else {
+                modalBody.innerHTML = `<p style="color:red;">❌ No details found for this package.</p>`;
+            }
+
+            modal.style.display = "flex";
+            setTimeout(() => modal.classList.add("show"), 10);
+            document.body.classList.add('no-scroll');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("testDetailModal");
+            modal.classList.remove("show");
+            document.body.classList.remove('no-scroll');
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 400); // Wait for the fade-out animation
+        }
+
+        // Event listeners
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('know-more-toggle')) {
+                const testName = e.target.getAttribute('data-test-name');
+                const bookingLink = e.target.getAttribute('data-booking-link');
+                openModal(testName, bookingLink);
+            }
         });
-    });
-
-    // --- Blog Post Logic (Your existing code below) ---
-    async function fetchBlogPosts() {
-        try {
-            const response = await fetch("https://script.google.com/macros/s/AKfycbwX1UPxYVJxawevF9MjOqjSbgF7ED2ekklq576LUIfb-lN_wlwCtHZFfIYRG77Z0yc/exec");
-            const data = await response.json();
-            return data.blogs || data;
-        } catch (err) {
-            console.error("Failed to fetch blog posts:", err);
-            return null;
-        }
-    }
-
-    function getSlugFromUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get("slug")?.toLowerCase().trim();
-    }
-
-    function getExcerpt(content, maxLength = 160) {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = content;
-        const textContent = tempDiv.textContent || tempDiv.innerText || '';
-        if (textContent.length > maxLength) {
-            return textContent.substring(0, maxLength) + '...';
-        }
-        return textContent;
-    }
-
-    function updateMetaTags(post) {
-        const currentUrl = window.location.origin + `/blog.html?slug=${post.Slug}`;
-        const excerpt = getExcerpt(post.Content);
-
-        document.title = post.Title + " - SwasthaIndia Blog";
-        document.getElementById("meta-description").setAttribute("content", excerpt);
-        document.getElementById("og-title").setAttribute("content", post.Title);
-        document.getElementById("og-desc").setAttribute("content", excerpt);
-        document.getElementById("og-image").setAttribute("content", post["Image URL"]);
-        document.getElementById("og-url").setAttribute("content", currentUrl);
-    }
-
-    function renderBlogPost(post, relatedPosts) {
-        const blogContainer = document.getElementById("blog-post");
         
-        const tagsHtml = post.Tags.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
+        document.getElementById("testDetailModal").addEventListener("click", function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("input", function () {
+            const searchTerm = this.value.toLowerCase();
+            const filteredTests = allTests.filter(test => 
+                test["Test Name"].toLowerCase().includes(searchTerm) || 
+                (test.Description && test.Description.toLowerCase().includes(searchTerm))
+            );
+            renderCards(filteredTests);
+        });
         
-        blogContainer.innerHTML = `
-            <h1>${post.Title}</h1>
-            <p class="meta">By ${post.Author} | ${post.Date}</p>
-            <img src="${post["Image URL"]}" alt="${post.Title}" class="featured-image" />
-            <div class="blog-content">${post.Content}</div>
-            <div class="tags">${tagsHtml}</div>
-            <p style="margin-top: 2rem;"><a href="/blogs/" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">&larr; Back to all blogs</a></p>
-        `;
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const navClose = document.getElementById('navClose');
 
-        renderRelatedPosts(relatedPosts);
-    }
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.add('active');
+            document.body.classList.add('no-scroll');
+        });
+        navClose.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        });
 
-    function renderRelatedPosts(posts) {
-        const container = document.querySelector(".related-posts-list");
-        if (posts.length === 0) {
-            document.getElementById("related-posts").style.display = "none";
-            return;
-        }
+        // Back to Top functionality
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
-        container.innerHTML = posts.map(post => `
-            <a href="/blog.html?slug=${post.Slug}" class="related-card">
-                <img src="${post["Image URL"]}" alt="${post.Title}" />
-                <div class="related-card-content">
-                    <h4>${post.Title}</h4>
-                    <p>${post.Date}</p>
-                </div>
-            </a>
-        `).join('');
-    }
+        // Intersection Observer for fade-in effect on cards
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
 
-    function setupShareButtons(post) {
-        const pageUrl = encodeURIComponent(window.location.href);
-        const title = encodeURIComponent(post.Title);
-        
-        document.getElementById("whatsapp-share").href = `https://wa.me/?text=${title} - ${pageUrl}`;
-        document.getElementById("facebook-share").href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-        document.getElementById("twitter-share").href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${title}`;
-    }
-
-    async function loadBlogPost() {
-        const slug = getSlugFromUrl();
-        const posts = await fetchBlogPosts();
-        const blogContainer = document.getElementById("blog-post");
-
-        if (!posts) {
-            blogContainer.innerHTML = "<p style='color: #ff5555;'>Failed to load blog posts. Please check your network or try again later.</p>";
-            return;
-        }
-
-        const post = posts.find(p => p.Slug?.toLowerCase().trim() === slug);
-        if (!post) {
-            blogContainer.innerHTML = "<p>Blog post not found.</p>";
-            return;
+        function observeCards() {
+            document.querySelectorAll('.package-card').forEach(card => {
+                observer.observe(card);
+            });
         }
         
-        updateMetaTags(post);
-        setupShareButtons(post);
-        
-        const currentTags = post.Tags?.toLowerCase().split(',').map(tag => tag.trim());
-        const relatedPosts = posts.filter(p =>
-            p.Slug?.toLowerCase().trim() !== slug &&
-            p.Tags?.toLowerCase().split(',').map(tag => tag.trim()).some(tag => currentTags?.includes(tag))
-        ).slice(0, 3);
-        
-        renderBlogPost(post, relatedPosts);
-    }
+        // Initial fetch and render
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchData();
+        });
+    </script>
 
-    document.addEventListener("DOMContentLoaded", loadBlogPost);
-</script>
 </body>
 </html>
