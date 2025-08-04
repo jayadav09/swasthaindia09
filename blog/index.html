@@ -701,7 +701,7 @@
          */
         async function fetchData() {
             try {
-                const response = await fetch(SCRIPT_URL + '?action=getData');
+                const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
                 return data;
             } catch (err) {
