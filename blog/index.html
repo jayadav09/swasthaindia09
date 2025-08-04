@@ -644,6 +644,9 @@
         // REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT URL
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk33c-tAQwT7bk2exDymm-6Mtxeyx_5AwH8Agv0cjVM2Xs526RntgeB5InWzXmjCgx/exec";
         const dynamicContent = document.getElementById("dynamic-content");
+        const modal = document.getElementById("message-modal");
+        const modalMessage = document.getElementById("modal-message");
+        const modalCloseBtn = document.querySelector(".modal-close");
 
         // --- User ID Logic for Likes (stored in local storage) ---
         let userId = localStorage.getItem('swasthaIndiaUserId');
@@ -651,6 +654,29 @@
             userId = 'user_' + Date.now() + Math.random().toString(36).substr(2, 9);
             localStorage.setItem('swasthaIndiaUserId', userId);
         }
+
+        /**
+         * Shows a custom modal with a message.
+         * @param {string} message The message to display.
+         */
+        function showMessageModal(message) {
+            modalMessage.textContent = message;
+            modal.style.display = 'flex';
+        }
+
+        /**
+         * Closes the custom modal.
+         */
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        modalCloseBtn.onclick = closeModal;
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
 
         // --- Blog Content Fetching and Rendering ---
 
@@ -721,7 +747,7 @@
          * @param {object} post The blog post object.
          */
         function updateMetaTags(post) {
-            const currentUrl = window.location.origin + `/blog.html?slug=${post.Slug}`;
+            const currentUrl = window.location.href.split('?')[0] + `?slug=${post.Slug}`;
             const excerpt = getExcerpt(post.Content);
             document.title = post.Title + " - SwasthaIndia Blog";
             document.getElementById("meta-description").setAttribute("content", excerpt);
@@ -745,7 +771,7 @@
                     <img src="${post["Image URL"]}" alt="${post.Title}" class="featured-image" />
                     <div class="blog-content">${post.Content}</div>
                     <div class="tags">${tagsHtml}</div>
-                    <p style="margin-top: 2rem;"><a href="/blogs/" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">&larr; Back to all blogs</a></p>
+                    <p style="margin-top: 2rem;"><a href="/" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">&larr; Back to all blogs</a></p>
 
                     <div id="like-section" class="like-container"></div>
                     <div id="comments-section" class="comments-section"></div>
@@ -763,7 +789,7 @@
                 </div>
             `;
         }
-
+        
         /**
          * Renders the blog list homepage.
          * @param {Array} posts An array of all blog posts.
@@ -780,7 +806,7 @@
             posts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
 
             const blogListHtml = posts.map(post => `
-                <a href="/blog.html?slug=${post.Slug}" class="blog-card">
+                <a href="?slug=${post.Slug}" class="blog-card">
                     <img src="${post["Image URL"]}" alt="${post.Title}" />
                     <div class="blog-card-content">
                         <h2>${post.Title}</h2>
@@ -815,7 +841,7 @@
                 return;
             }
             container.innerHTML = related.map(post => `
-                <a href="/blog.html?slug=${post.Slug}" class="related-card">
+                <a href="?slug=${post.Slug}" class="related-card">
                     <img src="${post["Image URL"]}" alt="${post.Title}" />
                     <div class="related-card-content">
                         <h4>${post.Title}</h4>
@@ -905,128 +931,103 @@
 
             const postComments = allComments.filter(c => c.Slug === blogSlug);
             const commentsCount = postComments.length;
-            
-            // Sort comments by timestamp (newest first)
-            postComments.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
 
-            const commentListHtml = commentsCount > 0 
-                ? postComments.map(comment => `
-                    <div class="comment">
-                        <div class="comment-header">
-                            <span class="comment-author">${comment.Name}</span>
-                            <span class="comment-date">${new Date(comment.Timestamp).toLocaleString()}</span>
-                        </div>
-                        <p class="comment-text">${comment.Comment}</p>
-                    </div>
-                `).join('')
-                : `<p class="no-comments">No comments yet. Be the first!</p>`;
-
-            commentsSection.innerHTML = `
+            const commentFormHtml = `
                 <div class="comment-form-container">
                     <h4>Leave a Comment</h4>
                     <form id="comment-form" class="comment-form">
-                        <input type="text" id="commenter-name" placeholder="Your Name (Optional)" maxlength="50" />
+                        <input type="text" id="commenter-name" placeholder="Your Name (optional)" />
                         <textarea id="comment-text" placeholder="Your comment..." required></textarea>
-                        <button type="submit">Submit Comment</button>
+                        <button type="submit">Post Comment</button>
                     </form>
                 </div>
-                <h3>Comments (<span id="comment-count">${commentsCount}</span>)</h3>
-                <div id="comment-list" class="comment-list">
-                    ${commentListHtml}
-                </div>
             `;
-            
-            const commentForm = document.getElementById("comment-form");
-            commentForm.addEventListener('submit', (e) => handleCommentSubmit(e, blogSlug));
+            const commentsListHtml = postComments.length > 0 ?
+                `<div class="comment-list">
+                    ${postComments.map(c => `
+                        <div class="comment">
+                            <div class="comment-header">
+                                <span class="comment-author">${c.Name}</span>
+                                <span class="comment-date">${c.Date}</span>
+                            </div>
+                            <div class="comment-text">${c.Comment}</div>
+                        </div>
+                    `).join('')}
+                </div>` :
+                `<p class="no-comments">No comments yet. Be the first to comment!</p>`;
+
+            commentsSection.innerHTML = `
+                <h3>Comments (${commentsCount})</h3>
+                ${commentFormHtml}
+                ${commentsListHtml}
+            `;
+
+            // Attach event listener to the newly rendered form
+            document.getElementById('comment-form').addEventListener('submit', (e) => handleCommentSubmit(e, blogSlug));
         }
 
-        // --- Modal Functions ---
-        const modal = document.getElementById("message-modal");
-        const modalMessage = document.getElementById("modal-message");
-        const modalCloseBtn = document.querySelector(".modal-close");
-
-        function showMessageModal(message) {
-            modalMessage.textContent = message;
-            modal.style.display = "flex";
-        }
-        modalCloseBtn.onclick = () => {
-            modal.style.display = "none";
-        };
-        window.onclick = (event) => {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
-        
         /**
-         * Sets up the social media share buttons.
+         * Sets up the social sharing links.
          * @param {object} post The blog post object.
          */
         function setupShareButtons(post) {
-            const pageUrl = encodeURIComponent(window.location.href);
+            const currentUrl = encodeURIComponent(window.location.href.split('?')[0] + `?slug=${post.Slug}`);
             const title = encodeURIComponent(post.Title);
-            const whatsappBtn = document.getElementById("whatsapp-share");
-            const facebookBtn = document.getElementById("facebook-share");
-            const twitterBtn = document.getElementById("twitter-share");
-            if (whatsappBtn) whatsappBtn.href = `https://wa.me/?text=${title} - ${pageUrl}`;
-            if (facebookBtn) facebookBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-            if (twitterBtn) twitterBtn.href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${title}`;
+            const excerpt = encodeURIComponent(getExcerpt(post.Content));
+
+            const whatsappLink = `https://wa.me/?text=${title}%20${currentUrl}`;
+            const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+            const twitterLink = `https://twitter.com/intent/tweet?text=${title}&url=${currentUrl}`;
+
+            document.getElementById('whatsapp-share').href = whatsappLink;
+            document.getElementById('facebook-share').href = facebookLink;
+            document.getElementById('twitter-share').href = twitterLink;
         }
 
-        // --- Main Initialization Function ---
+        /**
+         * The main function to load content based on the URL.
+         */
         async function loadPageContent() {
-            // Show the loading spinner
-            dynamicContent.innerHTML = `
-                <div class="loading-container">
-                    <div class="loader"></div>
-                    <p>Healing takes time, and so does loading our page!</p>
-                    <p>Please wait a moment while we fetch the latest health insights for you.</p>
-                </div>`;
-
-            const allData = await fetchData();
             const slug = getSlugFromUrl();
-
-            if (!allData || !allData.blogs) {
-                dynamicContent.innerHTML = "<p class='error-message'>Failed to load blog posts. Please check your network or try again later.</p>";
+            const data = await fetchData();
+            if (!data || !data.blogs) {
+                dynamicContent.innerHTML = `<p class="error-message">Failed to load blog data. Please try again later.</p>`;
                 return;
             }
 
+            const allPosts = data.blogs;
+
             if (slug) {
-                // This is a single blog post page
-                const post = allData.blogs.find(p => p.Slug.toLowerCase() === slug);
+                // Find post with case-insensitive slug comparison
+                const post = allPosts.find(p => p.Slug?.toLowerCase() === slug);
                 if (post) {
                     renderBlogPost(post);
                     updateMetaTags(post);
-                    updateLikesSection(post.Slug, allData.likes);
-                    renderCommentsSection(post.Slug, allData.comments);
-                    renderRelatedPosts(allData.blogs, post.Slug);
+                    renderRelatedPosts(allPosts, post.Slug);
+                    updateLikesSection(post.Slug, data.likes);
+                    renderCommentsSection(post.Slug, data.comments);
                     setupShareButtons(post);
                 } else {
-                    dynamicContent.innerHTML = "<p class='error-message'>Blog post not found. Please check the URL or go back to all blogs.</p>";
+                    dynamicContent.innerHTML = `<p class="error-message">Blog post not found. Please check the URL or go back to all blogs.</p>
+                                                <p style="text-align:center;"><a href="/" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">&larr; Back to all blogs</a></p>`;
                 }
             } else {
-                // This is the blog list home page
-                renderBlogList(allData.blogs);
+                renderBlogList(allPosts);
             }
         }
+        
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', loadPageContent);
+        window.addEventListener('popstate', loadPageContent);
 
-        // --- Event Listeners for mobile navigation ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const hamburger = document.getElementById('hamburger');
-            const navLinks = document.getElementById('navLinks');
-            const navClose = document.getElementById('navClose');
-
-            hamburger.addEventListener('click', () => {
-                navLinks.classList.add('active');
-            });
-
-            navClose.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-
-            // Load content when the page is ready
-            loadPageContent();
+        // Hamburger menu functionality
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.add('active');
         });
+        document.getElementById('navClose').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('active');
+        });
+        
     </script>
 </body>
 </html>
