@@ -350,17 +350,33 @@
             const container = document.getElementById("blog-list-container");
             container.innerHTML = "<p style='text-align: center; font-size: 1.2rem; color: #555;'>Loading blog posts...</p>";
             
+            const apiUrl = "https://script.google.com/macros/s/AKfycbxk33c-tAQwT7bk2exDymm-6Mtxeyx_5AwH8Agv0cjVM2Xs526RntgeB5InWzXmjCgx/exec";
+
+            console.log("Attempting to fetch blog posts from:", apiUrl);
+
             try {
-                const response = await fetch("https://script.google.com/macros/s/AKfycbxk33c-tAQwT7bk2exDymm-6Mtxeyx_5AwH8Agv0cjVM2Xs526RntgeB5InWzXmjCgx/exec");
-                                             
+                const response = await fetch(apiUrl);
+                
+                // Check if the network response was successful
+                if (!response.ok) {
+                    console.error("Network response was not ok:", response.status, response.statusText);
+                    container.innerHTML = `<p style='text-align: center; color: #ff5555;'>Error: Could not retrieve data. Status: ${response.status}</p>`;
+                    return;
+                }
+
                 const data = await response.json();
+                console.log("Fetched data:", data);
+
+                // Handle cases where the data structure is different
                 allPosts = data.blogs || data;
 
-                if (!allPosts || allPosts.length === 0) {
+                if (!allPosts || !Array.isArray(allPosts) || allPosts.length === 0) {
+                    console.log("No blog posts found in the response.");
                     container.innerHTML = "<p style='text-align: center;'>No blog posts found.</p>";
                     return;
                 }
 
+                // Sort the posts by date in descending order
                 allPosts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
                 
                 renderPosts(allPosts);
@@ -386,7 +402,8 @@
                 postCard.className = "blog-card";
                 postCard.href = `/blog.html?slug=${post.Slug}`;
                 
-                const excerpt = post.Content.split("</p>")[0].replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+                // Sanitize content and create an excerpt
+                let excerpt = post.Content.split("</p>")[0].replace(/<[^>]*>/g, '').substring(0, 150) + '...';
 
                 postCard.innerHTML = `
                     <img src="${post["Image URL"]}" alt="${post.Title}" />
