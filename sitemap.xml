@@ -17,12 +17,22 @@
   </url>
   <url>
     <loc>https://swasthaindia.in/blogs/</loc>
-    <lastmod>[Actual last modified date]</lastmod>
+    <lastmod>2025-08-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://swasthaindia.in/blogs/full-body-checkup-benefits</loc>
+    <lastmod>2025-08-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://swasthaindia.in/blogs/hba1c-test-explained</loc>
+    <lastmod>2025-08-03</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://swasthaindia.in/about/</loc>
-    <lastmod>[Actual last modified date]</lastmod>
+    <lastmod>2025-08-03</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -32,7 +42,7 @@
   </url>
   <url>
     <loc>https://swasthaindia.in/privacy/</loc>
-    <lastmod>[Actual last modified date]</lastmod>
+    <lastmod>2025-08-03</lastmod>
     <priority>0.5</priority>
   </url>
-  </urlset>
+</urlset>
