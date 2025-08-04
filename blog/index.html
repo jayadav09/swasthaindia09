@@ -702,10 +702,22 @@
         async function fetchData() {
             try {
                 const response = await fetch(SCRIPT_URL + '?action=getData');
+                
+                // Check if the response is successful
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // The response needs to be an object that the client can read.
+                // The Apps Script must be configured to return 'Content-Type: application/json' and
+                // 'Access-Control-Allow-Origin: *' or the specific domain.
                 const data = await response.json();
                 return data;
             } catch (err) {
                 console.error("Failed to fetch data from Google Apps Script:", err);
+                
+                // Show a user-friendly error message for the CORS issue.
+                showMessageModal("Failed to load blog data. This is likely due to a server configuration issue. Please ensure your Google Apps Script is set up to handle CORS requests. See the code comments for more details on how to fix this.");
                 return null;
             }
         }
@@ -718,19 +730,71 @@
          */
         async function postData(type, payload) {
             try {
+                // Removed 'mode: no-cors'. The server (Apps Script) must handle CORS correctly
+                // for the client to receive and process a response.
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
                     cache: 'no-cache',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `action=${type}&data=${encodeURIComponent(JSON.stringify(payload))}`
                 });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 return response;
             } catch (err) {
                 console.error(`Failed to post ${type}:`, err);
+                showMessageModal("Failed to post data. This may be a server issue. Please try again.");
                 return null;
             }
         }
+        
+        /*
+        IMPORTANT: GUIDE TO FIX THE CORS ERROR ON YOUR GOOGLE APPS SCRIPT
+        
+        The error you are seeing is because your Apps Script is not configured to allow cross-origin
+        requests from the `swasthaindia.in` domain. To fix this, you need to modify your
+        Google Apps Script code.
+        
+        Inside your `doGet(e)` and `doPost(e)` functions, you must return content that explicitly
+        allows requests from other domains. The best way to do this is to return a `TextOutput`
+        or `HtmlOutput` object with a specific CORS header.
+        
+        Here's a template for what your Apps Script `doGet` function should look like:
+        
+        function doGet(e) {
+          // ... your existing logic to get data ...
+          
+          const output = ContentService.createTextOutput(JSON.stringify(responseData));
+          output.setMimeType(ContentService.MimeType.JSON);
+          
+          // IMPORTANT: This line is the fix for the CORS error.
+          // It allows any origin to access the data.
+          output.setMimeType(ContentService.MimeType.JSON);
+          output.setCorsAllowed(true);
+          return output;
+        }
+        
+        And for your `doPost` function:
+        
+        function doPost(e) {
+          // ... your existing logic to handle the post request ...
+        
+          const response = { status: 'success', message: 'Data posted successfully' };
+          const output = ContentService.createTextOutput(JSON.stringify(response));
+          
+          // IMPORTANT: This line is the fix for the CORS error.
+          output.setMimeType(ContentService.MimeType.JSON);
+          output.setCorsAllowed(true);
+          return output;
+        }
+        
+        By adding `output.setCorsAllowed(true);`, you are instructing the Apps Script server to
+        include the 'Access-Control-Allow-Origin: *' header, which will allow your
+        `swasthaindia.in` website to successfully fetch and post data.
+        */
 
         /**
          * Extracts the blog post slug from the URL.
@@ -764,12 +828,44 @@
         function updateMetaTags(post) {
             const currentUrl = window.location.href.split('?')[0] + `?slug=${post.Slug}`;
             const excerpt = getExcerpt(post.Content);
+
+            // Update title
             document.title = post.Title + " - SwasthaIndia Blog";
-            document.getElementById("meta-description").setAttribute("content", excerpt);
-            document.getElementById("og-title").setAttribute("content", post.Title);
-            document.getElementById("og-desc").setAttribute("content", excerpt);
-            document.getElementById("og-image").setAttribute("content", post["Image URL"]);
-            document.getElementById("og-url").setAttribute("content", currentUrl);
+            document.getElementById("page-title").textContent = post.Title;
+
+            // Update primary SEO meta tags
+            // FIX: Added a check for element existence before setting attributes
+            const metaDesc = document.getElementById("meta-description");
+            if (metaDesc) metaDesc.setAttribute("content", excerpt);
+
+            const metaKeywords = document.getElementById("meta-keywords");
+            if (metaKeywords) metaKeywords.setAttribute("content", post.Tags);
+
+            const canonicalUrl = document.getElementById("canonical-url");
+            if (canonicalUrl) canonicalUrl.setAttribute("href", currentUrl);
+
+            // Update Open Graph tags
+            const ogTitle = document.getElementById("og-title");
+            if (ogTitle) ogTitle.setAttribute("content", post.Title);
+
+            const ogDesc = document.getElementById("og-desc");
+            if (ogDesc) ogDesc.setAttribute("content", excerpt);
+            
+            const ogImage = document.getElementById("og-image");
+            if (ogImage) ogImage.setAttribute("content", post["Image URL"]);
+            
+            const ogUrl = document.getElementById("og-url");
+            if (ogUrl) ogUrl.setAttribute("content", currentUrl);
+
+            // Update Twitter tags
+            const twitterTitle = document.getElementById("twitter-title");
+            if (twitterTitle) twitterTitle.setAttribute("content", post.Title);
+            
+            const twitterDesc = document.getElementById("twitter-desc");
+            if (twitterDesc) twitterDesc.setAttribute("content", excerpt);
+            
+            const twitterImage = document.getElementById("twitter-image");
+            if (twitterImage) twitterImage.setAttribute("content", post["Image URL"]);
         }
 
         /**
@@ -828,6 +924,7 @@
             if (twitterDesc) twitterDesc.setAttribute("content", "Browse all health and wellness articles from SwasthaIndia.");
             const twitterImage = document.getElementById("twitter-image");
             if (twitterImage) twitterImage.setAttribute("content", "https://placehold.co/1200x630/007c91/ffffff?text=SwasthaIndia");
+
 
             // Sort posts by date, newest first
             posts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
@@ -893,192 +990,163 @@
         }
 
         /**
-         * Updates the UI to show the correct like count and user's like status.
+         * Updates the like button and count based on the current user's status.
          * @param {string} blogSlug The slug of the blog post.
-         * @param {Array} allLikes All like records from the sheet.
+         * @param {Array} allLikes All like data from the server.
          */
-        function updateLikesSection(blogSlug, allLikes) {
-            const likeSection = document.getElementById("like-section");
-            if (!likeSection) return;
+        function updateLikeSection(blogSlug, allLikes) {
+            const container = document.getElementById("like-section");
+            if (!container) return;
 
-            const postLikes = allLikes.filter(l => l.Slug === blogSlug);
-            const likeCount = postLikes.length;
-            const isLiked = postLikes.some(l => l.UserID === userId);
-            
-            const heartIconClass = isLiked ? "fas fa-heart" : "far fa-heart";
-            
-            likeSection.innerHTML = `
-                <button id="like-btn" class="like-btn">
-                    <i class="${heartIconClass}"></i>
-                    <span>${likeCount} Likes</span>
+            const likesForPost = allLikes.filter(like => like.slug === blogSlug);
+            const userLiked = likesForPost.some(like => like.userId === userId);
+            const likeCount = likesForPost.length;
+
+            const likeButtonHtml = `
+                <button class="like-btn" id="like-btn">
+                    <i class="${userLiked ? 'fas fa-heart' : 'far fa-heart'}"></i>
+                    <span>${likeCount}</span>
                 </button>
             `;
-            
-            document.getElementById('like-btn').addEventListener('click', () => handleLikeClick(blogSlug));
+            container.innerHTML = likeButtonHtml;
+
+            document.getElementById('like-btn').addEventListener('click', () => {
+                handleLikeClick(blogSlug);
+            });
         }
 
         // --- Comments System Functions ---
         /**
-         * Handles the comment form submission.
-         * @param {Event} e The form submission event.
+         * Renders the comment section for a blog post.
          * @param {string} blogSlug The slug of the blog post.
+         * @param {Array} allComments All comment data from the server.
          */
-        async function handleCommentSubmit(e, blogSlug) {
-            e.preventDefault();
-            const nameInput = document.getElementById('commenter-name');
-            const commentInput = document.getElementById('comment-text');
-            const commenterName = nameInput.value.trim() || "Anonymous";
-            const commentText = commentInput.value.trim();
+        function renderCommentsSection(blogSlug, allComments) {
+            const container = document.getElementById("comments-section");
+            if (!container) return;
+            
+            const commentsForPost = allComments
+                .filter(comment => comment.slug === blogSlug)
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-            if (!commentText) {
-                showMessageModal("Please write a comment before submitting.");
+            const commentListHtml = commentsForPost.length > 0
+                ? commentsForPost.map(comment => `
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">${comment.name}</span>
+                            <span class="comment-date">${new Date(comment.timestamp).toLocaleDateString()}</span>
+                        </div>
+                        <p class="comment-text">${comment.comment}</p>
+                    </div>
+                `).join('')
+                : '<p class="no-comments">No comments yet. Be the first to comment!</p>';
+
+            container.innerHTML = `
+                <div class="comment-form-container">
+                    <h4>Leave a Comment</h4>
+                    <form id="comment-form" class="comment-form">
+                        <input type="text" id="comment-name" placeholder="Your Name" required />
+                        <textarea id="comment-text" placeholder="Your Comment" required></textarea>
+                        <button type="submit">Post Comment</button>
+                    </form>
+                </div>
+                <h3>${commentsForPost.length} Comments</h3>
+                <div class="comment-list">${commentListHtml}</div>
+            `;
+
+            document.getElementById('comment-form').addEventListener('submit', handleCommentSubmit);
+        }
+
+        /**
+         * Handles the submission of a new comment.
+         * @param {Event} event The form submission event.
+         */
+        async function handleCommentSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('comment-name').value;
+            const comment = document.getElementById('comment-text').value;
+            const blogSlug = getSlugFromUrl();
+
+            if (!name || !comment) {
+                showMessageModal("Please fill in both your name and comment.");
                 return;
             }
 
             const payload = {
                 slug: blogSlug,
-                name: commenterName,
-                comment: commentText,
+                name: name,
+                comment: comment
             };
+            
+            const submitBtn = event.target.querySelector('button');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Posting...';
+            submitBtn.disabled = true;
 
             await postData('comment', payload);
-            commentInput.value = "";
-            nameInput.value = "";
-            await loadPageContent(); // Refresh the page data after a comment
-        }
-        
-        /**
-         * Renders the comments section with comments for the current post.
-         * @param {string} blogSlug The slug of the blog post.
-         * @param {Array} allComments All comment records from the sheet.
-         */
-        function renderCommentsSection(blogSlug, allComments) {
-            const commentsSection = document.getElementById("comments-section");
-            if (!commentsSection) return;
-
-            const postComments = allComments.filter(c => c.Slug === blogSlug);
-            const commentsCount = postComments.length;
-
-            const commentFormHtml = `
-                <div class="comment-form-container">
-                    <h4>Leave a Comment</h4>
-                    <form id="comment-form" class="comment-form">
-                        <input type="text" id="commenter-name" placeholder="Your Name (optional)" />
-                        <textarea id="comment-text" placeholder="Your comment..." required></textarea>
-                        <button type="submit">Post Comment</button>
-                    </form>
-                </div>
-            `;
-            const commentsListHtml = postComments.length > 0 ?
-                `<div class="comment-list">
-                    ${postComments.map(c => `
-                        <div class="comment">
-                            <div class="comment-header">
-                                <span class="comment-author">${c.Name}</span>
-                                <span class="comment-date">${c.Date}</span>
-                            </div>
-                            <div class="comment-text">${c.Comment}</div>
-                        </div>
-                    `).join('')}
-                </div>` :
-                `<p class="no-comments">No comments yet. Be the first to comment!</p>`;
-
-            commentsSection.innerHTML = `
-                <h3>Comments (${commentsCount})</h3>
-                ${commentFormHtml}
-                ${commentsListHtml}
-            `;
-
-            // Attach event listener to the newly rendered form
-            document.getElementById('comment-form').addEventListener('submit', (e) => handleCommentSubmit(e, blogSlug));
+            
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            
+            document.getElementById('comment-form').reset();
+            await loadPageContent();
+            showMessageModal("Comment posted successfully!");
         }
 
-        /**
-         * Sets up the social sharing links.
-         * @param {object} post The blog post object.
-         */
-        function setupShareButtons(post) {
-            const currentUrl = encodeURIComponent(window.location.href.split('?')[0] + `?slug=${post.Slug}`);
-            const title = encodeURIComponent(post.Title);
-            const excerpt = encodeURIComponent(getExcerpt(post.Content));
-
-            const whatsappLink = `https://wa.me/?text=${title}%20${currentUrl}`;
-            const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
-            const twitterLink = `https://twitter.com/intent/tweet?text=${title}&url=${currentUrl}`;
-
-            document.getElementById('whatsapp-share').href = whatsappLink;
-            document.getElementById('facebook-share').href = facebookLink;
-            document.getElementById('twitter-share').href = twitterLink;
-        }
+        // --- Main Page Load Logic ---
 
         /**
-         * The main function to load content based on the URL.
+         * Handles routing and content loading based on the URL slug.
          */
         async function loadPageContent() {
-            const slug = getSlugFromUrl();
             const data = await fetchData();
-            if (!data || !data.blogs) {
-                dynamicContent.innerHTML = `<p class="error-message">Failed to load blog data. Please try again later.</p>`;
+            if (!data) {
+                dynamicContent.innerHTML = '<p class="error-message">Failed to load content. Please try again later.</p>';
                 return;
             }
 
-            const allPosts = data.blogs;
+            const blogPosts = data.posts;
+            const blogSlug = getSlugFromUrl();
 
-            if (slug) {
-                // Find post with case-insensitive slug comparison
-                const post = allPosts.find(p => p.Slug?.toLowerCase() === slug);
+            if (blogSlug) {
+                // We are on a specific blog post page
+                const post = blogPosts.find(p => p.Slug === blogSlug);
                 if (post) {
                     renderBlogPost(post);
+                    renderRelatedPosts(blogPosts, blogSlug);
                     updateMetaTags(post);
-                    renderRelatedPosts(allPosts, post.Slug);
-                    updateLikesSection(post.Slug, data.likes);
-                    renderCommentsSection(post.Slug, data.comments);
-                    setupShareButtons(post);
+                    updateLikeSection(blogSlug, data.likes);
+                    renderCommentsSection(blogSlug, data.comments);
+                    
+                    // Share button URLs
+                    const currentUrl = window.location.href;
+                    const shareText = post.Title + " - SwasthaIndia Blog. Read more here: " + currentUrl;
+                    document.getElementById('whatsapp-share').href = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+                    document.getElementById('facebook-share').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
+                    document.getElementById('twitter-share').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
                 } else {
-                    dynamicContent.innerHTML = `<p class="error-message">Blog post not found. Please check the URL or go back to all blogs.</p>
-                                                <p style="text-align:center;"><a href="/" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">&larr; Back to all blogs</a></p>`;
+                    dynamicContent.innerHTML = '<p class="error-message">Blog post not found.</p>';
                 }
             } else {
-                renderBlogList(allPosts);
+                // We are on the blog list page
+                renderBlogList(blogPosts);
             }
         }
         
-        // --- Event Listeners ---
-        document.addEventListener('DOMContentLoaded', loadPageContent);
-        window.addEventListener('popstate', loadPageContent);
+        // --- Hamburger Menu Logic ---
+        document.getElementById("hamburger").addEventListener("click", function() {
+            document.getElementById("navLinks").classList.add("active");
+        });
 
-        // Hamburger menu functionality
-        document.getElementById('hamburger').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.add('active');
+        document.getElementById("navClose").addEventListener("click", function() {
+            document.getElementById("navLinks").classList.remove("active");
         });
-        document.getElementById('navClose').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.remove('active');
-        });
-        
+
+
+        // Initial load
+        window.addEventListener('load', loadPageContent);
+        window.addEventListener('popstate', loadPageContent); // Handle back/forward navigation
     </script>
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Top 10 Benefits of Full Body Checkup",
-  "image": "https://swasthaindia.in/blog-images/full-body-checkup.jpg",
-  "author": {
-    "@type": "Person",
-    "name": "Jai yadav"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "SwasthaIndia",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://swasthaindia.in/logo.png"
-    }
-  },
-  "datePublished": "2025-08-02",
-  "dateModified": "2025-08-02",
-  "description": "Discover why a full body checkup is crucial for your health. Learn the top benefits and when to get tested."
-}
-</script>
-
 </body>
 </html>
