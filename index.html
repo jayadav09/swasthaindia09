@@ -83,34 +83,24 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px !important; /* Force a consistent height */
+    height: 60px 
+    background: var(--card-bg);
     padding: 0 20px;
 }
-.logo {
-    display: flex;
-    align-items: center;
-    height: 100%;
-}
+
 .logo img {
     width: 180px;
-    height: auto;
-    vertical-align: middle; /* Ensure vertical alignment */
-}
+   }
 .nav-links {
     display: flex;
-    gap: 24px;
-    align-items: center;
-    height: 100%;
-}
+   }
 .nav-links a {
     text-decoration: none;
     color: var(--primary-color);
     font-weight: 600;
     font-size: 16px;
     transition: color 0.3s, transform 0.3s;
-    display: flex;
-    align-items: center;
-    height: 100%;
+   margin-left: 24px;
 }
 .nav-links a:hover {
     color: var(--secondary-color);
@@ -133,6 +123,8 @@ header {
     z-index: 1001;
 }
 @media (max-width: 768px) {
+    .topbar { padding: 0 10px; }
+            .logo img { width: 140px; }
     .nav-links {
         flex-direction: column;
         justify-content: center;
@@ -153,7 +145,7 @@ header {
     }
     .nav-links a {
         color: white;
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin: 20px 0;
     }
     .nav-close {
@@ -163,7 +155,7 @@ header {
         display: block;
     }
     .logo img {
-        width: 140px;
+        width: 180px;
     }
 }
         /* --- Hero Section --- */
@@ -761,21 +753,25 @@ header {
 <body>
 
 <header>
-    <div class="topbar container">
-        <a href="/" class="logo">
-            <img src="/logo.png" alt="SwasthaIndia Logo" />
-        </a>
-        <nav class="nav-links" id="navLinks">
-            <button class="nav-close" id="navClose">×</button>
-            <a href="/">Home</a>
-            <a href="/my-packages/">Packages</a>
-            <a href="/book-test/">Book Test</a>
-            <a href="/contact/">Contact</a>
-            <a href="/about/">About</a>
-        </nav>
-        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-    </div>
-</header>
+   <header>
+        <div class="topbar">
+            <a href="/" class="logo">
+                <img src="/logo.png" alt="SwasthaIndia Logo" />
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links" id="navLinks">
+                <button class="nav-close" id="navClose">&times;</button>
+                <a href="/">Home</a>
+                <a href="/my-packages/">Packages</a>
+                <a href="/book-test/">Book Test</a>
+                <a href="/contact/">Contact</a>
+                <a href="/about/">About</a>
+                <a href="/blogs/">Blog</a>
+            </nav>
+        </div>
+    </header>
 
 <main>
     <section class="hero-section">
@@ -1205,6 +1201,7 @@ header {
 </script>
 </body>
 </html>
+
 
 
 
