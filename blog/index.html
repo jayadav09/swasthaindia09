@@ -4,42 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title id="page-title">SwasthaIndia Blog</title>
-    <!-- SEO + Open Graph Meta Tags -->
-<meta property="og:title" content="">
-<meta property="og:description" content="">
-<meta property="og:image" content="">
-<meta property="og:url" content="">
 
-<!-- Optional Twitter Meta Tags -->
-<meta name="twitter:title" content="">
-<meta name="twitter:description" content="">
-<meta name="twitter:image" content="">
-<meta name="twitter:card" content="summary_large_image">
+    <!-- Consolidated and Corrected SEO + Open Graph Meta Tags -->
+    <!-- These tags will be updated by the JavaScript function -->
+    <!-- FIX: Added 'id' to the description meta tag to prevent 'null' error -->
+    <meta name="description" id="meta-description" content="Stay informed with SwasthaIndia health blogs." />
+    <meta name="keywords" id="meta-keywords" content="health, wellness, blog, SwasthaIndia" />
+    <link rel="canonical" id="canonical-url" href="https://swasthaindia.in/blogs/" />
+    <meta name="robots" content="index, follow">
 
-    <!-- Primary SEO Meta Tags -->
-<title>Top 10 Benefits of Full Body Checkup - SwasthaIndia</title>
-<meta name="description" content="Discover why a full body checkup is crucial for your health. Learn the top benefits and when to get tested.">
-<meta name="keywords" content="full body checkup, health tests, preventive health, SwasthaIndia">
-<link rel="canonical" href="https://swasthaindia.in/blogs/full-body-checkup-benefits" />
-<meta name="robots" content="index, follow">
-<!-- Open Graph / Facebook / WhatsApp -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Top 10 Benefits of Full Body Checkup - SwasthaIndia" />
-<meta property="og:description" content="Discover why a full body checkup is crucial for your health. Learn the top benefits and when to get tested." />
-<meta property="og:url" content="https://swasthaindia.in/blogs/full-body-checkup-benefits" />
-<meta property="og:image" content="https://swasthaindia.in/blog-images/full-body-checkup.jpg" />
-<meta property="og:site_name" content="SwasthaIndia" />
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Top 10 Benefits of Full Body Checkup - SwasthaIndia">
-<meta name="twitter:description" content="Discover why a full body checkup is crucial for your health. Learn the top benefits and when to get tested.">
-<meta name="twitter:image" content="https://swasthaindia.in/blog-images/full-body-checkup.jpg">
-      
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="article" />
     <meta property="og:title" id="og-title" content="SwasthaIndia Blog" />
     <meta property="og:description" id="og-desc" content="Stay informed with SwasthaIndia health blogs." />
-    <meta property="og:image" id="og-image" content="https://placehold.co/1200x630/007c91/ffffff?text=SwasthaIndia" />
     <meta property="og:url" id="og-url" content="" />
-    <meta property="og:type" content="article" />
+    <meta property="og:image" id="og-image" content="https://placehold.co/1200x630/007c91/ffffff?text=SwasthaIndia" />
+    <meta property="og:site_name" content="SwasthaIndia" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="twitter-title" content="SwasthaIndia Blog">
+    <meta name="twitter:description" id="twitter-desc" content="Stay informed with SwasthaIndia health blogs.">
+    <meta name="twitter:image" id="twitter-image" content="https://placehold.co/1200x630/007c91/ffffff?text=SwasthaIndia">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -830,6 +816,18 @@
             document.getElementById("og-title").setAttribute("content", "SwasthaIndia Blog Home");
             document.getElementById("og-url").setAttribute("content", window.location.href.split('?')[0]);
             document.getElementById("og-image").setAttribute("content", "https://placehold.co/1200x630/007c91/ffffff?text=SwasthaIndia");
+
+            // FIX: Also update other meta tags for the homepage
+            const metaKeywords = document.getElementById("meta-keywords");
+            if (metaKeywords) metaKeywords.setAttribute("content", "health, wellness, articles, blogs");
+            const canonicalUrl = document.getElementById("canonical-url");
+            if (canonicalUrl) canonicalUrl.setAttribute("href", window.location.href.split('?')[0]);
+            const twitterTitle = document.getElementById("twitter-title");
+            if (twitterTitle) twitterTitle.setAttribute("content", "SwasthaIndia Blog Home");
+            const twitterDesc = document.getElementById("twitter-desc");
+            if (twitterDesc) twitterDesc.setAttribute("content", "Browse all health and wellness articles from SwasthaIndia.");
+            const twitterImage = document.getElementById("twitter-image");
+            if (twitterImage) twitterImage.setAttribute("content", "https://placehold.co/1200x630/007c91/ffffff?text=SwasthaIndia");
 
             // Sort posts by date, newest first
             posts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
