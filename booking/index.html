@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Health Checkup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #4CAF50;
+            --primary-dark-green: #388E3C;
+            --selection-red: #FFCDD2;
+            --background-color: #f7f9fc;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --secondary-text-color: #666666;
+            --border-color: #e0e0e0;
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --yes-red: #d32f2f;
+            --yes-bg-red: #ffebee;
+            --no-green: #2e7d32;
+            --no-bg-green: #e8f5e9;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            background-color: var(--card-background);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-light);
+            width: 100%;
+            max-width: 650px;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .form-container:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .progress-bar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: #e8f5e9;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-green);
+            transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        h1 {
+            color: var(--primary-dark-green);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        h2 {
+            color: var(--text-color);
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: var(--secondary-text-color);
+            text-align: center;
+            margin-top: -5px;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .step {
+            display: none;
+            padding: 10px 0;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .choice-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .choice-option {
+            background-color: var(--background-color);
+            border: 2px solid var(--border-color);
+            padding: 14px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: var(--secondary-text-color);
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            user-select: none;
+        }
+
+        .choice-option:hover {
+            background-color: #eef1f6;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Base selected style for all options */
+        .choice-option.selected {
+            border-color: var(--primary-green);
+            background-color: var(--no-bg-green);
+            font-weight: 600;
+            color: var(--no-green);
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Specific styles for Yes/No */
+        .choice-option.selected.selected-yes {
+            background-color: var(--yes-bg-red);
+            color: var(--yes-red);
+            border-color: var(--yes-red);
+        }
+        
+        .choice-option.selected.selected-no {
+            background-color: var(--no-bg-green);
+            color: var(--no-green);
+            border-color: var(--no-green);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #fff;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            outline: none;
+        }
+        
+        .slot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .slot {
+            background-color: var(--background-color);
+            border: 2px solid var(--border-color);
+            padding: 12px 15px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .slot:hover {
+            background-color: #eef1f6;
+            transform: translateY(-2px);
+        }
+        
+        .slot.selected {
+            background-color: var(--selection-red);
+            color: var(--text-color);
+            border-color: #ef9a9a;
+            font-weight: 600;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .next-btn, #submitBtn {
+            background-color: var(--primary-green);
+            color: #fff;
+        }
+
+        .back-btn {
+            background-color: #b0bec5;
+            color: #fff;
+        }
+        
+        .next-btn:hover, #submitBtn:hover {
+            background-color: var(--primary-dark-green);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .back-btn:hover {
+            background-color: #90a4ae;
+            box-shadow: 0 4-5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .summary-card, .booking-details-box, .instructions-card {
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.03);
+        }
+        
+        .summary-card h3, .instructions-card h3, .booking-details-box h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            color: var(--primary-dark-green);
+            border-bottom: 2px solid var(--primary-green);
+            padding-bottom: 8px;
+        }
+
+        .summary-item p, .booking-details-box p {
+            margin: 10px 0;
+            font-size: 1em;
+            color: var(--secondary-text-color);
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #e0e0e0;
+            padding-bottom: 5px;
+        }
+        
+        .summary-item p:last-child, .booking-details-box p:last-child {
+            border-bottom: none;
+        }
+
+        .summary-item p strong, .booking-details-box p strong {
+            color: var(--text-color);
+            flex: 1;
+        }
+        
+        .summary-item p span, .booking-details-box p span {
+            text-align: right;
+        }
+        
+        .info-note {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            margin-bottom: 20px;
+        }
+
+        .info-note p {
+            margin: 0;
+            font-weight: 500;
+            color: #1b5e20;
+        }
+        
+        .thank-you-title {
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .thank-you-message {
+            font-size: 1.2em;
+            text-align: center;
+            color: var(--secondary-text-color);
+            margin-bottom: 30px;
+        }
+
+        .instructions-card ul {
+            padding-left: 20px;
+            margin: 0;
+            color: var(--secondary-text-color);
+        }
+
+        .instructions-card li {
+            margin-bottom: 10px;
+        }
+
+        /* Custom Alert/Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal-content {
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-hover);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .modal-overlay.show {
+            opacity: 1;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h3 {
+            color: #d32f2f; /* A red color for errors */
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .modal-content p {
+            font-size: 1em;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .modal-content button {
+            background-color: #f44336; /* Red color for the close button */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        .modal-content button:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top: 2px solid #28a745;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 720px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+        </div>
+
+        <form id="bookingForm">
+            <h1>Book Your Health Checkup</h1>
+
+            <div class="step" id="step1">
+                <h2>Who will be getting the test?</h2>
+                <p class="subtitle">Please select a recipient for this booking.</p>
+                <div class="choice-row" id="testForChoice">
+                    <div class="choice-option selected" data-value="Self">Self</div>
+                    <div class="choice-option" data-value="Parent">Parent</div>
+                    <div class="choice-option" data-value="Other">Other</div>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+            </div>
+
+            <div class="step" id="step2">
+                <h2>Lifestyle & Health Questions</h2>
+                <p class="subtitle">Answer a few quick questions to help us understand your health profile.</p>
+                <div class="form-group">
+                    <label for="smoker">Do you smoke?</label>
+                    <div class="choice-row" id="smokerChoice">
+                        <div class="choice-option" data-value="Yes">Yes</div>
+                        <div class="choice-option" data-value="No">No</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sedentary">Is your lifestyle sedentary?</label>
+                    <div class="choice-row" id="sedentaryChoice">
+                        <div class="choice-option" data-value="Yes">Yes</div>
+                        <div class="choice-option" data-value="No">No</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="alcohol">Do you consume alcohol?</label>
+                    <div class="choice-row" id="alcoholChoice">
+                        <div class="choice-option" data-value="Yes">Yes</div>
+                        <div class="choice-option" data-value="No">No</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="diabetes">Do you have a family history of diabetes?</label>
+                    <div class="choice-row" id="diabetesChoice">
+                        <div class="choice-option" data-value="Yes">Yes</div>
+                        <div class="choice-option" data-value="No">No</div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="back-btn">Back</button>
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+            </div>
+
+            <div class="step" id="step3">
+                <h2>Tell us about yourself</h2>
+                <p class="subtitle">Please fill in your personal details.</p>
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="Enter age" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email (Optional)</label>
+                    <input type="email" id="email" name="email" placeholder="Enter email address">
+                </div>
+                <div class="form-group">
+                    <label for="address">Full Address</label>
+                    <input type="text" id="address" name="address" placeholder="Enter full address" required>
+                </div>
+                <div class="form-group">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" id="pincode" name="pincode" placeholder="e.g., 110001" required>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="back-btn">Back</button>
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+            </div>
+
+            <div class="step" id="step4">
+                <h2>Select a Date & Time</h2>
+                <p class="subtitle">Choose a convenient time for your home sample collection.</p>
+                <div class="form-group">
+                    <label for="bookingDate">Select a Date</label>
+                    <input type="date" id="bookingDate" name="bookingDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Select a Time Slot (5:00 AM to 11:00 AM)</label>
+                    <div class="slot-grid"></div>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="back-btn">Back</button>
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+            </div>
+
+            <div class="step" id="step5">
+                <h2>Confirm Your Details</h2>
+                <p class="subtitle">Please review your booking details before proceeding.</p>
+                <div class="summary-card">
+                    <h3>Your Booking Summary</h3>
+                    <p><strong>Test/Package:</strong> <span id="summary-test-name">Complete Health Checkup</span></p>
+                    <p><strong>Price:</strong> <span id="summary-price">₹1299</span></p>
+                    <p><strong>Booking For:</strong> <span id="summary-testFor"></span></p>
+                </div>
+                <div class="summary-card">
+                    <h3>Personal Information</h3>
+                    <p><strong>Name:</strong> <span id="summary-name"></span></p>
+                    <p><strong>Age:</strong> <span id="summary-age"></span></p>
+                    <p><strong>Gender:</strong> <span id="summary-gender"></span></p>
+                    <p><strong>Phone:</strong> <span id="summary-phone"></span></p>
+                    <p><strong>Address:</strong> <span id="summary-address"></span></p>
+                </div>
+                <div class="summary-card" id="lifestyle-summary-card">
+                    <h3>Lifestyle Profile</h3>
+                    <p><strong>Smoker:</strong> <span id="summary-smoker"></span></p>
+                    <p><strong>Sedentary:</strong> <span id="summary-sedentary"></span></p>
+                    <p><strong>Alcohol:</strong> <span id="summary-alcohol"></span></p>
+                    <p><strong>Diabetes History:</strong> <span id="summary-diabetes"></span></p>
+                </div>
+                <div class="summary-card">
+                    <h3>Appointment Details</h3>
+                    <p><strong>Date:</strong> <span id="summary-date"></span></p>
+                    <p><strong>Time Slot:</strong> <span id="summary-slot"></span></p>
+                </div>
+                <div class="info-note">
+                    <p>Our agent will collect the sample and payment at the time of your appointment. Please double-check all details before confirming.</p>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="back-btn">Back</button>
+                    <button type="submit" id="submitBtn">Confirm & Book</button>
+                </div>
+            </div>
+
+            <div class="step" id="step6">
+                <h2 class="thank-you-title">Booking Confirmed!</h2>
+                <p class="thank-you-message">You have successfully booked your test. We look forward to serving you.</p>
+                <div class="booking-details-box">
+                    <h3>Your Booking Details</h3>
+                    <p><strong>Booking ID:</strong> <span id="thankYouBookingId">#...</span></p>
+                    <p><strong>Date & Time:</strong> <span id="thankYouDate"></span> at <span id="thankYouTime"></span></p>
+                    <p>A confirmation SMS and email with all details will be sent to you shortly.</p>
+                </div>
+                <div class="instructions-card">
+                    <h3>Important Instructions for Your Test</h3>
+                    <ul>
+                        <li><strong>Fasting:</strong> For some tests, an 8-10 hour fasting period is required. Please follow any specific instructions provided to you.</li>
+                        <li><strong>Hydration:</strong> Drink plenty of water unless advised otherwise.</li>
+                        <li><strong>Cancellation:</strong> You can cancel or reschedule your booking by calling our helpline.</li>
+                        <li><strong>Report:</strong> Your reports will be available online within 24-48 hours.</li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-message"></p>
+            <button id="modal-close-btn" class="next-btn">OK</button>
+        </div>
+    </div>
+<div id="bookingModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeBookingForm()">&times;</span>
+    <iframe id="bookingFormFrame" src="" frameborder="0" width="100%" height="650px"></iframe>
+  </div>
+</div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('bookingForm');
+            const steps = document.querySelectorAll('.step');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const backButtons = document.querySelectorAll('.back-btn');
+            const slotGrid = document.querySelector('.slot-grid');
+            const progressBar = document.querySelector('.progress-bar');
+            const bookingDateInput = document.getElementById('bookingDate');
+            
+            // Custom modal elements
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            // Function to show the custom modal
+            const showModal = (title, message) => {
+                modalTitle.textContent = title;
+                modalMessage.textContent = message;
+                modalOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    modalOverlay.classList.add('show');
+                }, 10);
+            };
+
+            // Function to hide the custom modal
+            const hideModal = () => {
+                modalOverlay.classList.remove('show');
+                setTimeout(() => {
+                    modalOverlay.style.display = 'none';
+                }, 300);
+            };
+
+            modalCloseBtn.addEventListener('click', hideModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target.id === 'modal-overlay') {
+                    hideModal();
+                }
+            });
+
+            // Replace this URL with your Google Apps Script Web App URL
+            const FORM_URL = 'https://script.google.com/macros/s/AKfycbymEH1yM3vJtA_WAD210f4B86n4FydUjVaIYHl3KFbIg2yqfHDe5RA-CAqjEt27szrJFQ/exec';
+                              
+
+            let currentStep = 1;
+            const totalDataSteps = 4;
+
+            const updateProgressBar = (step) => {
+                let progress;
+                if (step <= totalDataSteps) {
+                    progress = (step - 1) / totalDataSteps;
+                } else {
+                    progress = 1;
+                }
+                progressBar.style.width = `${progress * 100}%`;
+            };
+
+            const showStep = (stepNumber) => {
+                steps.forEach(step => step.style.display = 'none');
+                const nextStepElement = document.getElementById(`step${stepNumber}`);
+                if (nextStepElement) {
+                    nextStepElement.style.display = 'block';
+                }
+                updateProgressBar(stepNumber);
+                currentStep = stepNumber;
+            };
+
+            const addSelectionListener = (containerId) => {
+                const container = document.getElementById(containerId);
+                container.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('choice-option')) {
+                        const selectedOption = container.querySelector('.choice-option.selected');
+                        if (selectedOption) {
+                            selectedOption.classList.remove('selected');
+                            selectedOption.classList.remove('selected-yes');
+                            selectedOption.classList.remove('selected-no');
+                        }
+                        e.target.classList.add('selected');
+                        if (e.target.dataset.value === 'Yes') {
+                            e.target.classList.add('selected-yes');
+                        } else if (e.target.dataset.value === 'No') {
+                            e.target.classList.add('selected-no');
+                        }
+                    }
+                });
+            };
+
+            // Modified next button logic to handle conditional steps
+            nextButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (!validateStep(currentStep)) return;
+                    
+                    let nextStep;
+                    if (currentStep === 1) {
+                        const selectedFor = document.querySelector('#testForChoice .choice-option.selected').dataset.value;
+                        if (selectedFor === 'Self') {
+                            nextStep = 2; // Go to lifestyle questions
+                        } else {
+                            nextStep = 3; // Skip to personal details
+                        }
+                    } else if (currentStep === 2) {
+                        nextStep = 3;
+                    } else if (currentStep === 3) {
+                        nextStep = 4;
+                    } else if (currentStep === 4) {
+                        updateSummary();
+                        nextStep = 5;
+                    }
+
+                    showStep(nextStep);
+                });
+            });
+
+            backButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    let previousStep;
+                    if (currentStep === 3) {
+                        const selectedFor = document.querySelector('#testForChoice .choice-option.selected').dataset.value;
+                        if (selectedFor === 'Self') {
+                            previousStep = 2; // Go back to lifestyle questions
+                        } else {
+                            previousStep = 1; // Go back to 'test for' question
+                        }
+                    } else {
+                        previousStep = currentStep - 1;
+                    }
+                    showStep(previousStep);
+                });
+            });
+
+            const validateStep = (step) => {
+                if (step === 1) {
+                    if (!document.querySelector('#testForChoice .choice-option.selected')) {
+                        showModal('Validation Error', 'Please select a recipient for the test.');
+                        return false;
+                    }
+                } else if (step === 2) {
+                    const lifestyleChoices = ['smokerChoice', 'sedentaryChoice', 'alcoholChoice', 'diabetesChoice'];
+                    for (const choice of lifestyleChoices) {
+                        if (!document.querySelector(`#${choice} .choice-option.selected`)) {
+                            showModal('Validation Error', 'Please answer all the lifestyle questions.');
+                            return false;
+                        }
+                    }
+                } else if (step === 3) {
+                    const requiredFields = ['fullName', 'age', 'gender', 'phone', 'address', 'pincode'];
+                    for (const field of requiredFields) {
+                        if (!document.getElementById(field).value) {
+                            showModal('Validation Error', 'Please fill out all required personal details.');
+                            return false;
+                        }
+                    }
+                } else if (step === 4) {
+                    const bookingDate = document.getElementById('bookingDate').value;
+                    const selectedSlot = document.querySelector('.slot.selected');
+                    if (!bookingDate || !selectedSlot) {
+                        showModal('Validation Error', 'Please select both a date and a time slot.');
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            const generateSlots = () => {
+                slotGrid.innerHTML = '';
+                const startTime = 5 * 60;
+                const endTime = 11 * 60;
+                const interval = 30;
+
+                for (let time = startTime; time <= endTime; time += interval) {
+                    const hours = Math.floor(time / 60);
+                    const minutes = time % 60;
+                    const period = hours >= 12 ? 'PM' : 'AM';
+                    const displayHours = hours % 12 === 0 ? 12 : hours % 12;
+                    const timeString = `${displayHours}:${minutes < 10 ? '0' : ''}${minutes} ${period}`;
+                    
+                    const slotDiv = document.createElement('div');
+                    slotDiv.classList.add('slot');
+                    slotDiv.textContent = timeString;
+                    slotDiv.dataset.time = timeString;
+                    slotGrid.appendChild(slotDiv);
+                }
+            };
+
+            slotGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains('slot')) {
+                    const selectedSlot = document.querySelector('.slot.selected');
+                    if (selectedSlot) {
+                        selectedSlot.classList.remove('selected');
+                    }
+                    e.target.classList.add('selected');
+                }
+            });
+
+            const updateSummary = () => {
+                const testForValue = document.querySelector('#testForChoice .choice-option.selected')?.dataset.value || 'N/A';
+                document.getElementById('summary-testFor').textContent = testForValue;
+                
+                // Show/hide lifestyle section based on 'Test For' value
+                const lifestyleSummaryCard = document.getElementById('lifestyle-summary-card');
+                if (testForValue === 'Self') {
+                    lifestyleSummaryCard.style.display = 'block';
+                    document.getElementById('summary-smoker').textContent = document.querySelector('#smokerChoice .choice-option.selected')?.dataset.value || 'N/A';
+                    document.getElementById('summary-sedentary').textContent = document.querySelector('#sedentaryChoice .choice-option.selected')?.dataset.value || 'N/A';
+                    document.getElementById('summary-alcohol').textContent = document.querySelector('#alcoholChoice .choice-option.selected')?.dataset.value || 'N/A';
+                    document.getElementById('summary-diabetes').textContent = document.querySelector('#diabetesChoice .choice-option.selected')?.dataset.value || 'N/A';
+                } else {
+                    lifestyleSummaryCard.style.display = 'none';
+                }
+                
+                document.getElementById('summary-name').textContent = document.getElementById('fullName').value || 'N/A';
+                document.getElementById('summary-age').textContent = document.getElementById('age').value || 'N/A';
+                document.getElementById('summary-gender').textContent = document.getElementById('gender').value || 'N/A';
+                document.getElementById('summary-phone').textContent = document.getElementById('phone').value || 'N/A';
+                document.getElementById('summary-address').textContent = `${document.getElementById('address').value}, ${document.getElementById('pincode').value}` || 'N/A';
+                
+                document.getElementById('summary-date').textContent = bookingDateInput.value ? new Date(bookingDateInput.value).toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }) : 'N/A';
+
+                const selectedSlot = document.querySelector('.slot.selected');
+                document.getElementById('summary-slot').textContent = selectedSlot ? selectedSlot.dataset.time : 'N/A';
+            };
+function setupChoiceGroup(groupId) {
+    const group = document.getElementById(groupId);
+    if (!group) return;
+
+    group.querySelectorAll('.choice-option').forEach(option => {
+        option.addEventListener('click', () => {
+            // Remove existing selection
+            group.querySelectorAll('.choice-option').forEach(opt => opt.classList.remove('selected'));
+            // Add selected class
+            option.classList.add('selected');
+        });
+    });
+}
+
+// Apply this to all your groups
+setupChoiceGroup('testForChoice');
+setupChoiceGroup('smokerChoice');
+setupChoiceGroup('sedentaryChoice');
+setupChoiceGroup('alcoholChoice');
+setupChoiceGroup('diabetesChoice');
+
+
+           form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitBtn = document.getElementById('submitBtn');
+    const originalBtnText = submitBtn.textContent;
+
+    // Set loading state
+    submitBtn.innerHTML = `<span class="spinner"></span> Booking...`;
+    submitBtn.disabled = true;
+
+    const data = new URLSearchParams();
+    const bookingId = 'BK' + Date.now();
+    data.append('Booking ID', bookingId);
+    data.append('Timestamp', new Date().toISOString());
+
+    const testForValue = document.querySelector('#testForChoice .choice-option.selected')?.dataset.value || '';
+    data.append('Test For', testForValue);
+
+    if (testForValue === 'Self') {
+        data.append('Smoker', document.querySelector('#smokerChoice .choice-option.selected')?.dataset.value || '');
+        data.append('Sedentary', document.querySelector('#sedentaryChoice .choice-option.selected')?.dataset.value || '');
+        data.append('Alcohol', document.querySelector('#alcoholChoice .choice-option.selected')?.dataset.value || '');
+        data.append('Diabetes', document.querySelector('#diabetesChoice .choice-option.selected')?.dataset.value || '');
+    } else {
+        data.append('Smoker', 'N/A');
+        data.append('Sedentary', 'N/A');
+        data.append('Alcohol', 'N/A');
+        data.append('Diabetes', 'N/A');
+    }
+
+    data.append('Full Name', document.getElementById('fullName').value);
+    data.append('Age', document.getElementById('age').value);
+    data.append('Gender', document.getElementById('gender').value);
+    data.append('Phone', document.getElementById('phone').value);
+    data.append('Email', document.getElementById('email').value);
+    data.append('Address', document.getElementById('address').value);
+    data.append('Pincode', document.getElementById('pincode').value);
+    data.append('Booking Date', bookingDateInput.value);
+
+    const selectedSlot = document.querySelector('.slot.selected')?.dataset.time;
+    data.append('Selected Slot', selectedSlot || '');
+
+    try {
+        await fetch(FORM_URL, {
+            method: 'POST',
+            body: data,
+        });
+
+        // Show thank you screen
+        document.getElementById('thankYouDate').textContent = data.get('Booking Date');
+        document.getElementById('thankYouTime').textContent = data.get('Selected Slot');
+        showStep(6);
+        document.getElementById('thankYouBookingId').textContent = '#' + bookingId;
+
+
+    } catch (error) {
+        alert('Something went wrong. Please try again.');
+        console.error(error);
+    } finally {
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+    }
+});
+            addSelectionListener('testForChoice');
+            addSelectionListener('smokerChoice');
+            addSelectionListener('sedentaryChoice');
+            addSelectionListener('alcoholChoice');
+            addSelectionListener('diabetesChoice');
+
+            generateSlots();
+            showStep(1);
+
+            const today = new Date().toISOString().split('T')[0];
+            bookingDateInput.setAttribute('min', today);
+        });
+    </script>
+<script>
+function openBookingForm(testName) {
+  const modal = document.getElementById('bookingModal');
+  const iframe = document.getElementById('bookingFormFrame');
+
+  // Pass test/package name to form via query param if needed
+  iframe.src = `/book-test.html?testName=${encodeURIComponent(testName)}`;
+
+  modal.classList.remove('hidden');
+}
+
+function closeBookingForm() {
+  document.getElementById('bookingModal').classList.add('hidden');
+  document.getElementById('bookingFormFrame').src = ''; // Reset iframe
+}
+</script>
+
+</body>
+</html>
