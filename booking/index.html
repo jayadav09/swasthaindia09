@@ -468,6 +468,8 @@
                     <button type="button" class="next-btn">Next</button>
                 </div>
             </div>
+            <input type="hidden" id="test-name-field" name="Test Name">
+            <input type="hidden" id="offer-price-field" name="Offer Price">
 
             <div class="step" id="step2">
                 <h2>Lifestyle & Health Questions</h2>
@@ -566,42 +568,53 @@
             </div>
 
             <div class="step" id="step5">
-                <h2>Confirm Your Details</h2>
-                <p class="subtitle">Please review your booking details before proceeding.</p>
-                <div class="summary-card">
-                    <h3>Your Booking Summary</h3>
-                    <p><strong>Test/Package:</strong> <span id="summary-test-name">Complete Health Checkup</span></p>
-                    <p><strong>Price:</strong> <span id="summary-price">₹1299</span></p>
-                    <p><strong>Booking For:</strong> <span id="summary-testFor"></span></p>
-                </div>
-                <div class="summary-card">
-                    <h3>Personal Information</h3>
-                    <p><strong>Name:</strong> <span id="summary-name"></span></p>
-                    <p><strong>Age:</strong> <span id="summary-age"></span></p>
-                    <p><strong>Gender:</strong> <span id="summary-gender"></span></p>
-                    <p><strong>Phone:</strong> <span id="summary-phone"></span></p>
-                    <p><strong>Address:</strong> <span id="summary-address"></span></p>
-                </div>
-                <div class="summary-card" id="lifestyle-summary-card">
-                    <h3>Lifestyle Profile</h3>
-                    <p><strong>Smoker:</strong> <span id="summary-smoker"></span></p>
-                    <p><strong>Sedentary:</strong> <span id="summary-sedentary"></span></p>
-                    <p><strong>Alcohol:</strong> <span id="summary-alcohol"></span></p>
-                    <p><strong>Diabetes History:</strong> <span id="summary-diabetes"></span></p>
-                </div>
-                <div class="summary-card">
-                    <h3>Appointment Details</h3>
-                    <p><strong>Date:</strong> <span id="summary-date"></span></p>
-                    <p><strong>Time Slot:</strong> <span id="summary-slot"></span></p>
-                </div>
-                <div class="info-note">
-                    <p>Our agent will collect the sample and payment at the time of your appointment. Please double-check all details before confirming.</p>
-                </div>
-                <div class="button-group">
-                    <button type="button" class="back-btn">Back</button>
-                    <button type="submit" id="submitBtn">Confirm & Book</button>
-                </div>
-            </div>
+    <h2>Confirm Your Details</h2>
+    <p class="subtitle">Please review your booking details before proceeding.</p>
+
+    <!-- ✅ Booking Summary Card -->
+    <div class="summary-card">
+        <h3>Your Booking Summary</h3>
+        <p><strong>Selected Test:</strong> <span id="confirmTestName">Loading...</span></p>
+        <p><strong>Offer Price:</strong> <span id="confirmTestPrice">₹0</span></p>
+        <p><strong>Test For:</strong> <span id="summary-testFor">N/A</span></p> <!-- ✅ ADD THIS LINE -->
+    </div>
+
+    <!-- Personal Info -->
+    <div class="summary-card">
+        <h3>Personal Information</h3>
+        <p><strong>Name:</strong> <span id="summary-name"></span></p>
+        <p><strong>Age:</strong> <span id="summary-age"></span></p>
+        <p><strong>Gender:</strong> <span id="summary-gender"></span></p>
+        <p><strong>Phone:</strong> <span id="summary-phone"></span></p>
+        <p><strong>Address:</strong> <span id="summary-address"></span></p>
+    </div>
+
+    <!-- Lifestyle -->
+    <div class="summary-card" id="lifestyle-summary-card">
+        <h3>Lifestyle Profile</h3>
+        <p><strong>Smoker:</strong> <span id="summary-smoker"></span></p>
+        <p><strong>Sedentary:</strong> <span id="summary-sedentary"></span></p>
+        <p><strong>Alcohol:</strong> <span id="summary-alcohol"></span></p>
+        <p><strong>Diabetes History:</strong> <span id="summary-diabetes"></span></p>
+    </div>
+
+    <!-- Appointment -->
+    <div class="summary-card">
+        <h3>Appointment Details</h3>
+        <p><strong>Date:</strong> <span id="summary-date"></span></p>
+        <p><strong>Time Slot:</strong> <span id="summary-slot"></span></p>
+    </div>
+
+    <div class="info-note">
+        <p>Our agent will collect the sample and payment at the time of your appointment. Please double-check all details before confirming.</p>
+    </div>
+
+    <div class="button-group">
+        <button type="button" class="back-btn">Back</button>
+        <button type="submit" id="submitBtn">Confirm & Book</button>
+    </div>
+</div>
+
 
             <div class="step" id="step6">
                 <h2 class="thank-you-title">Booking Confirmed!</h2>
@@ -835,37 +848,52 @@
                 }
             });
 
-            const updateSummary = () => {
-                const testForValue = document.querySelector('#testForChoice .choice-option.selected')?.dataset.value || 'N/A';
-                document.getElementById('summary-testFor').textContent = testForValue;
-                
-                // Show/hide lifestyle section based on 'Test For' value
-                const lifestyleSummaryCard = document.getElementById('lifestyle-summary-card');
-                if (testForValue === 'Self') {
-                    lifestyleSummaryCard.style.display = 'block';
-                    document.getElementById('summary-smoker').textContent = document.querySelector('#smokerChoice .choice-option.selected')?.dataset.value || 'N/A';
-                    document.getElementById('summary-sedentary').textContent = document.querySelector('#sedentaryChoice .choice-option.selected')?.dataset.value || 'N/A';
-                    document.getElementById('summary-alcohol').textContent = document.querySelector('#alcoholChoice .choice-option.selected')?.dataset.value || 'N/A';
-                    document.getElementById('summary-diabetes').textContent = document.querySelector('#diabetesChoice .choice-option.selected')?.dataset.value || 'N/A';
-                } else {
-                    lifestyleSummaryCard.style.display = 'none';
-                }
-                
-                document.getElementById('summary-name').textContent = document.getElementById('fullName').value || 'N/A';
-                document.getElementById('summary-age').textContent = document.getElementById('age').value || 'N/A';
-                document.getElementById('summary-gender').textContent = document.getElementById('gender').value || 'N/A';
-                document.getElementById('summary-phone').textContent = document.getElementById('phone').value || 'N/A';
-                document.getElementById('summary-address').textContent = `${document.getElementById('address').value}, ${document.getElementById('pincode').value}` || 'N/A';
-                
-                document.getElementById('summary-date').textContent = bookingDateInput.value ? new Date(bookingDateInput.value).toLocaleDateString('en-IN', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                }) : 'N/A';
+           const updateSummary = () => {
+    const testForValue = document.querySelector('#testForChoice .choice-option.selected')?.dataset.value || 'N/A';
+    document.getElementById('summary-testFor').textContent = testForValue;
 
-                const selectedSlot = document.querySelector('.slot.selected');
-                document.getElementById('summary-slot').textContent = selectedSlot ? selectedSlot.dataset.time : 'N/A';
-            };
+    const lifestyleSummaryCard = document.getElementById('lifestyle-summary-card');
+    if (testForValue === 'Self') {
+        lifestyleSummaryCard.style.display = 'block';
+        document.getElementById('summary-smoker').textContent = document.querySelector('#smokerChoice .choice-option.selected')?.dataset.value || 'N/A';
+        document.getElementById('summary-sedentary').textContent = document.querySelector('#sedentaryChoice .choice-option.selected')?.dataset.value || 'N/A';
+        document.getElementById('summary-alcohol').textContent = document.querySelector('#alcoholChoice .choice-option.selected')?.dataset.value || 'N/A';
+        document.getElementById('summary-diabetes').textContent = document.querySelector('#diabetesChoice .choice-option.selected')?.dataset.value || 'N/A';
+    } else {
+        lifestyleSummaryCard.style.display = 'none';
+    }
+
+    document.getElementById('summary-name').textContent = document.getElementById('fullName').value || 'N/A';
+    document.getElementById('summary-age').textContent = document.getElementById('age').value || 'N/A';
+    document.getElementById('summary-gender').textContent = document.getElementById('gender').value || 'N/A';
+    document.getElementById('summary-phone').textContent = document.getElementById('phone').value || 'N/A';
+    document.getElementById('summary-address').textContent = `${document.getElementById('address').value}, ${document.getElementById('pincode').value}` || 'N/A';
+
+    document.getElementById('summary-date').textContent = bookingDateInput.value
+        ? new Date(bookingDateInput.value).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+        : 'N/A';
+
+    const selectedSlot = document.querySelector('.slot.selected');
+    document.getElementById('summary-slot').textContent = selectedSlot ? selectedSlot.dataset.time : 'N/A';
+
+    // ✅ Safe check for test name and price
+    function syncTestInfo() {
+  const confirmTestNameEl = document.getElementById('confirmTestName');
+const confirmTestPriceEl = document.getElementById('confirmTestPrice');
+const testNameField = document.getElementById('test-name-field');
+const offerPriceField = document.getElementById('offer-price-field');
+
+if (confirmTestNameEl && testNameField) {
+  confirmTestNameEl.textContent = testNameField.value || 'N/A';
+}
+
+if (confirmTestPriceEl && offerPriceField) {
+  confirmTestPriceEl.textContent = '₹' + (offerPriceField.value || '0');
+}
+}
+
+};
+
 function setupChoiceGroup(groupId) {
     const group = document.getElementById(groupId);
     if (!group) return;
@@ -929,6 +957,8 @@ setupChoiceGroup('diabetesChoice');
 
     const selectedSlot = document.querySelector('.slot.selected')?.dataset.time;
     data.append('Selected Slot', selectedSlot || '');
+    data.append('Test Name', document.getElementById('test-name-field').value);
+    data.append('Offer Price', document.getElementById('offer-price-field').value);
 
     try {
         await fetch(FORM_URL, {
@@ -965,21 +995,33 @@ setupChoiceGroup('diabetesChoice');
         });
     </script>
 <script>
-function openBookingForm(testName) {
-  const modal = document.getElementById('bookingModal');
-  const iframe = document.getElementById('bookingFormFrame');
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const testName = urlParams.get("test");
+    const offerPrice = urlParams.get("price");
 
-  // Pass test/package name to form via query param if needed
-  iframe.src = `/book-test.html?testName=${encodeURIComponent(testName)}`;
+    if (testName) {
+      const decodedName = decodeURIComponent(testName);
+      const testNameInput = document.getElementById("test-name-field");
+      const confirmTestName = document.getElementById("confirmTestName");
 
-  modal.classList.remove('hidden');
-}
+      if (testNameInput) testNameInput.value = decodedName;
+      if (confirmTestName) confirmTestName.textContent = decodedName;
+    }
 
-function closeBookingForm() {
-  document.getElementById('bookingModal').classList.add('hidden');
-  document.getElementById('bookingFormFrame').src = ''; // Reset iframe
-}
+    if (offerPrice) {
+      const decodedPrice = decodeURIComponent(offerPrice);
+      const offerPriceInput = document.getElementById("offer-price-field");
+      const confirmTestPrice = document.getElementById("confirmTestPrice");
+
+      if (offerPriceInput) offerPriceInput.value = decodedPrice;
+      if (confirmTestPrice) confirmTestPrice.textContent = `₹${decodedPrice}`;
+    }
+  });
 </script>
+
+
+
 
 </body>
 </html>
