@@ -809,7 +809,8 @@
                     <div class="card-body">
                         <p style="font-size: 14px; color: #555;">${test.Description || 'No description available.'}</p>
                         <button class="know-more-toggle" data-test-name="${test['Test Name']}" data-booking-link="${test['Booking Link']}">Know More</button>
-                        <a href="${test['Booking Link']}" class="book-now" target="_blank">Book Now</a>
+                        <a href="booking.html?test=${encodeURIComponent(test['Test Name'])}&price=${encodeURIComponent(test['Offer Price'])}" class="book-now" target="_blank">Book Now</a>
+
                     </div>
                 `;
                 container.appendChild(card);
@@ -826,7 +827,7 @@
             const modal = document.getElementById("testDetailModal");
 
             modalTitle.innerText = testName;
-            modalBookLink.href = bookingLink;
+            modalBookLink.href = `booking.html?test=${encodeURIComponent(testName)}`;
             
             if (detailsData) {
                 const parametersList = detailsData.Parameters
