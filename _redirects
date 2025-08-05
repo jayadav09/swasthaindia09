@@ -1,5 +1,6 @@
 /blog         /blog.html                                           200
 /blog/*       /blog.html                                           200
+/blog/*       /index.html                                          200
 /blog-api  https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec  200
 /blog-api/*  https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec/:splat  200
 /blog-api  https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec  200!
