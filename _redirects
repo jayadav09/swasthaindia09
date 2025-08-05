@@ -1,5 +1,5 @@
 # Serve blog.html for any /blog route (SPA blog rendering)
-#/blog         /blog.html                                           200    ← redundant
+#/blog        /blog.html                                           200    ← redundant
 /blog/*       /blog.html                                           200
 
 # Serve index.html for any other SPA route
