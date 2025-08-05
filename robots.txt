@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://swasthaindia.in/sitemap.xml
+Site: https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec
 
 
 
