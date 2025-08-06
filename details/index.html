@@ -576,7 +576,7 @@
                 <div class="info-grid">${infoHtml}</div>
                 ${testDetailsHtml}
                 <div class="book-btn-container">
-                    <a class="book-btn" href="${bookingLink}" target="_blank">Book Now</a>
+                    <a href="booking.html?test=${encodeURIComponent(pkg.Package)}&price=${pkg.Offer_Price}" class="book-now-btn">Book Now</a>
                 </div>
             </div>
         `;
