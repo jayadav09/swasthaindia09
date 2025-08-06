@@ -806,7 +806,7 @@ header {
                 <a href="/my-packages/" class="btn-red">VIEW POPULAR PACKAGES</a>
             </div>
             <div class="diabetes-image" data-aos="fade-left">
-                <a href="https://wa.me/919911990556?text=I%20want%20to%20book%20the%20Diabetes%20Profile" target="_blank">
+                <a href="/booking/?test=Diabetes%20Profile&price=995" target="_blank">
                     <img src="diabetes-package.png" alt="SwasthaIndia - Diabetes Profile">
                 </a>
             </div>
@@ -1089,10 +1089,7 @@ header {
                         ${mrp > offer && mrp > 0 ? `<span class="mrp">₹${mrp}</span>` : ''}
                         <span class="offer-price">₹${offer}</span>
                     </div>
-                    <a href="https://wa.me/919911990556?text=Hi%20SwasthaIndia%2C%20I%20want%20to%20book%20the%20${encodeURIComponent(name)}%20package."
-                        target="_blank" class="book-now-btn">
-                        Book Now
-                    </a>
+                    <a href="booking.html?test=${encodeURIComponent(name)}&price=${offer}" class="book-btn">Book Now</a>
                 </div>
             `;
             container.appendChild(card);
@@ -1201,6 +1198,7 @@ header {
 </script>
 </body>
 </html>
+
 
 
 
