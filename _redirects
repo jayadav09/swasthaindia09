@@ -1,4 +1,7 @@
 /index.html   /index.html                                          200
+
+/blogs/*   /blogs/index.html     200
+
 # ✅ Blog API routing to Google Apps Script (with and without trailing slash)
 /blog-api      https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec       200
 /blog-api/     https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec       200
