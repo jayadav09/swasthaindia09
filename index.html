@@ -93,7 +93,13 @@
             margin: auto;
             padding: 0 20px;
         }
-        
+
+        @media (max-width: 768px) {
+    .container {
+        padding: 0 12px;
+       }
+         }
+
         /* --- Header --- */
         header {
             background: white;
@@ -115,7 +121,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px 
+    height: 60px;
     background: var(--card-bg);
     padding: 0 20px;
 }
@@ -382,6 +388,18 @@ header {
             .features { grid-template-columns: 1fr; gap: 12px; text-align: left; padding: 0 10px; }
             .btn-red { width: 90%; font-size: 16px; }
         }
+
+@media (max-width: 768px) {
+    #why-choose-us .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #why-choose-us .card {
+        padding: 20px;
+        text-align: center;
+    }
+}
 
         /* --- General Sections --- */
         .section-header {
@@ -780,6 +798,31 @@ header {
             height: 34px;
             fill: white;
         }
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+@media (max-width: 768px) {
+    .cards-grid {
+        gap: 18px;
+    }
+    .category-card {
+        padding: 24px 16px;
+    }
+    .category-card i {
+        font-size: 3rem;
+    }
+}
+@media (max-width: 768px) {
+    .hero-btn:last-child {
+        margin-bottom: 70px; /* ensures not blocked by float button */
+    }
+}
+
+
     </style>
 </head>
 <body>
@@ -1230,14 +1273,3 @@ header {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
