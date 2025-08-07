@@ -1,14 +1,17 @@
+# Main site homepage
 /index.html   /index.html                                          200
 
-/blogs/*   /blogs/index.html     200
+# ✅ Serve blogs homepage for all /blogs/* routes (like /blogs/, /blogs/index.html, etc.)
+/blogs/*      /blogs/index.html                                    200
 
-# ✅ Blog API routing to Google Apps Script (with and without trailing slash)
-/blog-api      https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec       200
-/blog-api/     https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec       200
-/blog-api/*    https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec/:splat 200
+# ✅ Serve individual blog post detail pages (e.g. /blog/my-article-slug)
+# This ensures SPA routing works for blog details
+/blog/*       /blog.html                                           200
 
-# ✅ Serve blog.html for all /blog/* routes (Single Page App behavior)
-/blog/*        /blog.html                                                                 200
+# ✅ Blog API routing to Google Apps Script (both with and without trailing slash)
+/blog-api     https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec  200
+/blog-api/    https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec  200
+/blog-api/*   https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec/:splat 200
 
-# ✅ Serve index.html for everything else (for other SPA routes)
-/*             /index.html                                                                200
+# ✅ Serve index.html for everything else (e.g. other SPA routes like /about, /contact)
+/*            /index.html                                          200
