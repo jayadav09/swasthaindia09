@@ -29,8 +29,10 @@
         gtag('config', 'G-WJ1DMWRWC3');
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
     <style>
         :root {
@@ -624,24 +626,58 @@
         
         /* Loading spinner */
         .loading-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; transition: opacity 0.5s ease;
-        }
-        .spinner {
-            border: 6px solid #f3f3f3; border-top: 6px solid var(--primary-color);
-            border-radius: 50%; width: 50px; height: 50px;
-            animation: spin 1s linear infinite; margin-bottom: 15px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+    padding: 20px;
+    text-align: center;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    max-width: 90%;
+}
+
+.spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid var(--primary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.4;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 
         /* --- Media Queries for Mobile --- */
         @media (max-width: 768px) {
             .packages-hero h1 { font-size: 2rem; }
             .packages-hero p { font-size: 1rem; }
             .logo img { width: 140px; }
-            .package-price-section { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .package-price-section {
+             flex-direction: column;
+             align-items: flex-start;
+              gap: 15px;
+              }
             .package-actions { margin-left: 0; width: 100%; }
             .book-now-btn, .know-more-btn { width: 100%; }
             .packages-toolbar { flex-direction: column; align-items: stretch; }
@@ -705,29 +741,40 @@
                 display: block;
             }
         }
+body, html {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
     </style>
 </head>
 <body>
 
     <header>
-        <div class="topbar">
-            <a href="/" class="logo">
-                <img src="/logo.png" alt="SwasthaIndia Logo" />
-            </a>
-            <div class="hamburger" id="hamburger">
-                <i class="fas fa-bars"></i>
-            </div>
-            <nav class="nav-links" id="navLinks">
-                <button class="nav-close" id="navClose">×</button>
-                <a href="/">Home</a>
-                <a href="/my-packages/">Packages</a>
-                <a href="/book-test/">Book Test</a>
-                <a href="/contact/">Contact</a>
-                <a href="/about/">About</a>
-                <a href="/blogs/">Blog</a>
-            </nav>
+    <div class="topbar">
+        <a href="/" class="logo">
+            <img src="/logo.png" alt="SwasthaIndia Logo" />
+        </a>
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
         </div>
-    </header>
+        <nav class="nav-links" id="navLinks">
+            <button class="nav-close" id="navClose">&times;</button>
+            <a href="/">Home</a>
+            <a href="/my-packages/">Packages</a>
+            <a href="/book-test/">Book Test</a>
+            <a href="/contact/">Contact</a>
+            <a href="/about/">About</a>
+            <a href="/blogs/">Blog</a>
+        </nav>
+    </div>
+</header>
+
 
     <div class="container">
         <section class="packages-hero">
@@ -750,10 +797,13 @@
         </div>
 
         <div id="loading-overlay" class="loading-overlay">
-            <div class="spinner"></div>
-            <div style="font-size: 16px; color: #333;">Healing takes time, and so does loading our page!</div>
-            <div style="font-size: 16px; color: #333;">Please wait a moment while we fetch the latest health insights for you.</div>
-                </div>
+    <div class="loading-content">
+        <div class="spinner"></div>
+        <p class="loading-text">Healing takes time, and so does loading our page!</p>
+        <p class="loading-text">Please wait a moment while we fetch the latest health insights for you.</p>
+    </div>
+</div>
+
 
         <section class="faq-section">
             <h2>Frequently Asked Questions</h2>
@@ -810,7 +860,8 @@
     </div>
     
     <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp icon to chat with SwasthaIndia" />
+
     </a>
 
     <a href="#top" class="back-to-top" id="backToTopBtn">
@@ -1117,11 +1168,23 @@ document.addEventListener('DOMContentLoaded', () => {
     filterPackagesByCategory();
 });
 </script>
+<script>
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("navLinks");
+    const navClose = document.getElementById("navClose");
+
+    hamburger.addEventListener("click", () => {
+        navLinks.classList.add("active");
+        document.body.classList.add("no-scroll");
+    });
+
+    navClose.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        document.body.classList.remove("no-scroll");
+    });
+</script>
+
 
 </body>
 </html>
-
-
-
-
 
