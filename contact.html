@@ -43,21 +43,29 @@
         }
 
         header {
-            background: var(--card-bg);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
 
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 60px;
-            background: var(--card-bg);
-            padding: 0 20px;
-        }
+/* Fix only the topbar */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--card-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+/* Push the rest of the page down */
+body {
+    margin-top: 60px; /* equal to .topbar height */
+}
 
         .logo img {
             width: 180px;
@@ -528,4 +536,5 @@
     </script>
 </body>
 </html>
+
 
