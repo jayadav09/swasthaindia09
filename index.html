@@ -821,7 +821,28 @@ html, body {
         margin-bottom: 70px; /* ensures not blocked by float button */
     }
 }
+.skeleton-card {
+    background: #f6f6f6;
+    border-radius: 10px;
+    overflow: hidden;
+    animation: pulse 1.5s infinite;
+}
 
+@keyframes pulse {
+    0% { background-color: #f6f6f6; }
+    50% { background-color: #e9e9e9; }
+    100% { background-color: #f6f6f6; }
+}
+.skeleton-img {
+    height: 150px;
+    background: #ddd;
+}
+.skeleton-text {
+    height: 20px;
+    margin: 10px;
+    background: #ccc;
+    border-radius: 5px;
+}
 
     </style>
 </head>
@@ -1130,8 +1151,31 @@ html, body {
             // Handle the error gracefully, e.g., display a message to the user
         }
     }
+    // 🔹 Instant hamburger toggle - runs immediately
+const hamburger = document.getElementById("hamburger");
+if (hamburger) {
+   document.querySelectorAll('.mobile-nav [data-aos]').forEach(el => {
+        el.removeAttribute('data-aos');
+    });
+    hamburger.addEventListener("click", () => {
+        document.body.classList.toggle("menu-open");
+    });
+}
 
-    // Render popular items on the homepage
+function showSkeletonCards(count = 6) {
+    const container = document.getElementById("popular-container");
+    container.innerHTML = "";
+    for (let i = 0; i < count; i++) {
+        container.innerHTML += `
+            <div class="skeleton-card">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-text"></div>
+                <div class="skeleton-text" style="width: 60%;"></div>
+            </div>
+        `;
+    }
+}
+
     function renderPopularItems() {
         const container = document.getElementById("popular-container");
         if (!container) return;
@@ -1143,34 +1187,50 @@ html, body {
             return;
         }
 
-        popularItems.slice(0, 6).forEach(item => { // Limit to top 6 items
-            const name = item.name;
-            const desc = item.data.Description || "";
-            const mrp = parseFloat(item.data.MRP || 0);
-            const offer = parseFloat(item.data["Offer_Price"] || 0);
-            const imageUrl = item.data.Image || 'https://via.placeholder.com/400x200.png?text=Package+Image'; // Default placeholder image
-            
-            const card = document.createElement("a");
-            card.className = "package-card";
-            card.href = `/details.html?name=${encodeURIComponent(name)}`;
-            card.setAttribute("data-aos", "fade-up");
-            
-            card.innerHTML = `
-                <img src="${imageUrl}" alt="${name}" class="package-card-img">
-                <div class="package-card-content">
-                    <h3>${name}</h3>
-                    <p class="description">${desc}</p>
-                    <div class="package-card-price">
-                        ${mrp > offer && mrp > 0 ? `<span class="mrp">₹${mrp}</span>` : ''}
-                        <span class="offer-price">₹${offer}</span>
-                    </div>
-                    
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    }
+        popularItems.slice(0, 6).forEach(item => {
+        const name = item.name;
+        const desc = item.data.Description || "";
+        const mrp = parseFloat(item.data.MRP || 0);
+        const offer = parseFloat(item.data["Offer_Price"] || 0);
+        const imageUrl = item.data.Image || 'https://via.placeholder.com/400x200.png?text=Package+Image';
 
+        // Main clickable card wrapper
+        const card = document.createElement("div");
+        card.className = "package-card";
+        card.setAttribute("data-aos", "fade-up");
+
+        // Clicking anywhere on the card → details page
+        card.addEventListener("click", () => {
+            window.location.href = `/details/?name=${encodeURIComponent(name)}`;
+        });
+
+        card.innerHTML = `
+            <img src="${imageUrl}" alt="${name}" class="package-card-img">
+            <div class="package-card-content">
+                <h3>${name}</h3>
+                <p class="description">${desc}</p>
+                <div class="package-card-price">
+                    ${mrp > offer && mrp > 0 ? `<span class="mrp">₹${mrp}</span>` : ''}
+                    <span class="offer-price">₹${offer}</span>
+                </div>
+                <button class="book-now-btn">Book Now</button>
+            </div>
+        `;
+
+        // Stop click from bubbling when clicking Book Now button
+        card.querySelector(".book-now-btn").addEventListener("click", (e) => {
+            e.stopPropagation();
+            window.location.href = `/booking/?package=${encodeURIComponent(pkg.Package)}&price=${pkg.Offer_Price}" class="book-now-btn`;
+        });
+
+        container.appendChild(card);
+    });
+}
+
+showSkeletonCards(); // Show placeholders immediately
+fetchData().then(() => {
+    renderPopularItems(); // Replace with real data
+});
     // --- Event Handlers & Initialisation ---
     document.addEventListener("DOMContentLoaded", async () => {
         AOS.init({ once: true });
@@ -1271,5 +1331,30 @@ html, body {
         }
     };
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const navClose = document.getElementById('navClose');
+
+        if (hamburger && navLinks && navClose) {
+            hamburger.addEventListener('click', function() {
+                navLinks.classList.add('active');
+            });
+
+            navClose.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+            });
+
+            // Optional: Close menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+    });
+</script>
 </body>
 </html>
+
