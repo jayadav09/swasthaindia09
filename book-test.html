@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SwasthaIndia – Blood Tests & Health Screenings</title>
+    
+    <title>SwasthaIndia: Affordable Blood Tests & Health Packages in Delhi</title>
+    
     <link rel="canonical" href="https://swasthaindia.in/my-packages/" />
-    <meta name="description" content="Affordable blood tests and health screenings in Delhi by SwasthaIndia. Book your tests online with doorstep sample collection.">
-    <meta name="keywords" content="blood test, health screening, SwasthaIndia, health checkup, Delhi">
-    <meta property="og:title" content="SwasthaIndia – Blood Tests & Health Screenings">
-    <meta property="og:description" content="Book affordable blood tests and diagnostic screenings at home. Trusted & professional service in Delhi.">
+    
+    <meta name="description" content="Book affordable blood tests, full body checkups, and diagnostic health packages with SwasthaIndia. Get a free home sample collection and a digital report in Delhi.">
+    
+    <meta property="og:title" content="SwasthaIndia: Your Health Checkup Partner in Delhi">
+    <meta property="og:description" content="Book affordable blood tests and diagnostic screenings with free home sample collection. Get accurate results with SwasthaIndia.">
     <meta property="og:url" content="https://swasthaindia.in/my-packages/">
+    <meta property="og:image" content="https://swasthaindia.in/full-body-checkup-og.jpg">
     <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SwasthaI17440"> <meta name="twitter:title" content="SwasthaIndia: Affordable Health Packages">
+    <meta name="twitter:description" content="Book blood tests and full body checkups with free home sample collection in Delhi.">
+    <meta name="twitter:image" content="https://swasthaindia.in/full-body-checkup-og.jpg">
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJ1DMWRWC3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -18,12 +28,16 @@
         gtag('js', new Date());
         gtag('config', 'G-WJ1DMWRWC3');
     </script>
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
-        :root {
+        /* ------------------------------
+        SwasthaIndia — Cleaned / Fixed CSS
+        ------------------------------ */
+        :root{
+            --topbar-h: 60px;
             --primary-color: #007c91;
             --secondary-color: #00bfa5;
             --dark-color: #1a1a1a;
@@ -33,156 +47,142 @@
             --accent-color: #004d40;
             --danger-color: #ff4d4f;
             --highlight-color: #ffeb3b;
+            --site-max: 1200px;
         }
 
+        /* Box sizing & base */
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--light-bg);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            color: var(--text-color);
+            padding-top: var(--topbar-h);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Prevent scrolling when modal is open */
+        /* Prevent scrolling when modal or menu is open */
         body.no-scroll {
             overflow: hidden;
+            position: fixed;
+            width: 100%;
         }
 
-         header {
-    background: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-/* Fix only the topbar */
-.topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background: var(--card-bg);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    z-index: 1000;
-}
-
-/* Push the rest of the page down */
-body {
-    margin-top: 60px; /* equal to .topbar height */
-}
+        /* -----------------------
+        Topbar / Header
+        ----------------------- */
+        header { width: 100%; }
+        .topbar{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--topbar-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            background: var(--card-bg);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            z-index: 2200;
+        }
 
         .logo img {
             width: 180px;
+            height: auto;
+            display: block;
         }
 
+        /* Desktop nav */
         .nav-links {
             display: flex;
+            gap: 20px;
+            align-items: center;
         }
-
-        .nav-links a {
-            text-decoration: none;
+        .nav-links a{
             color: var(--primary-color);
+            text-decoration: none;
             font-weight: 600;
-            font-size: 16px;
-            margin-left: 24px;
-            transition: color 0.3s, transform 0.3s;
+            font-size: 15px;
+            transition: color .18s, transform .18s;
         }
+        .nav-links a:hover { color: var(--secondary-color); transform: translateY(-2px); }
 
-        .nav-links a:hover {
-            color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
+        /* Hamburger (mobile) */
         .hamburger {
             display: none;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 22px;
             color: var(--primary-color);
+            z-index: 2300;
+            background: transparent;
+            border: none;
+            padding: 6px;
         }
-        
-        /* Mobile nav close button - Hidden by default on desktop */
+
+        /* Nav close (visible in overlay) */
         .nav-close {
             display: none;
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 3rem;
-            color: white;
+            top: 18px;
+            right: 18px;
+            font-size: 34px;
+            color: #fff;
             cursor: pointer;
-            z-index: 1001; /* Ensure it's above the nav links */
+            z-index: 2400;
         }
 
-
-        /* --- Hero Section --- */
-        .hero-section {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://img.freepik.com/free-photo/doctor-s-hand-holding-bottle-with-red-pills_1170-1376.jpg?w=1800');
+        /* -----------------------
+        Hero
+        ----------------------- */
+        .hero-section{
+            background-image:
+                linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+                url('https://images.unsplash.com/photo-1579684385150-13f5080a2214?q=80&w=1776&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            color: white;
+            color: #fff;
             text-align: center;
             padding: 80px 20px;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 18px 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
-        
-        .hero-section h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 0 0 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
+        .hero-section h1 { font-size: 2.8rem; margin: 0 0 8px; }
+        .hero-section p { font-size: 1.1rem; max-width: 720px; margin: 0 auto 20px; }
 
-        .hero-section p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
-        }
-
+        /* WhatsApp CTA inside hero */
         .hero-whatsapp a {
             display: inline-flex;
             align-items: center;
             background: #25d366;
-            padding: 12px 24px;
-            border-radius: 50px;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 40px;
             text-decoration: none;
-            font-weight: 600;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: background 0.3s ease;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
         }
-        
-        .hero-whatsapp a:hover {
-            background: #128C7E;
-        }
+        .hero-whatsapp a:hover { background-color: #1eac53; }
+        .hero-whatsapp img { width: 20px; height: 20px; margin-right: 8px; }
 
-        .hero-whatsapp img {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-        }
-
-        /* --- Promotional Banner Section --- */
+        /* -----------------------
+        Promo Banner
+        ----------------------- */
         .promo-banner {
             background: var(--primary-color);
-            color: white;
-            padding: 30px 20px;
+            color: #fff;
+            padding: 22px 18px;
             text-align: center;
-            margin: 40px auto;
-            max-width: 1200px;
+            margin: 28px auto;
+            max-width: var(--site-max);
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
-        .promo-banner h2 {
-            font-size: 2rem;
-            margin: 0 0 10px;
-        }
-        .promo-banner p {
-            font-size: 1.1rem;
-            margin: 0 0 20px;
-        }
+        .promo-banner h2 { font-size: 2rem; margin: 0 0 10px; }
+        .promo-banner p { font-size: 1.1rem; margin: 0 0 20px; }
         .promo-banner .cta-button {
             display: inline-block;
             background: var(--secondary-color);
@@ -193,11 +193,122 @@ body {
             text-decoration: none;
             transition: background 0.3s ease;
         }
-        .promo-banner .cta-button:hover {
-            background: #008f7a;
+        .promo-banner .cta-button:hover { background: #008f7a; }
+
+        /* -----------------------
+        Search / Container
+        ----------------------- */
+        .container {
+            max-width: var(--site-max);
+            margin: 0 auto;
+            padding: 0 16px 40px;
+        }
+        .search-container {
+            max-width: 700px;
+            margin: 20px auto 18px;
+            position: relative;
+            width: 100%;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 12px 44px 12px 16px;
+            border-radius: 28px;
+            border: 1px solid #e6e6e6;
+            font-size: 15px;
+            outline: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        #searchInput:focus { border-color: var(--primary-color); }
+        .search-icon {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color:#999;
         }
 
-        /* --- Testimonial Section --- */
+        /* -----------------------
+        Package Grid + Cards
+        ----------------------- */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+            max-width: var(--site-max);
+            margin: 0 auto 40px;
+        }
+
+        .package-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            min-height: 180px;
+            overflow: hidden;
+            transition: transform .22s ease, box-shadow .22s ease;
+        }
+        .package-card:hover { transform: translateY(-6px); box-shadow: 0 10px 26px rgba(0,0,0,0.09); }
+
+        .package-header {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        .package-name { font-size: 17px; font-weight: 700; color: var(--accent-color); line-height: 1.2; }
+        .price-section { display: flex; gap: 10px; align-items: center; }
+        .mrp { color: #888; text-decoration: line-through; font-size: 13px; }
+        .offer-price { color: var(--danger-color); font-weight: 700; font-size: 16px; }
+        .discount-tag { background: var(--danger-color); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+
+        /* body / content area of card */
+        .card-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1 1 auto;
+        }
+
+        /* Buttons / actions */
+        .know-more-toggle {
+            display: inline-block;
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px;
+            border: 2px solid var(--danger-color);
+            color: var(--danger-color);
+            background: transparent;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .know-more-toggle:hover { color: #fff; background: var(--danger-color); border-color: var(--danger-color); }
+
+        .card-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        /* Book Now full-width button */
+        .book-now {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+        .book-now:hover { background: #005f53; }
+
+        /* --- Testimonials Section --- */
         .testimonials-section {
             padding: 60px 20px;
             background-color: var(--card-bg);
@@ -207,13 +318,11 @@ body {
             border-radius: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
-
         .testimonials-section h2 {
             font-size: 2.2rem;
             color: var(--accent-color);
             margin-bottom: 50px;
         }
-
         .testimonial-card {
             max-width: 700px;
             margin: auto;
@@ -222,7 +331,6 @@ body {
             padding: 30px;
             position: relative;
         }
-        
         .testimonial-card blockquote {
             font-style: italic;
             color: #555;
@@ -231,7 +339,6 @@ body {
             position: relative;
             padding: 0 20px;
         }
-
         .testimonial-card blockquote::before, .testimonial-card blockquote::after {
             content: '"';
             font-size: 4rem;
@@ -242,264 +349,31 @@ body {
         }
         .testimonial-card blockquote::before { left: -10px; }
         .testimonial-card blockquote::after { right: -10px; }
-        
         .testimonial-card .author {
             margin-top: 20px;
             font-weight: 600;
             color: var(--primary-color);
         }
 
-        /* --- Search & Filters --- */
-        .search-container {
-            max-width: 600px;
-            margin: 40px auto 20px;
-            position: relative;
-        }
-
-        #searchInput {
-            width: 100%;
-            padding: 12px 40px 12px 20px;
-            border-radius: 30px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-            outline: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: border-color 0.3s;
-        }
-
-        #searchInput:focus {
-            border-color: var(--primary-color);
-        }
-        
-        .search-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-            pointer-events: none;
-            font-size: 18px;
-        }
-
-        /* --- Package Cards Grid --- */
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .package-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .package-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .package-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .package-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .package-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--accent-color);
-            line-height: 1.3;
-        }
-        
-        .price-section {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-        }
-        
-        .mrp {
-            color: #888;
-            text-decoration: line-through;
-            font-size: 14px;
-        }
-        
-        .offer-price {
-            color: var(--danger-color);
-            font-weight: 700;
-            font-size: 18px;
-        }
-        
-        .discount-tag {
-            background: var(--danger-color);
-            color: white;
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-        
-        .card-body {
-            padding: 20px;
-            flex-grow: 1;
-        }
-        
-        .know-more-toggle {
-            width: 100%;
-            background-color: transparent;
-            color: var(--danger-color);
-            border: 2px solid var(--danger-color);
-            border-radius: 8px;
-            padding: 12px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px;
-        }
-
-        .know-more-toggle:hover {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .book-now {
-            display: block;
-            margin-top: 15px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            text-align: center;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .book-now:hover {
-            background-color: #005f53;
-        }
-
-        /* --- Footer Styles --- */
-        .swastha-footer {
-            background: linear-gradient(to right, #000000, #1c1c1c);
-            color: #fff;
-            padding: 50px 20px 20px;
-            font-family: 'Inter', sans-serif;
-            margin-top: 60px;
-        }
-
-        .footer-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .footer-column {
-            flex: 1 1 300px;
-            margin: 20px;
-        }
-
-        .footer-column h3, .footer-column h4 {
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-        }
-
-        .footer-column p, .footer-column a {
-            color: #ccc;
-            font-size: 15px;
-            line-height: 1.6;
-            text-decoration: none;
-        }
-
-        .footer-column a:hover {
-            color: #00ffd5;
-            transition: 0.3s;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .social-icons a {
-            font-size: 20px;
-            color: #ccc;
-            margin-right: 15px;
-            transition: transform 0.3s, color 0.3s;
-        }
-
-        .social-icons a:hover {
-            transform: scale(1.2);
-            color: #00ffd5;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #333;
-            color: #999;
-            font-size: 14px;
-        }
-        
-        /* --- General Utilities --- */
-        .floating-banner { 
-            position: sticky; top: 0; z-index: 999; 
-            background: var(--accent-color); color: white; 
-            padding: 12px; font-size: 15px; text-align: center; 
-            font-weight: 500; 
-        }
-        .floating-banner a { 
-            color: var(--highlight-color); font-weight: bold; text-decoration: underline; 
-        }
-        .wa-float { 
-            position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 9999; 
-            background-color: #25d366; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        /* --- Floating CTA and back-to-top --- */
+        .wa-float {
+            position: fixed; right: 20px; bottom: 20px;
+            width: 60px; height: 60px; border-radius: 50%;
+            z-index: 9999;
             display: flex; align-items: center; justify-content: center;
+            background: #25d366; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
         }
-        .wa-float img { 
-            width: 70%; height: auto; 
-        }
+        .wa-float img { width: 70%; height: auto; }
+        .wa-float:hover { transform: scale(1.1); }
 
-        /* --- Back to Top Button --- */
         .back-to-top {
             position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 45px;
-            height: 45px;
-            background: var(--primary-color);
-            color: white;
+            bottom: 90px; right: 20px;
+            width: 45px; height: 45px;
+            background: var(--primary-color); color: white;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             cursor: pointer;
@@ -508,7 +382,6 @@ body {
             transition: opacity 0.3s, visibility 0.3s;
             z-index: 999;
         }
-
         .back-to-top.show {
             opacity: 1;
             visibility: visible;
@@ -516,9 +389,10 @@ body {
 
         /* --- Modal Styles --- */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); display: none; align-items: center;
-            justify-content: center; z-index: 9999; padding: 20px;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none; align-items: center; justify-content: center;
+            z-index: 9999; padding: 20px;
             backdrop-filter: blur(5px);
         }
         .modal-overlay.show {
@@ -540,41 +414,30 @@ body {
         .modal-header {
             padding: 16px 20px;
             display: flex;
-            flex-direction: column; /* Stack elements on mobile */
+            flex-direction: column;
             gap: 10px;
             border-bottom: 1px solid #f0f0f0;
             background: var(--card-bg);
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            position: sticky; top: 0; z-index: 10;
         }
-        .modal-header h2 {
-            font-size: 18px; font-weight: 600; color: var(--accent-color);
-            margin: 0;
-        }
+        .modal-header h2 { font-size: 18px; font-weight: 600; color: var(--accent-color); margin: 0; }
         .modal-close {
-            position: absolute; /* Fix alignment on mobile */
-            top: 10px;
-            right: 10px;
+            position: absolute; top: 10px; right: 10px;
             width: 32px; height: 32px;
             display: flex; align-items: center; justify-content: center;
             font-size: 28px; color: #999; cursor: pointer;
-            border: none; background: transparent;
-            z-index: 10;
+            border: none; background: transparent; z-index: 10;
+            transition: transform 0.2s ease;
         }
+        .modal-close:hover { transform: rotate(90deg); color: var(--danger-color); }
         .modal-book-now {
-            background-color: var(--danger-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
+            background-color: var(--danger-color); color: white;
+            padding: 10px 20px; border-radius: 8px;
+            text-decoration: none; font-weight: 600;
             transition: background 0.3s;
             display: inline-block;
         }
-        .modal-book-now:hover {
-            background-color: #d9363e;
-        }
+        .modal-book-now:hover { background-color: #d9363e; }
         .modal-body-scroll {
             flex-grow: 1; overflow-y: auto; padding: 20px;
         }
@@ -585,19 +448,22 @@ body {
         .modal-body-scroll ul, .modal-body-scroll p {
             font-size: 14px; color: #555; line-height: 1.6;
         }
-        .modal-body-scroll ul {
-            padding-left: 20px;
-        }
-        .modal-body-scroll li {
-            margin-bottom: 5px;
-        }
+        .modal-body-scroll ul { padding-left: 20px; }
+        .modal-body-scroll li { margin-bottom: 5px; }
 
         /* --- Loading and Animations --- */
         .loading-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.8); display: flex;
-            align-items: center; justify-content: center; z-index: 9999;
-            flex-direction: column; transition: opacity 0.5s ease;
+            position: fixed; inset: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            text-align: center; /* Center text lines */
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+            padding: 20px; /* Add padding for mobile spacing */
+            gap: 10px; /* Add spacing between elements */
         }
         .spinner {
             border: 6px solid #f3f3f3; border-top: 6px solid var(--primary-color);
@@ -607,48 +473,60 @@ body {
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- Media Queries for Mobile --- */
-        @media (max-width: 768px) {
-            .hero-section h1 { font-size: 2rem; }
-            .hero-section p { font-size: 1rem; }
-            .logo img { width: 140px; }
+        /* --- Footer Styles --- */
+        .swastha-footer {
+            background: linear-gradient(to right, #000000, #1c1c1c);
+            color: #fff;
+            padding: 50px 20px 20px;
+            font-family: 'Inter', sans-serif;
+            margin-top: 60px;
+        }
+        .footer-container {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            max-width: 1200px; margin: auto;
+        }
+        .footer-column { flex: 1 1 300px; margin: 20px; }
+        .footer-column h3, .footer-column h4 { color: var(--secondary-color); margin-bottom: 15px; }
+        .footer-column p, .footer-column a { color: #ccc; font-size: 15px; line-height: 1.6; text-decoration: none; }
+        .footer-column a:hover { color: #00ffd5; transition: 0.3s; }
+        .footer-column ul { list-style: none; padding: 0; }
+        .footer-column ul li { margin-bottom: 10px; }
+        .social-icons a {
+            font-size: 20px; color: #ccc; margin-right: 15px;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons a:hover { transform: scale(1.2); color: #00ffd5; }
+        .footer-bottom {
+            text-align: center; margin-top: 30px; padding-top: 15px;
+            border-top: 1px solid #333; color: #999; font-size: 14px;
+        }
 
-            /* Mobile Nav Overlay */
+        /* --- Mobile Tweaks --- */
+        @media (max-width: 768px) {
+            :root { --topbar-h: 56px; }
+            body { padding-top: var(--topbar-h); }
+            .logo img { width: 130px; }
+            .hamburger { display: block; }
             .nav-links {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(5px);
-                z-index: 999;
-                transform: translateX(100%);
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(5px);
+                z-index: 9999; transform: translateX(100%);
                 transition: transform 0.4s ease-in-out;
             }
-            .nav-links.active {
-                transform: translateX(0);
-            }
-            .nav-links a {
-                color: white;
-                font-size: 2rem;
-                margin: 20px 0;
-            }
-            .nav-close {
-                display: block; /* Show close button on mobile */
-            }
-            .hamburger {
-                display: block; /* Show hamburger on mobile */
-            }
-
-            .packages-grid { padding: 1rem; }
-            .package-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .nav-links.active { transform: translateX(0); }
+            .nav-links a { color: white; font-size: 2rem; margin: 20px 0; }
+            .nav-close { display: block; }
+            .hero-section { padding: 36px 16px; border-radius: 0 0 12px 12px; }
+            .hero-section h1 { font-size: 2rem; }
+            .hero-section p { font-size: 1rem; }
+            .promo-banner { padding: 16px; margin: 18px 12px; border-radius: 10px; }
+            .packages-grid { gap: 14px; padding: 8px 8px 24px; }
+            .package-header { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px; }
             .package-name { font-size: 18px; }
             .price-section { width: 100%; justify-content: space-between; }
+            .card-body { padding: 12px; }
+            .offer-price { font-size: 15px; }
             .know-more-toggle, .book-now { width: 100%; text-align: center; }
             .footer-container { flex-direction: column; align-items: center; text-align: center; }
         }
@@ -661,11 +539,11 @@ body {
             <a href="/" class="logo">
                 <img src="/logo.png" alt="SwasthaIndia Logo" />
             </a>
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="Open navigation menu">
                 <i class="fas fa-bars"></i>
-            </div>
-            <nav class="nav-links" id="navLinks">
-                <button class="nav-close" id="navClose">&times;</button>
+            </button>
+            <nav class="nav-links" id="navLinks" role="navigation">
+                <button class="nav-close" id="navClose" aria-label="Close navigation menu">&times;</button>
                 <a href="/">Home</a>
                 <a href="/my-packages/">Packages</a>
                 <a href="/book-test/">Book Test</a>
@@ -680,7 +558,7 @@ body {
         <h1>Your Path to a Healthier You</h1>
         <p>Explore our comprehensive range of blood tests and health screenings, designed for a complete health overview.</p>
         <div class="hero-whatsapp">
-            <a href="https://wa.me/919911990556" target="_blank">
+            <a href="https://wa.me/919911990556" target="_blank" rel="noopener noreferrer">
                 <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
                 Book Your Blood Test Now
             </a>
@@ -690,12 +568,12 @@ body {
     <section class="promo-banner">
         <h2>Exclusive Limited-Time Offer!</h2>
         <p>Get a free personalized health consultation with every blood test booking.</p>
-        <a href="https://wa.me/919911990556" class="cta-button" target="_blank">Claim Your Offer Now</a>
+        <a href="https://wa.me/919911990556" class="cta-button" target="_blank" rel="noopener noreferrer">Claim Your Offer Now</a>
     </section>
 
     <div class="container">
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Looking for a test..." />
+            <input type="text" id="searchInput" placeholder="Looking for a test..." aria-label="Search for a test" />
             <i class="fas fa-search search-icon"></i>
         </div>
 
@@ -713,11 +591,11 @@ body {
         </div>
     </section>
     
-    <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+    <a href="https://wa.me/919911990556" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Icon" />
     </a>
 
-    <a href="#top" class="back-to-top" id="backToTopBtn">
+    <a href="#top" class="back-to-top" id="backToTopBtn" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </a>
     
@@ -731,9 +609,9 @@ body {
         <div class="modal-container">
             <div class="modal-header">
                 <h2 id="modal-test-name"></h2>
-                <a id="modal-book-link" class="modal-book-now" target="_blank">Book Now</a>
+                <a id="modal-book-link" class="modal-book-now" target="_blank" rel="noopener noreferrer">Book Now</a>
             </div>
-            <button class="modal-close" onclick="closeModal()">×</button>
+            <button class="modal-close" onclick="closeModal()" aria-label="Close modal">×</button>
             <div id="modal-body" class="modal-body-scroll"></div>
         </div>
     </div>
@@ -747,11 +625,11 @@ body {
             <div class="footer-column links">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="/index.html">Home</a></li>
-                    <li><a href="/my-packages.html">Health Packages</a></li>
-                    <li><a href="/book-test.html">Book Test</a></li>
-                    <li><a href="/privacy.html">Privacy Policy</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/my-packages/">Health Packages</a></li>
+                    <li><a href="/book-test/">Book Test</a></li>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/contact/">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-column contact">
@@ -759,10 +637,10 @@ body {
                 <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
                 <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
                 <div class="social-icons">
-                    <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" title="Follow us on Facebook" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.linkedin.com/company/swasthaindia" target="_blank" title="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
         </div>
@@ -774,11 +652,13 @@ body {
     <script>
         const sheetURL = "https://script.google.com/macros/s/AKfycbx86AqCtPYZkCRGiMCl-XYWbC6UctZCQnbd7CbPloJon6y9g-jzVKH2L04-GUVwU4t7/exec";
         const container = document.getElementById("test-cards-container");
+        const searchInput = document.getElementById("searchInput");
         let allTests = [];
         let testDetailsMap = {};
 
         async function fetchData() {
-            document.getElementById("loading-message").style.display = "flex";
+            const loadingOverlay = document.getElementById("loading-message");
+            loadingOverlay.style.display = "flex";
             try {
                 const response = await fetch(sheetURL);
                 const data = await response.json();
@@ -793,9 +673,9 @@ body {
                 renderCards(allTests);
             } catch (err) {
                 console.error("Failed to fetch data:", err);
-                document.getElementById("loading-message").innerHTML = "<div style='color:red;'>❌ Failed to load tests. Please try again later.</div>";
+                loadingOverlay.innerHTML = "<div style='color:red;'>❌ Failed to load tests. Please try again later.</div>";
             } finally {
-                document.getElementById("loading-message").style.display = "none";
+                loadingOverlay.style.display = "none";
             }
         }
         
@@ -825,8 +705,7 @@ body {
                     <div class="card-body">
                         <p style="font-size: 14px; color: #555;">${test.Description || 'No description available.'}</p>
                         <button class="know-more-toggle" data-test-name="${test['Test Name']}" data-booking-link="${test['Booking Link']}">Know More</button>
-                        <a href="/booking/?test=${encodeURIComponent(test['Test Name'])}&price=${encodeURIComponent(test['Offer Price'])}" class="book-now" target="_blank">Book Now</a>
-
+                        <a href="/booking/?test=${encodeURIComponent(test['Test Name'])}&price=${encodeURIComponent(test['Offer Price'])}" class="book-now" target="_blank" rel="noopener noreferrer">Book Now</a>
                     </div>
                 `;
                 container.appendChild(card);
@@ -889,7 +768,6 @@ body {
             }
         });
 
-        const searchInput = document.getElementById("searchInput");
         searchInput.addEventListener("input", function () {
             const searchTerm = this.value.toLowerCase();
             const filteredTests = allTests.filter(test => 
@@ -898,60 +776,58 @@ body {
             );
             renderCards(filteredTests);
         });
-        
-        // Hamburger menu functionality
-        const hamburger = document.getElementById('hamburger');
+
+        document.addEventListener('DOMContentLoaded', fetchData);
+
         const navLinks = document.getElementById('navLinks');
+        const hamburger = document.getElementById('hamburger');
         const navClose = document.getElementById('navClose');
 
         hamburger.addEventListener('click', () => {
             navLinks.classList.add('active');
             document.body.classList.add('no-scroll');
         });
+
         navClose.addEventListener('click', () => {
             navLinks.classList.remove('active');
             document.body.classList.remove('no-scroll');
         });
 
-        // Back to Top functionality
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                navLinks.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            }
+        });
+        
+        // Back to top button logic
         const backToTopBtn = document.getElementById('backToTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
                 backToTopBtn.classList.add('show');
             } else {
                 backToTopBtn.classList.remove('show');
             }
-        });
-        backToTopBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Intersection Observer for fade-in effect on cards
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
+        };
 
         function observeCards() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
             document.querySelectorAll('.package-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                 observer.observe(card);
             });
         }
-        
-        // Initial fetch and render
-        document.addEventListener("DOMContentLoaded", () => {
-            fetchData();
-        });
     </script>
-
 </body>
 </html>
-
-
-
-
