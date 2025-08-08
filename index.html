@@ -1218,7 +1218,7 @@ function showSkeletonCards(count = 6) {
         // Stop click from bubbling when clicking Book Now button
         card.querySelector(".book-now-btn").addEventListener("click", (e) => {
             e.stopPropagation();
-            window.location.href = `/booking/?package=${encodeURIComponent(pkg.Package)}&price=${pkg.Offer_Price}" class="book-now-btn`;
+            window.location.href = "/booking/?package=${encodeURIComponent(pkg.Package)}&price=${pkg.Offer_Price}";
         });
 
         container.appendChild(card);
@@ -1355,6 +1355,7 @@ fetchData().then(() => {
 </script>
 </body>
 </html>
+
 
 
 
