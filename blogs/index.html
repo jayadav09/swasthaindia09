@@ -614,9 +614,35 @@ body.no-scroll {
     const searchInput = document.getElementById("searchInput");
     const tagsContainer = document.getElementById('tags-container');
 
+    // Function to create and show skeletons
+    function showSkeletons() {
+        blogListContainer.innerHTML = '';
+        const numberOfSkeletons = 6; // Display 6 skeleton cards
+        for (let i = 0; i < numberOfSkeletons; i++) {
+            const skeletonCard = document.createElement("div");
+            skeletonCard.className = "blog-card skeleton";
+            skeletonCard.innerHTML = `
+                <div class="skeleton-image"></div>
+                <div class="blog-card-content">
+                    <div class="skeleton-text meta"></div>
+                    <div class="skeleton-text title"></div>
+                    <div class="skeleton-text paragraph"></div>
+                    <div class="skeleton-text button"></div>
+                </div>
+            `;
+            blogListContainer.appendChild(skeletonCard);
+        }
+    }
+
+    // Function to hide skeletons and show actual posts
+    function hideSkeletonsAndRenderPosts(postsToRender) {
+        blogListContainer.innerHTML = "";
+        renderPosts(postsToRender);
+    }
+    
     // Function to fetch blog posts from the API
     async function fetchAllBlogPosts() {
-        blogListContainer.innerHTML = `<p class="loading-message">Loading blog posts...</p>`;
+        showSkeletons();
         const apiUrl = "/blog-api";
 
         try {
@@ -636,10 +662,9 @@ body.no-scroll {
                 return;
             }
 
-            // Sort posts by date in descending order
             allPosts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
             
-            renderPosts(allPosts);
+            hideSkeletonsAndRenderPosts(allPosts);
             renderTags(allPosts);
 
         } catch (err) {
@@ -650,8 +675,6 @@ body.no-scroll {
 
     // Function to render blog posts to the DOM
     function renderPosts(postsToRender) {
-        blogListContainer.innerHTML = "";
-
         if (postsToRender.length === 0) {
             blogListContainer.innerHTML = `<p class="no-results-message">No matching blog posts found.</p>`;
             return;
@@ -718,66 +741,6 @@ body.no-scroll {
 
     // Initial call to fetch and display blog posts
     fetchAllBlogPosts();
-});
-    </script>
-    <script>
-// Get the container for the blog posts and the skeleton template
-const blogPostsContainer = document.getElementById('blog-posts');
-const skeletonTemplate = document.getElementById('skeleton-template');
-const mainContentContainer = document.querySelector('.main-content'); // Assuming a main content container
-
-// Function to create and show skeletons
-function showSkeletons() {
-  const numberOfSkeletons = 5; // Adjust as needed
-  for (let i = 0; i < numberOfSkeletons; i++) {
-    const skeletonClone = skeletonTemplate.content.cloneNode(true);
-    mainContentContainer.appendChild(skeletonClone);
-  }
-}
-
-// Function to hide skeletons and show real content
-function hideSkeletonsAndShowContent() {
-  const skeletons = document.querySelectorAll('.blog-post.skeleton');
-  skeletons.forEach(skeleton => skeleton.remove());
-  blogPostsContainer.style.display = 'block';
-}
-
-// Function to fetch blog posts (simulated)
-function fetchBlogPosts() {
-  return new Promise(resolve => {
-    // Simulate a network request with a delay
-    setTimeout(() => {
-      const posts = [
-        { title: 'My First Blog Post', content: 'This is the content of my first blog post...' },
-        { title: 'A Guide to Web Development', content: 'Here are some tips for aspiring web developers...' },
-        // ... more posts
-      ];
-      resolve(posts);
-    }, 2000); // 2-second delay
-  });
-}
-
-// Main logic
-document.addEventListener('DOMContentLoaded', () => {
-  // Show skeletons immediately
-  showSkeletons();
-
-  // Fetch data and then replace skeletons with real content
-  fetchBlogPosts().then(posts => {
-    // Populate the blog post container with real data
-    posts.forEach(post => {
-      const postElement = document.createElement('div');
-      postElement.className = 'blog-post';
-      postElement.innerHTML = `
-        <h2>${post.title}</h2>
-        <p>${post.content}</p>
-      `;
-      blogPostsContainer.appendChild(postElement);
-    });
-
-    // Hide skeletons and show the real blog posts
-    hideSkeletonsAndShowContent();
-  });
 });
 </script>
 </body>
