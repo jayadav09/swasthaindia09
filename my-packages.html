@@ -980,7 +980,7 @@ body, html {
                             </div>
                             <div class="package-actions">
                                 <button class="know-more-btn" data-package-id="${pkg.Package}">Know More</button>
-                                <a href="booking.html?test=${encodeURIComponent(pkg.Package)}&price=${pkg.Offer_Price}" class="book-now-btn">Book Now</a>
+                                <a href="/booking/?package=${encodeURIComponent(pkg.Package)}&price=${pkg.Offer_Price}" class="book-now-btn">Book Now</a>
                             </div>
                         </div>
                         ${pkg.discount > 0 ? `<div class="discount-tag">${pkg.discount}% OFF</div>` : ''}
