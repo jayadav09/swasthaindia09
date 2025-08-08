@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - SwasthaIndia</title>
+    
+    <title>About Us | SwasthaIndia: Your Partner in Health</title>
+    
     <link rel="canonical" href="https://swasthaindia.in/about/" />
-    <meta name="description" content="Learn about SwasthaIndia's mission, vision, and core values. We are dedicated to providing accessible and affordable diagnostic services to all.">
-    <meta name="keywords" content="about us, SwasthaIndia, our mission, health company, founders, preventive healthcare">
+    
+    <meta name="description" content="Discover SwasthaIndia's mission to make healthcare accessible and affordable. Learn about our commitment to quality, convenience, and transparent pricing in diagnostic services.">
+    
+    <meta property="og:title" content="About SwasthaIndia: Our Mission and Values">
+    <meta property="og:description" content="Learn about our commitment to accessible, accurate, and affordable diagnostic services in India.">
+    <meta property="og:url" content="https://swasthaindia.in/about/">
+    <meta property="og:image" content="https://swasthaindia.in/images/about-og-image.jpg">
+    <meta property="og:type" content="website">
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJ1DMWRWC3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -14,12 +23,16 @@
         gtag('js', new Date());
         gtag('config', 'G-WJ1DMWRWC3');
     </script>
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
+        /* ---------------------------------
+        SwasthaIndia — Cleaned & Improved CSS
+        --------------------------------- */
         :root {
+            --topbar-h: 60px;
             --primary-color: #007c91;
             --secondary-color: #00bfa5;
             --dark-color: #1a1a1a;
@@ -31,67 +44,86 @@
             --highlight-color: #ffeb3b;
         }
 
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--light-bg);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            color: var(--text-color);
+            padding-top: var(--topbar-h);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        
-        body.no-scroll {
-            overflow: hidden;
+        body.no-scroll { overflow: hidden; position: fixed; width: 100%; }
+
+        /* --- Header & Topbar --- */
+        header { width: 100%; }
+        .topbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--topbar-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            background: var(--card-bg);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            z-index: 2200;
         }
-
-        Chhupa Rustam
-
         .logo img {
-            width: 180px;
+            /* Corrected and balanced logo size */
+            width: 150px; 
+            height: auto;
+            display: block;
         }
 
+        /* --- Desktop Navigation --- */
         .nav-links {
             display: flex;
+            align-items: center;
+            gap: 24px;
         }
-
         .nav-links a {
-            text-decoration: none;
             color: var(--primary-color);
+            text-decoration: none;
             font-weight: 600;
             font-size: 16px;
-            margin-left: 24px;
             transition: color 0.3s, transform 0.3s;
         }
+        .nav-links a:hover { color: var(--secondary-color); transform: translateY(-2px); }
 
-        .nav-links a:hover {
-            color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
+        /* --- Mobile Navigation & Hamburger --- */
         .hamburger {
             display: none;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 22px;
             color: var(--primary-color);
+            z-index: 2300;
+            background: transparent;
+            border: none;
+            padding: 6px;
         }
-        
         .nav-close {
             display: none;
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 3rem;
-            color: white;
+            top: 18px; right: 18px;
+            font-size: 34px;
+            color: #fff;
             cursor: pointer;
-            z-index: 1001;
+            z-index: 2400;
         }
-
-        /* --- Main Content --- */
+        
+        /* --- Main Content Layout --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
+        /* --- About Hero Section --- */
         .about-hero {
             background: linear-gradient(to right, #f8f9fa, #eaf4ff);
             padding: 60px 20px;
@@ -99,20 +131,8 @@
             border-radius: 0 0 20px 20px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
-
-        .about-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #0d3c61;
-        }
-
-        .about-hero p {
-            font-size: 1.2rem;
-            color: #555;
-            max-width: 700px;
-            margin: auto;
-        }
-        
+        .about-hero h1 { font-size: 3rem; margin-bottom: 12px; color: var(--accent-color); }
+        .about-hero p { font-size: 1.2rem; color: #555; max-width: 700px; margin: auto; }
         .image-banner {
             width: 100%;
             height: 350px;
@@ -123,80 +143,17 @@
             margin-top: 40px;
         }
 
-        /* --- Accordion (Expandable Content) --- */
-        .accordion {
-            margin-top: 40px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            padding: 20px;
-        }
-        
-        .accordion-item {
-            border-bottom: 1px solid #eee;
-            padding: 16px 0;
-        }
-        .accordion-item:last-child {
-            border-bottom: none;
-        }
-
-        .accordion-header {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            transition: color 0.3s;
-        }
-        .accordion-header:hover {
-            color: var(--secondary-color);
-        }
-
-        .accordion-header .icon {
-            margin-right: 15px;
-            font-size: 1.5rem;
-            color: var(--secondary-color);
-        }
-
-        .accordion-header .toggle-icon {
-            margin-left: auto;
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-        .accordion-header.active .toggle-icon {
-            transform: rotate(180deg);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-            padding: 0 0 0 40px;
-        }
-        .accordion-content p {
-            margin: 10px 0;
-            line-height: 1.6;
-            color: #555;
-        }
-        .accordion-content.active {
-            max-height: 500px; /* Adjust based on content length */
-            padding: 16px 0 0 40px;
-            transition: max-height 0.6s ease-in, padding 0.6s ease-in;
-        }
-        
-        /* --- New Sections --- */
+        /* --- Promises Section --- */
         .promises-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-top: 40px;
             padding: 20px;
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
-        
         .promise-card {
             display: flex;
             align-items: flex-start;
@@ -206,30 +163,48 @@
             border-radius: 12px;
             transition: transform 0.3s;
         }
-        
-        .promise-card:hover {
-            transform: translateY(-5px);
+        .promise-card:hover { transform: translateY(-5px); }
+        .promise-card .icon { font-size: 2.5rem; color: var(--secondary-color); min-width: 40px; }
+        .promise-card h3 { margin: 0 0 8px; font-size: 1.2rem; color: var(--accent-color); }
+        .promise-card p { margin: 0; font-size: 0.95rem; color: #555; line-height: 1.5; }
+
+        /* --- Accordion (Expandable Content) --- */
+        .accordion {
+            margin-top: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 20px;
         }
-        
-        .promise-card .icon {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            min-width: 40px;
-        }
-        
-        .promise-card h3 {
-            margin: 0 0 8px;
+        .accordion-item { border-bottom: 1px solid #eee; padding: 16px 0; }
+        .accordion-item:last-child { border-bottom: none; }
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
             font-size: 1.2rem;
-            color: var(--accent-color);
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: color 0.3s;
         }
-        
-        .promise-card p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.5;
+        .accordion-header:hover { color: var(--secondary-color); }
+        .accordion-header .icon { margin-right: 15px; font-size: 1.5rem; color: var(--secondary-color); }
+        .accordion-header .toggle-icon { margin-left: auto; font-size: 1.5rem; transition: transform 0.3s ease; }
+        .accordion-header.active .toggle-icon { transform: rotate(180deg); }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            padding: 0 0 0 40px;
         }
-        
+        .accordion-content p { margin: 10px 0; line-height: 1.6; color: #555; }
+        .accordion-content.active {
+            max-height: 500px;
+            padding: 16px 0 0 40px;
+            transition: max-height 0.6s ease-in, padding 0.6s ease-in;
+        }
+
+        /* --- Call to Action Section --- */
         .cta-section {
             background-color: var(--primary-color);
             color: white;
@@ -239,18 +214,8 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        .cta-section p {
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-        
+        .cta-section h2 { font-size: 2rem; margin-bottom: 10px; }
+        .cta-section p { font-size: 1.1rem; max-width: 700px; margin: 0 auto 30px; }
         .cta-section a {
             background-color: var(--secondary-color);
             color: var(--dark-color);
@@ -260,10 +225,7 @@
             font-weight: 700;
             transition: background 0.3s;
         }
-        
-        .cta-section a:hover {
-            background-color: #008f7a;
-        }
+        .cta-section a:hover { background-color: #008f7a; }
 
         /* --- Footer Styles --- */
         .swastha-footer {
@@ -273,7 +235,6 @@
             font-family: 'Inter', sans-serif;
             margin-top: 60px;
         }
-
         .footer-container {
             display: flex;
             flex-wrap: wrap;
@@ -281,82 +242,37 @@
             max-width: 1200px;
             margin: auto;
         }
-
-        .footer-column {
-            flex: 1 1 300px;
-            margin: 20px;
-        }
-
-        .footer-column h3, .footer-column h4 {
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-        }
-
-        .footer-column p, .footer-column a {
-            color: #ccc;
-            font-size: 15px;
-            line-height: 1.6;
-            text-decoration: none;
-        }
-
-        .footer-column a:hover {
-            color: #00ffd5;
-            transition: 0.3s;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
+        .footer-column { flex: 1 1 300px; margin: 20px; }
+        .footer-column h3, .footer-column h4 { color: var(--secondary-color); margin-bottom: 15px; }
+        .footer-column p, .footer-column a { color: #ccc; font-size: 15px; line-height: 1.6; text-decoration: none; }
+        .footer-column a:hover { color: #00ffd5; transition: 0.3s; }
+        .footer-column ul { list-style: none; padding: 0; }
+        .footer-column ul li { margin-bottom: 10px; }
         .social-icons a {
-            font-size: 20px;
-            color: #ccc;
-            margin-right: 15px;
+            font-size: 20px; color: #ccc; margin-right: 15px;
             transition: transform 0.3s, color 0.3s;
         }
-
-        .social-icons a:hover {
-            transform: scale(1.2);
-            color: #00ffd5;
-        }
-
+        .social-icons a:hover { transform: scale(1.2); color: #00ffd5; }
         .footer-bottom {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #333;
-            color: #999;
-            font-size: 14px;
+            text-align: center; margin-top: 30px; padding-top: 15px;
+            border-top: 1px solid #333; color: #999; font-size: 14px;
         }
-        
-        /* --- General Utilities --- */
-        .wa-float { 
-            position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 9999; 
-            background-color: #25d366; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        .wa-float {
+            position: fixed; right: 20px; bottom: 20px;
+            width: 60px; height: 60px; border-radius: 50%;
+            z-index: 9999;
             display: flex; align-items: center; justify-content: center;
+            background: #25d366; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
         }
-        .wa-float img { 
-            width: 70%; height: auto; 
-        }
-
-        /* --- Back to Top Button --- */
+        .wa-float img { width: 70%; height: auto; }
+        .wa-float:hover { transform: scale(1.1); }
         .back-to-top {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 45px;
-            height: 45px;
-            background: var(--primary-color);
-            color: white;
+            position: fixed; bottom: 90px; right: 20px;
+            width: 45px; height: 45px;
+            background: var(--primary-color); color: white;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             cursor: pointer;
@@ -365,59 +281,38 @@
             transition: opacity 0.3s, visibility 0.3s;
             z-index: 999;
         }
+        .back-to-top.show { opacity: 1; visibility: visible; }
 
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* --- Media Queries for Mobile --- */
+        /* --- Mobile Tweaks --- */
         @media (max-width: 768px) {
+            :root { --topbar-h: 56px; }
+            body { padding-top: var(--topbar-h); }
+            /* Corrected and balanced logo size for mobile */
+            .logo img { width: 120px; }
             .about-hero h1 { font-size: 2rem; }
             .about-hero p { font-size: 1rem; }
-            .logo img { width: 140px; }
-            .image-banner { height: 220px; }
-            
+            .image-banner { height: 220px; margin-top: 20px; }
             .promises-section { grid-template-columns: 1fr; }
             .promise-card { flex-direction: column; text-align: center; }
-            .promise-card .icon { margin-right: 0; margin-bottom: 10px; }
-
+            .promise-card .icon { margin: 0 0 10px 0; }
+            .cta-section { padding: 40px 20px; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-section p { font-size: 1rem; }
             .accordion-header { font-size: 1rem; }
             .accordion-content.active { padding: 16px 0 0 20px; }
             .accordion-content { padding: 0 0 0 20px; }
             .footer-container { flex-direction: column; align-items: center; text-align: center; }
-
-            /* Mobile Nav Overlay */
+            .hamburger { display: block; }
             .nav-links {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(5px);
-                z-index: 999;
-                transform: translateX(100%);
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(5px);
+                z-index: 9999; transform: translateX(100%);
                 transition: transform 0.4s ease-in-out;
             }
-            .nav-links.active {
-                transform: translateX(0);
-            }
-            .nav-links a {
-                color: white;
-                font-size: 2rem;
-                margin: 20px 0;
-            }
-            .nav-close {
-                display: block; /* Show close button on mobile */
-            }
-            .hamburger {
-                display: block; /* Show hamburger on mobile */
-            }
+            .nav-links.active { transform: translateX(0); }
+            .nav-links a { color: white; font-size: 2rem; margin: 20px 0; }
+            .nav-close { display: block; }
         }
     </style>
 </head>
@@ -428,11 +323,11 @@
             <a href="/" class="logo">
                 <img src="/logo.png" alt="SwasthaIndia Logo" />
             </a>
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="Open navigation menu">
                 <i class="fas fa-bars"></i>
-            </div>
-            <nav class="nav-links" id="navLinks">
-                <button class="nav-close" id="navClose">&times;</button>
+            </button>
+            <nav class="nav-links" id="navLinks" role="navigation">
+                <button class="nav-close" id="navClose" aria-label="Close navigation menu">&times;</button>
                 <a href="/">Home</a>
                 <a href="/my-packages/">Packages</a>
                 <a href="/book-test/">Book Test</a>
@@ -449,7 +344,7 @@
             <p>Your trusted partner in preventive healthcare. We make diagnostic testing simple, affordable, and accessible to all.</p>
         </section>
         
-        <img src="about.jpg" alt="Happy family at home" class="image-banner" />
+        <img src="https://images.unsplash.com/photo-1579684385150-13f5080a2214?q=80&w=1776&auto=format&fit=crop" alt="A team of medical professionals working together" class="image-banner" />
         
         <section class="promises-section">
             <div class="promise-card">
@@ -490,6 +385,17 @@
 
             <div class="accordion-item">
                 <div class="accordion-header">
+                    <i class="fas fa-eye icon"></i>
+                    <h2>Our Vision</h2>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>We envision a healthier India—where diagnostic care is no longer a luxury, but a right. SwasthaIndia aims to be the most trusted name in preventive healthcare across the nation.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
                     <i class="fas fa-users icon"></i>
                     <h2>Meet the Founders</h2>
                     <i class="fas fa-chevron-down toggle-icon"></i>
@@ -499,31 +405,20 @@
                     <p>Both founders bring a unique blend of healthcare insight and digital innovation to the platform—ensuring every test booked is one step toward a healthier India.</p>
                 </div>
             </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <i class="fas fa-eye icon"></i>
-                    <h2>Our Vision</h2>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="accordion-content">
-                    <p>We envision a healthier India—where diagnostic care is no longer a luxury, but a right. SwasthaIndia aims to be the most trusted name in preventive healthcare across the nation.</p>
-                </div>
-            </div>
         </section>
 
         <section class="cta-section">
             <h2>Ready to Take Control of Your Health?</h2>
             <p>Book your health checkup today and get reliable results from the comfort of your home.</p>
-            <a href="https://wa.me/919911990556" target="_blank">Book Your Test Now</a>
+            <a href="https://wa.me/919911990556" target="_blank" rel="noopener noreferrer">Book Your Test Now</a>
         </section>
     </div>
 
-    <a href="https://wa.me/919911990556" class="wa-float" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+    <a href="https://wa.me/919911990556" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Icon" />
     </a>
 
-    <a href="#top" class="back-to-top" id="backToTopBtn">
+    <a href="#top" class="back-to-top" id="backToTopBtn" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </a>
 
@@ -536,11 +431,11 @@
             <div class="footer-column links">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="/index.html">Home</a></li>
-                    <li><a href="/my-packages.html">Health Packages</a></li>
-                    <li><a href="/book-test.html">Book Test</a></li>
-                    <li><a href="/privacy.html">Privacy Policy</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/my-packages/">Health Packages</a></li>
+                    <li><a href="/book-test/">Book Test</a></li>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/contact/">Contact Us</a></li>
                 </ul>
             </div>
             <div class="footer-column contact">
@@ -548,10 +443,10 @@
                 <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
                 <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
                 <div class="social-icons">
-                    <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Follow us on Instagram" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/company/swasthaindia" target="_blank" title="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
         </div>
@@ -573,6 +468,14 @@
         navClose.addEventListener('click', () => {
             navLinks.classList.remove('active');
             document.body.classList.remove('no-scroll');
+        });
+        
+        // Close menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
         });
 
         // Back to Top functionality
@@ -599,17 +502,25 @@
                 document.querySelectorAll('.accordion-header.active').forEach(activeHeader => {
                     if (activeHeader !== header) {
                         activeHeader.classList.remove('active');
+                        activeHeader.nextElementSibling.style.maxHeight = null;
                         activeHeader.nextElementSibling.classList.remove('active');
                     }
                 });
 
                 // Toggle the clicked one
                 header.classList.toggle('active');
-                content.classList.toggle('active');
+                if (content.classList.contains('active')) {
+                    content.style.maxHeight = null;
+                    content.classList.remove('active');
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    content.classList.add('active');
+                }
             });
         });
         
+        // Initial state for active accordion on page load
+        document.querySelector('.accordion-header.active').nextElementSibling.style.maxHeight = document.querySelector('.accordion-header.active').nextElementSibling.scrollHeight + "px";
     </script>
-
 </body>
 </html>
