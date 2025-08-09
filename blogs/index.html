@@ -683,7 +683,7 @@ body.no-scroll {
         postsToRender.forEach(post => {
             const postCard = document.createElement("a");
             postCard.className = "blog-card";
-            postCard.href = `/blog.html?slug=${post.Slug}`;
+            postCard.href = `/blog/?slug=${post.Slug}`;
             
             const excerpt = post.Content.split("</p>")[0].replace(/<[^>]*>/g, '').substring(0, 150) + '...';
 
