@@ -450,6 +450,18 @@
 .hidden {
   display: none;
 }
+        .logo-container {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically if needed */
+    margin-bottom: 15px;     /* space below logo */
+}
+
+.logo {
+    max-width: 120px;  /* adjust size as needed */
+    height: auto;
+}
+
 
     </style>
 </head>
@@ -734,7 +746,7 @@
             });
 
             // Replace this URL with your Google Apps Script Web App URL
-            const FORM_URL = 'https://script.google.com/macros/s/AKfycbyvI1RZQdoeFhunrOpA_C8duzJbPdee8rTlN0o19O0wDAjzPQJIyWvOzgMZNNU7HiKdZw/exec';
+            const FORM_URL = 'https://script.google.com/macros/s/AKfycbysZ4xGB-2OpNBW30Q-6GZPxYxPaffeoKoRrzi9IEWXuINpkuJRFxAqSw3kOKhFqaUcdA/exec';
                               
             let currentStep = 1;
             const totalDataSteps = 5;
