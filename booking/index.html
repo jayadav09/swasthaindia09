@@ -244,7 +244,7 @@
             letter-spacing: 0.5px;
         }
 
-        .next-btn, #submitBtn {
+        .next-btn, #submitBtn, #applyCouponBtn {
             background-color: var(--primary-green);
             color: #fff;
         }
@@ -254,7 +254,7 @@
             color: #fff;
         }
         
-        .next-btn:hover, #submitBtn:hover {
+        .next-btn:hover, #submitBtn:hover, #applyCouponBtn:hover {
             background-color: var(--primary-dark-green);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
@@ -477,6 +477,9 @@
             </div>
             <input type="hidden" id="test-name-field" name="Test Name">
             <input type="hidden" id="offer-price-field" name="Offer Price">
+            <input type="hidden" id="final-price-field" name="Final Price">
+            <input type="hidden" id="coupon-code-field" name="Coupon Code">
+
 
             <div class="step" id="step2">
                 <h2>Lifestyle & Health Questions</h2>
@@ -575,55 +578,82 @@
             </div>
 
             <div class="step" id="step5">
-    <h2>Confirm Your Details</h2>
-    <p class="subtitle">Please review your booking details before proceeding.</p>
+                <h2>Coupon & Price Summary</h2>
+                <p class="subtitle">Your total is based on the selected test. Apply a coupon if you have one.</p>
+                
+                <div class="summary-card">
+                    <h3>Booking Summary</h3>
+                    <p><strong>Selected Test:</strong> <span id="confirmTestName">Loading...</span></p>
+                    <p><strong>Offer Price:</strong> <span id="confirmTestPrice">₹0</span></p>
+                </div>
 
-    <!-- ✅ Booking Summary Card -->
-    <div class="summary-card">
-        <h3>Your Booking Summary</h3>
-        <p><strong>Selected Test:</strong> <span id="confirmTestName">Loading...</span></p>
-        <p><strong>Offer Price:</strong> <span id="confirmTestPrice">₹0</span></p>
-        <p><strong>Test For:</strong> <span id="summary-testFor">N/A</span></p> <!-- ✅ ADD THIS LINE -->
-    </div>
+                <div class="form-group">
+                    <label for="couponInput">Coupon Code</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="couponInput" name="couponInput" placeholder="Enter coupon code" style="flex: 1;">
+                        <button type="button" id="applyCouponBtn" style="flex: none; padding: 12px 20px;">Apply</button>
+                    </div>
+                    <small id="coupon-message" style="display: block; margin-top: 8px; font-weight: 500;"></small>
+                </div>
 
-    <!-- Personal Info -->
-    <div class="summary-card">
-        <h3>Personal Information</h3>
-        <p><strong>Name:</strong> <span id="summary-name"></span></p>
-        <p><strong>Age:</strong> <span id="summary-age"></span></p>
-        <p><strong>Gender:</strong> <span id="summary-gender"></span></p>
-        <p><strong>Phone:</strong> <span id="summary-phone"></span></p>
-        <p><strong>Address:</strong> <span id="summary-address"></span></p>
-    </div>
+                <div class="summary-card">
+                    <h3>Final Price</h3>
+                    <p style="font-size: 1.2em; font-weight: 600;"><strong>Total Amount:</strong> <span id="finalPrice" style="color: var(--primary-green);">₹0</span></p>
+                </div>
 
-    <!-- Lifestyle -->
-    <div class="summary-card" id="lifestyle-summary-card">
-        <h3>Lifestyle Profile</h3>
-        <p><strong>Smoker:</strong> <span id="summary-smoker"></span></p>
-        <p><strong>Sedentary:</strong> <span id="summary-sedentary"></span></p>
-        <p><strong>Alcohol:</strong> <span id="summary-alcohol"></span></p>
-        <p><strong>Diabetes History:</strong> <span id="summary-diabetes"></span></p>
-    </div>
-
-    <!-- Appointment -->
-    <div class="summary-card">
-        <h3>Appointment Details</h3>
-        <p><strong>Date:</strong> <span id="summary-date"></span></p>
-        <p><strong>Time Slot:</strong> <span id="summary-slot"></span></p>
-    </div>
-
-    <div class="info-note">
-        <p>Our agent will collect the sample and payment at the time of your appointment. Please double-check all details before confirming.</p>
-    </div>
-
-    <div class="button-group">
-        <button type="button" class="back-btn">Back</button>
-        <button type="submit" id="submitBtn">Confirm & Book</button>
-    </div>
-</div>
+                <div class="button-group">
+                    <button type="button" class="back-btn">Back</button>
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+            </div>
 
 
             <div class="step" id="step6">
+                <h2>Confirm Your Details</h2>
+                <p class="subtitle">Please review your booking details before proceeding.</p>
+
+                <div class="summary-card">
+                    <h3>Final Booking Summary</h3>
+                    <p><strong>Selected Test:</strong> <span id="summary-test-name">N/A</span></p>
+                    <p><strong>Final Price:</strong> <span id="summary-final-price" style="color: var(--primary-green); font-weight: 700;">N/A</span></p>
+                    <p><strong>Test For:</strong> <span id="summary-testFor">N/A</span></p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Personal Information</h3>
+                    <p><strong>Name:</strong> <span id="summary-name"></span></p>
+                    <p><strong>Age:</strong> <span id="summary-age"></span></p>
+                    <p><strong>Gender:</strong> <span id="summary-gender"></span></p>
+                    <p><strong>Phone:</strong> <span id="summary-phone"></span></p>
+                    <p><strong>Address:</strong> <span id="summary-address"></span></p>
+                </div>
+
+                <div class="summary-card" id="lifestyle-summary-card">
+                    <h3>Lifestyle Profile</h3>
+                    <p><strong>Smoker:</strong> <span id="summary-smoker"></span></p>
+                    <p><strong>Sedentary:</strong> <span id="summary-sedentary"></span></p>
+                    <p><strong>Alcohol:</strong> <span id="summary-alcohol"></span></p>
+                    <p><strong>Diabetes History:</strong> <span id="summary-diabetes"></span></p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Appointment Details</h3>
+                    <p><strong>Date:</strong> <span id="summary-date"></span></p>
+                    <p><strong>Time Slot:</strong> <span id="summary-slot"></span></p>
+                </div>
+
+                <div class="info-note">
+                    <p>Our agent will collect the sample and payment at the time of your appointment. Please double-check all details before confirming.</p>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="back-btn">Back</button>
+                    <button type="submit" id="submitBtn">Confirm & Book</button>
+                </div>
+            </div>
+
+
+            <div class="step" id="step7">
                 <h2 class="thank-you-title">Booking Confirmed!</h2>
                 <p class="thank-you-message">You have successfully booked your test. We look forward to serving you.</p>
                 <div class="booking-details-box">
@@ -701,12 +731,11 @@
                 }
             });
 
-            
-            const FORM_URL = 'https://script.google.com/macros/s/AKfycbw46s88cpUviUPKbWLbx_fNtfPYnudfQa7Vgu0DXztcoef-ApRjMNItQu6niWxhkDvIQA/exec';
+            // Replace this URL with your Google Apps Script Web App URL
+            const FORM_URL = 'https://script.google.com/macros/s/AKfycbwxfwGRv264tC2D6Uoy2cKjU4wxVwi-9He8R7dOTvy_WT47_vQ-KwHMTjVu4qJWmPI0Pg/exec';
                               
-
             let currentStep = 1;
-            const totalDataSteps = 4;
+            const totalDataSteps = 5;
 
             const updateProgressBar = (step) => {
                 let progress;
@@ -766,8 +795,14 @@
                     } else if (currentStep === 3) {
                         nextStep = 4;
                     } else if (currentStep === 4) {
+                        syncPrices();
+                        nextStep = 5; // Go to coupon step
+                    } else if (currentStep === 5) {
                         updateSummary();
-                        nextStep = 5;
+                        nextStep = 6;
+                    }
+                    else if (currentStep === 6) {
+                        nextStep = 7;
                     }
 
                     showStep(nextStep);
@@ -784,8 +819,13 @@
                         } else {
                             previousStep = 1; // Go back to 'test for' question
                         }
-                    } else {
-                        previousStep = currentStep - 1;
+                    } else if (currentStep === 5) {
+                        previousStep = 4; // Back from coupon step to date/time
+                    } else if (currentStep === 6) {
+                        previousStep = 5; // Back from summary to coupon
+                    }
+                    else {
+                         previousStep = currentStep - 1;
                     }
                     showStep(previousStep);
                 });
@@ -816,14 +856,12 @@
         }
     }
 
-    // ✅ Age validation: must be 1–99
     const age = document.getElementById('age').value.trim();
     if (!/^\d{1,2}$/.test(age) || parseInt(age) < 1 || parseInt(age) > 99) {
         showModal('Validation Error', 'Please enter a valid age (1–99).');
         return false;
     }
 
-    // ✅ Phone validation: must be 10 digits
     const phone = document.getElementById('phone').value.trim();
     if (!/^\d{10}$/.test(phone)) {
         showModal('Validation Error', 'Please enter a valid 10-digit phone number.');
@@ -873,6 +911,19 @@
                 }
             });
 
+            // Function to sync prices and test info across steps
+            const syncPrices = () => {
+                const testName = document.getElementById('test-name-field').value;
+                const offerPrice = parseFloat(document.getElementById('offer-price-field').value) || 0;
+                
+                document.getElementById('confirmTestName').textContent = testName || 'N/A';
+                document.getElementById('confirmTestPrice').textContent = `₹${offerPrice.toLocaleString('en-IN')}`;
+                
+                // Also set the initial final price
+                document.getElementById('finalPrice').textContent = `₹${offerPrice.toLocaleString('en-IN')}`;
+                document.getElementById('final-price-field').value = offerPrice;
+            };
+
            const updateSummary = () => {
     const testForValue = document.querySelector('#testForChoice .choice-option.selected')?.dataset.value || 'N/A';
     document.getElementById('summary-testFor').textContent = testForValue;
@@ -901,25 +952,10 @@
     const selectedSlot = document.querySelector('.slot.selected');
     document.getElementById('summary-slot').textContent = selectedSlot ? selectedSlot.dataset.time : 'N/A';
 
-        // ✅ Safe check for test name and price
-    function syncTestInfo() {
-        const confirmTestNameEl = document.getElementById('confirmTestName');
-        const confirmTestPriceEl = document.getElementById('confirmTestPrice');
-        const testNameField = document.getElementById('test-name-field');
-        const offerPriceField = document.getElementById('offer-price-field');
-
-        if (confirmTestNameEl && testNameField) {
-            confirmTestNameEl.textContent = testNameField.value || 'N/A';
-        }
-
-        if (confirmTestPriceEl && offerPriceField) {
-            confirmTestPriceEl.textContent = '₹' + (offerPriceField.value || '0');
-        }
-    }
-
-    syncTestInfo(); // ✅ CALL IT HERE!
-
-
+    // ✅ Sync final price and test name to the final summary step
+    document.getElementById('summary-test-name').textContent = document.getElementById('test-name-field').value;
+    const finalPrice = parseFloat(document.getElementById('final-price-field').value) || 0;
+    document.getElementById('summary-final-price').textContent = `₹${finalPrice.toLocaleString('en-IN')}`;
 };
 
 function setupChoiceGroup(groupId) {
@@ -928,9 +964,7 @@ function setupChoiceGroup(groupId) {
 
     group.querySelectorAll('.choice-option').forEach(option => {
         option.addEventListener('click', () => {
-            // Remove existing selection
             group.querySelectorAll('.choice-option').forEach(opt => opt.classList.remove('selected'));
-            // Add selected class
             option.classList.add('selected');
         });
     });
@@ -943,11 +977,45 @@ setupChoiceGroup('sedentaryChoice');
 setupChoiceGroup('alcoholChoice');
 setupChoiceGroup('diabetesChoice');
 
+// Coupon code functionality
+const applyCouponBtn = document.getElementById('applyCouponBtn');
+const couponInput = document.getElementById('couponInput');
+const couponMessage = document.getElementById('coupon-message');
+
+applyCouponBtn.addEventListener('click', () => {
+    const couponCode = couponInput.value.trim().toUpperCase();
+    const offerPrice = parseFloat(document.getElementById('offer-price-field').value) || 0;
+    let finalPrice = offerPrice;
+
+    couponMessage.style.color = '#d32f2f';
+    couponMessage.textContent = '';
+    
+    if (couponCode === 'FLAT100') {
+        const discountAmount = 100;
+        finalPrice = Math.max(0, offerPrice - discountAmount);
+        couponMessage.style.color = 'var(--primary-green)';
+        couponMessage.textContent = 'Coupon applied successfully!';
+    } 
+    else if (couponCode === 'SAVE20') {
+        const discountAmount = offerPrice * 0.20;
+        finalPrice = Math.max(0, offerPrice - discountAmount);
+        couponMessage.style.color = 'var(--primary-green)';
+        couponMessage.textContent = 'Coupon applied successfully!';
+    }
+    else if (couponCode !== '') {
+        couponMessage.textContent = 'Invalid coupon code.';
+    }
+
+    document.getElementById('finalPrice').textContent = `₹${finalPrice.toLocaleString('en-IN')}`;
+    document.getElementById('final-price-field').value = finalPrice;
+    document.getElementById('coupon-code-field').value = couponCode;
+
+});
+
 
            form.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // ✅ START: Input Validations
     const phoneValue = document.getElementById('phone').value.trim();
     const ageValue = document.getElementById('age').value.trim();
 
@@ -960,12 +1028,9 @@ setupChoiceGroup('diabetesChoice');
         alert("Please enter a valid age (1–99).");
         return;
     }
-    // ✅ END: Input Validations
-
     const submitBtn = document.getElementById('submitBtn');
     const originalBtnText = submitBtn.textContent;
 
-    // Set loading state
     submitBtn.innerHTML = `<span class="spinner"></span> Booking...`;
     submitBtn.disabled = true;
 
@@ -1002,6 +1067,9 @@ setupChoiceGroup('diabetesChoice');
     data.append('Selected Slot', selectedSlot || '');
     data.append('Test Name', document.getElementById('test-name-field').value);
     data.append('Offer Price', document.getElementById('offer-price-field').value);
+    data.append('Final Price', document.getElementById('final-price-field').value);
+    data.append('Coupon Code', document.getElementById('coupon-code-field').value);
+
 
     try {
         await fetch(FORM_URL, {
@@ -1012,7 +1080,7 @@ setupChoiceGroup('diabetesChoice');
         // Show thank you screen
         document.getElementById('thankYouDate').textContent = data.get('Booking Date');
         document.getElementById('thankYouTime').textContent = data.get('Selected Slot');
-        showStep(6);
+        showStep(7);
         document.getElementById('thankYouBookingId').textContent = '#' + bookingId;
 
 
