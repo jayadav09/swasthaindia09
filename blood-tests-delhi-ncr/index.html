@@ -797,6 +797,10 @@ body {
             margin-top: 0;
         }
     }
+        html {
+  scroll-behavior: smooth;
+}
+
     </style>
     
     <script type="application/ld+json">
@@ -908,9 +912,9 @@ body {
                         <span class="mrp">₹1999</span>
                         <span class="offer">₹995</span>
                     </div>
-                    <a href="#book-package" class="btn btn-primary">
-                        <i class="fa-solid fa-calendar-check"></i> Book Now
-                    </a>
+                    <a href="#diabetes-package" class="btn btn-primary">
+    <i class="fa-solid fa-calendar-check"></i> Book Now
+</a>
                 </div>
             </div>
         </div>
@@ -1170,6 +1174,10 @@ body {
 
                     const card = document.createElement("div");
                     card.className = "card card-wrap";
+                    // If this package is "Diabetes Health Package", add an ID
+if (name.toLowerCase().includes("diabetes")) {
+    card.id = "diabetes-package";
+}
                     card.innerHTML = `
                         ${offPct > 0 ? `<span class="off-badge">SAVE ${offPct}%</span>` : ""}
                         <img class="thumb" src="${img}" alt="${name}">
