@@ -1050,6 +1050,7 @@ applyCouponBtn.addEventListener('click', () => {
 
     const data = new URLSearchParams();
     const bookingId = 'BK' + Date.now();
+    data.append('action', 'new');           
     data.append('Booking ID', bookingId);
     data.append('Timestamp', new Date().toISOString());
 
