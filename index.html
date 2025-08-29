@@ -1485,19 +1485,49 @@ fetchData().then(() => {
 
   // ====== Firebase Config (same as login.html) ======
   const firebaseConfig = {
-    apiKey: "AIzaSyDBi4vIBxmqvX-TuaVzDVJBFcAi3PT6pE0",
+    apiKey: "AIzaSyDvzLRCD4lDkasz6vsnUxChd3ElkP9SrxE",
     authDomain: "swasthaindia-f97a6.firebaseapp.com",
+    databaseURL: "https://swasthaindia-f97a6-default-rtdb.firebaseio.com",
     projectId: "swasthaindia-f97a6",
     storageBucket: "swasthaindia-f97a6.firebasestorage.app",
     messagingSenderId: "982224624069",
-    appId: "1:982224624069:web:b875c17f3b53d6ac0a53ac",
-    measurementId: "G-C9QC6YM8WD"
-  }; 
-  const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyy__JoFJKXoqltzFELsvx_MlG2mo9ARqn5O4H6wheaUBUYOWL9dq4SiJWPIkAX2ux-uw/exec";
+    appId: "1:982224624069:web:52a7c0b0a804aa7f0a53ac",
+    measurementId: "G-Z24M4FZJ67"
+  };
+  // from login.html
+  // SHEET web app URL (from login.html)
+  const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzlUdR9ZBwDupH8Eth3S02wtFtDE5hqLD6N3JGJoLej5DjGTyae5gG3qQUz-DrhfBFwzw/exec";
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
+  const loginLink = document.getElementById("openAuthModalLink");
+  const dashboardLink = document.getElementById("dashboardNavLink");
+  const logoutLink = document.getElementById("logoutNavLink");
+
+  // Watch login state
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loginLink.style.display = "none";
+      dashboardLink.style.display = "inline-block";
+      logoutLink.style.display = "inline-block";
+    } else {
+      loginLink.style.display = "inline-block";
+      dashboardLink.style.display = "none";
+      logoutLink.style.display = "none";
+    }
+  });
+
+  // Handle logout
+  logoutLink.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      await signOut(auth);
+      window.location.href = "/"; // back to home
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  });
 
   // ====== Messaging (Web Push) ======
   let messaging = null;
@@ -1517,22 +1547,28 @@ fetchData().then(() => {
   // Replace with your Web Push certs key (VAPID public key) from Firebase Console
   const VAPID_KEY = "BAFi29OBsJ5nyDtIJl4l4VfVJI9WPhTd2EbgRjBjsAG1S_qbDIX3lPUIQptiG1v1zamjqYAQBRe7yZT6TEFjSnU";
 
-  async function requestOfferNotifications() {
-    try {
-      if (!('Notification' in window)) return { status: 'unsupported' };
-      const permission = await Notification.requestPermission();
-      if (permission !== 'granted') return { status: permission };
+  // CORRECTED: Request permission and get the token in one go
+ async function requestOfferNotifications() {
+  try {
+    if (!('Notification' in window)) return { status: 'unsupported', token: null };
 
-      const reg = await initMessaging();
-      if (!reg) return { status: 'unsupported' };
-
-      cachedToken = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
-      return { status: 'granted', token: cachedToken };
-    } catch (e) {
-      console.error('Push permission error', e);
-      return { status: 'error' };
+    // Explicitly ask for notification permission
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+        return { status: permission, token: null };
     }
-  }
+
+    const reg = await initMessaging();
+    if (!reg) return { status: 'unsupported', token: null };
+
+    cachedToken = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
+    return { status: 'granted', token: cachedToken };
+
+  } catch (e) {
+    console.error('Push permission error', e);
+    return { status: 'error', token: null };
+  }
+}
 
   // ====== Sheet sync (add fcmToken + permission) ======
   async function upsertUserToSheet(user, extra = {}) {
@@ -1547,9 +1583,10 @@ fetchData().then(() => {
         photoURL: user.photoURL || "",
         createdAt: extra.createdAt || new Date().toISOString(),
         lastLoginAt: new Date().toISOString(),
-        fcmToken: extra.fcmToken || "",       // << store token for offers
-        notifStatus: extra.notifStatus || ""  // 'granted' | 'denied' | 'default' | 'unsupported'
+        fcmToken: extra.fcmToken || "",
+        notifStatus: extra.notifStatus || ""
       };
+      console.log("Sending to sheet:", payload);
 
       const res = await fetch(SHEET_WEBAPP_URL, {
         method: "POST",
@@ -1588,6 +1625,52 @@ fetchData().then(() => {
   });
   $("#authCloseBtn").addEventListener("click", closeAuth);
   function closeAuth() { authModal.style.display = "none"; bodyEl.style.overflow = ""; }
+  /* ---------- Small UI helpers: show spinner on buttons & friendly errors ---------- */
+
+  /**
+   * setBtnLoading(btn, html) - disables button and replaces innerHTML with loading html.
+   * Returns a restore() function that will restore original state.
+   */
+  function setBtnLoading(btn, loadingHtml) {
+    if (!btn) {
+      return () => {};
+    }
+    if (!btn.dataset.origHtml) btn.dataset.origHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    btn.innerHTML = loadingHtml || `<i class="fas fa-spinner fa-spin"></i> Processing...`;
+    return () => {
+      btn.disabled = false;
+      btn.removeAttribute('aria-busy');
+      btn.innerHTML = btn.dataset.origHtml;
+    };
+  }
+
+  /**
+   * friendlyAuthError(err) - turn Firebase error into a user-friendly string.
+   * Uses err.code where possible and otherwise strips the "Firebase:" prefix from message.
+   */
+  function friendlyAuthError(err) {
+    console.error('Auth error (full):', err);
+    if (!err) return 'Something went wrong. Try again.';
+    const code = err.code || '';
+    const map = {
+      'auth/wrong-password': 'Wrong password. Please try again.',
+      'auth/user-not-found': 'No account found with this email.',
+      'auth/email-already-in-use': 'This email is already registered. Try logging in.',
+      'auth/invalid-email': 'Please enter a valid email address.',
+      'auth/weak-password': 'Password is too weak. Use at least 6 characters.',
+      'auth/too-many-requests': 'Too many attempts. Try again later.',
+      'auth/popup-closed-by-user': 'Sign-in popup closed. Try again.',
+      'auth/network-request-failed': 'Network error. Check your connection.',
+      'auth/user-disabled': 'This account has been disabled. Contact support.'
+    };
+    if (map[code]) return map[code];
+
+    // Fallback: remove "Firebase: " prefix and the (auth/... ) suffix if present
+    const raw = (err.message || String(err));
+    return raw.replace(/^Firebase:\s*/i, '').replace(/\s*\(auth\/[^\)]+\)\.?\s*/i, '').trim();
+  }
 
   // Tabs
   const tabLogin = $("#authTabLogin");
@@ -1597,14 +1680,22 @@ fetchData().then(() => {
   const title = $("#authTitle");
 
   const goLogin = () => {
-    tabLogin.classList.add("active"); tabSignup.classList.remove("active");
-    loginPane.style.display = "block"; signupPane.style.display = "none";
-    title.textContent = "Login"; flash(""); authVerifyAlert.style.display = "none";
+    tabLogin.classList.add("active");
+    tabSignup.classList.remove("active");
+    loginPane.style.display = "block";
+    signupPane.style.display = "none";
+    title.textContent = "Login";
+    flash("");
+    authVerifyAlert.style.display = "none";
   };
   const goSignup = () => {
-    tabSignup.classList.add("active"); tabLogin.classList.remove("active");
-    signupPane.style.display = "block"; loginPane.style.display = "none";
-    title.textContent = "Sign up"; flash(""); authVerifyAlert.style.display = "none";
+    tabSignup.classList.add("active");
+    tabLogin.classList.remove("active");
+    signupPane.style.display = "block";
+    loginPane.style.display = "none";
+    title.textContent = "Sign up";
+    flash("");
+    authVerifyAlert.style.display = "none";
   };
   tabLogin.addEventListener("click", goLogin);
   tabSignup.addEventListener("click", goSignup);
@@ -1612,92 +1703,194 @@ fetchData().then(() => {
   $("#switchToLogin").addEventListener("click", goLogin);
 
   // ====== Auth flows (email/password + Google) ======
-  $("#signupBtn").addEventListener("click", async () => {
-    const name = $("#signupName").value.trim();
-    const email = $("#signupEmail").value.trim();
-    const pass = $("#signupPass").value;
-    const phone = $("#signupPhone").value.trim();
-    const wantsPush = $("#signupAllowPush").checked;
+   // ---------- Signup (with button spinner + friendly errors + optional push signup) ----------
+// ---------- Signup (with button spinner + friendly errors + optional push signup) ----------
+$("#signupBtn").addEventListener("click", async (e) => {
+  const btn = $("#signupBtn");
+  const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Creating...');
+  try {
+    const name = $("#signupName").value.trim();
+    const email = $("#signupEmail").value.trim();
+    const pass = $("#signupPass").value;
+    const phone = $("#signupPhone").value.trim();
+    const wantsPush = $("#signupAllowPush").checked;
 
-    if (!name || !email || !pass) { flash("Please fill all required fields.", false); return; }
+    if (!name || !email || !pass) { 
+        flash("Please fill all required fields.", false); 
+        return; 
+    }
 
+    // 1. Create the user account with email and password
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: name });
+
+    // 2. Request notification permission only if the user opted in
+    let notifStatus = 'default', token = '';
+    if (wantsPush) {
+        const r = await requestOfferNotifications();
+        notifStatus = r.status || 'default';
+        token = r.token || '';
+    }
+
+    // 3. Save the user data (including notification status/token) to Google Sheets
+    await upsertUserToSheet(cred.user, {
+        name,
+        phone,
+        fcmToken: token,
+        notifStatus,
+        createdAt: new Date().toISOString()
+    });
+
+    // 4. Send the email verification link to the user
+    const baseUrl = window.location.hostname === "localhost"
+        ? "http://localhost:5500"
+        : "https://swasthaindia.in";
+
+    await sendEmailVerification(cred.user, {
+        url: baseUrl,
+        handleCodeInApp: false
+    });
+
+    // 5. Sign out the user immediately after sending the verification link
+    // This prevents them from auto-logging in until they verify.
+    await signOut(auth);
+
+    // 6. Display a success message and switch to the login tab
+    // The message is displayed *after* the view change to ensure it's visible.
+    goLogin();
+    flash("Verification email sent! Please check your inbox to log in.", true);
+    authVerifyAlert.style.display = "block";
+
+  } catch (err) {
+    flash(friendlyAuthError(err), false);
+  } finally {
+    restore();
+  }
+});
+
+// Update the login logic to handle unverified users
+$("#loginBtn").addEventListener("click", async (e) => {
+    const btn = $("#loginBtn");
+    const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Logging in...');
     try {
-      const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      await updateProfile(cred.user, { displayName: name });
-      await sendEmailVerification(cred.user);
+        const email = $("#loginEmail").value.trim();
+        const pass = $("#loginPass").value;
+        if (!email || !pass) {
+            flash("Enter email & password.", false);
+            return;
+        }
 
-      let notifStatus = 'default', token = '';
-      if (wantsPush) {
+        const cred = await signInWithEmailAndPassword(auth, email, pass);
+
+        // Check verification after login
+        if (!cred.user.emailVerified) {
+            // Do NOT sign out. Let them log in but show the verification message.
+            authVerifyAlert.style.display = "block";
+            flash("Please verify your email to continue. Click 'Resend' if needed.", false);
+            return;
+        }
+
+        // If verified, proceed
+        await upsertUserToSheet(cred.user);
+        window.location.href = "dashboard.html";
+
+    } catch (err) {
+        flash(friendlyAuthError(err), false);
+    } finally {
+        restore();
+    }
+});
+  // ---------- Google Sign-in (wrap flow so button shows spinner) ----------
+  const googleFlow = async (btn) => {
+    const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Signing in...');
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      let notifStatus = 'default',
+        token = '';
+      try {
         const r = await requestOfferNotifications();
         notifStatus = r.status;
         token = r.token || '';
-      }
-
-      await upsertUserToSheet(cred.user, { name, phone, createdAt: new Date().toISOString(), fcmToken: token, notifStatus });
-      flash("Verification email sent. Please check your inbox.");
-      authVerifyAlert.style.display = "block";
-    } catch (err) {
-      flash(err.message, false);
-    }
-  });
-
-  $("#loginBtn").addEventListener("click", async () => {
-    const email = $("#loginEmail").value.trim();
-    const pass = $("#loginPass").value;
-    if (!email || !pass) { flash("Enter email & password.", false); return; }
-
-    try {
-      const cred = await signInWithEmailAndPassword(auth, email, pass);
-      if (!cred.user.emailVerified) {
-        await signOut(auth);
-        authVerifyAlert.style.display = "block";
-        flash("Please verify your email to continue.", false);
-        return;
-      }
-      await upsertUserToSheet(cred.user);
-      window.location.href = "/dashboard/index.html";
-    } catch (err) {
-      flash(err.message, false);
-    }
-  });
-
-  const googleFlow = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      // Ask for notifications after Google sign-in (optional)
-      let notifStatus = 'default', token = '';
-      try {
-        const r = await requestOfferNotifications();
-        notifStatus = r.status; token = r.token || '';
       } catch {}
-      await upsertUserToSheet(result.user, { createdAt: new Date().toISOString(), fcmToken: token, notifStatus });
-      window.location.href = "/dashboard/index.html";
+      await upsertUserToSheet(result.user, {
+        createdAt: new Date().toISOString(),
+        fcmToken: token,
+        notifStatus
+      });
+      window.location.href = "dashboard.html";
     } catch (err) {
-      flash(err.message, false);
+      flash(friendlyAuthError(err), false);
+    } finally {
+      restore();
     }
   };
-  $("#googleBtn").addEventListener("click", googleFlow);
-  $("#googleBtn2").addEventListener("click", googleFlow);
 
+  $("#googleBtn").addEventListener("click", (e) => googleFlow(e.currentTarget));
+  $("#googleBtn2").addEventListener("click", (e) => googleFlow(e.currentTarget));
+
+  // ---------- Forgot / Resend (also show small spinner) ----------
   $("#authForgotBtn").addEventListener("click", async () => {
-    const email = $("#loginEmail").value.trim();
-    if (!email) { flash("Enter your email in the login form first.", false); return; }
-    try { await sendPasswordResetEmail(auth, email); flash("Password reset email sent."); }
-    catch (e) { flash(e.message, false); }
+    const btn = $("#authForgotBtn");
+    const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Sending...');
+    try {
+      const email = $("#loginEmail").value.trim();
+      if (!email) {
+        flash("Enter your email in the login form first.", false);
+        return;
+      }
+      await sendPasswordResetEmail(auth, email);
+      flash("Password reset email sent.");
+    } catch (e) {
+      flash(friendlyAuthError(e), false);
+    } finally {
+      restore();
+    }
   });
 
   $("#authResendVerify").addEventListener("click", async () => {
-    const user = auth.currentUser;
-    if (!user) { flash("Login first to resend verification.", false); return; }
-    try { await sendEmailVerification(user); flash("Verification email re-sent."); }
-    catch (e) { flash(e.message, false); }
+    const btn = $("#authResendVerify");
+    const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Resending...');
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        flash("Login first to resend verification.", false);
+        return;
+      }
+      await sendEmailVerification(user);
+      flash("Verification email re-sent.");
+    } catch (e) {
+      flash(friendlyAuthError(e), false);
+    } finally {
+      restore();
+    }
   });
+
 
   // If already logged-in & verified, you can optionally hide "Login" link
   onAuthStateChanged(auth, (user) => {
     // No auto-redirect here on home — we only redirect after explicit login
   });
+  // ====== Detect email verification redirect ======
+  document.addEventListener("DOMContentLoaded", async () => {
+    const urlParams = new URLSearchParams(window.location.search);
 
+    if (urlParams.has("oobCode")) {
+      try {
+        // Ensure auth is reloaded if user was still around
+        if (auth.currentUser) await auth.currentUser.reload();
+
+        // Auto-open login modal after verification
+        goLogin();
+        authModal.style.display = "flex";
+        flash("Email verified! Please log in with your password.", true);
+
+        // Clean URL (remove the Firebase oobCode from query params)
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (e) {
+        console.error("Verify redirect error:", e);
+      }
+    }
+  });
   // Foreground messages (optional toast)
   try {
     const supported = await isSupported();
@@ -1709,9 +1902,9 @@ fetchData().then(() => {
     }
   } catch {}
 </script>
-
 </body>
 </html>
+
 
 
 
