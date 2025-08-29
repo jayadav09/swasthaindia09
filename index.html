@@ -1877,11 +1877,10 @@ $("#loginBtn").addEventListener("click", async (e) => {
     // No auto-redirect here on home — we only redirect after explicit login
   });
   // ====== Detect email verification redirect ======
-  document.addEventListener("DOMContentLoaded", async () => {
-    const urlParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams(window.location.search);
 
-    if (urlParams.has("oobCode")) {
-      try {
+if (urlParams.has("oobCode")) {
+    try {
         // Ensure auth is reloaded if user was still around
         if (auth.currentUser) await auth.currentUser.reload();
 
@@ -1892,25 +1891,25 @@ $("#loginBtn").addEventListener("click", async (e) => {
 
         // Clean URL (remove the Firebase oobCode from query params)
         window.history.replaceState({}, document.title, window.location.pathname);
-      } catch (e) {
+    } catch (e) {
         console.error("Verify redirect error:", e);
-      }
     }
-  });
-  // Foreground messages (optional toast)
-  try {
-    const supported = await isSupported();
-    if (supported) {
-      onMessage(getMessaging(app), (payload) => {
+}
+
+// Foreground messages (optional toast)
+// NOTE: This should also be inside your main DOMContentLoaded listener.
+const supported = await isSupported();
+if (supported) {
+    onMessage(getMessaging(app), (payload) => {
         // You could show a toast here when an offer arrives while the site is open
         console.log('Offer received in-foreground:', payload);
-      });
-    }
-  } catch {}
+    });
+}
     
 </script>
 </body>
 </html>
+
 
 
 
