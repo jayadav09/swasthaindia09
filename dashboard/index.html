@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SwasthaIndia Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+    --primary-color: #1a73e8;
+    --secondary-color: #e63946;
+    --primary-hover: #145cb7;
+     --accent-color: #00c6d7;
+    --background-color: #f0f2f5;
+    --surface-color: #ffffff;
+    --border-color: #e2e8f0;
+    --text-color: #334155;
+    --muted-text: #64748b;
+    --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.05),0 2px 4px -1px rgba(0,0,0,0.03);
+    --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --red-cancel: #ef4444;
+    --red-cancel-hover: #dc2626;
+    --status-pending: #facc15;
+    --status-completed: #22c55e;
+    --status-cancelled: #ef4444;
+    --status-rescheduled: #3b82f6;
+}
+ header {
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* Fix only the topbar */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--card-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+/* Push the rest of the page down */
+body {
+    margin-top: 60px; /* equal to .topbar height */
+}
+.logo img {
+    width: 180px;
+   }
+.nav-links {
+    display: flex;
+   }
+.nav-links a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s, transform 0.3s;
+   margin-left: 24px;
+}
+.nav-links a:hover {
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--primary-color);
+}
+.nav-close {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+}
+@media (max-width: 768px) {
+    .topbar { padding: 0 10px; }
+            .logo img { width: 140px; }
+    .nav-links {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+    }
+    .nav-links.active {
+        transform: translateX(0);
+    }
+    .nav-links a {
+        color: white;
+        font-size: 1.5rem;
+        margin: 20px 0;
+    }
+    .nav-close {
+        display: block;
+    }
+    .hamburger {
+        display: block;
+    }
+    .logo img {
+        width: 180px;
+    }
+}
+.logout-btn {
+    background: var(--secondary-color);  /* make sure secondary-color is defined */
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background: #c62828; /* darker red shade */
+}
+.logout-btn {
+  background: none;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+}
+.logout-btn:hover {
+  background: var(--secondary-color);
+  color: #fff;
+}
+
+
+
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Inter',sans-serif; background:var(--background-color); color:var(--text-color); line-height:1.6; }
+h1 { font-size:2rem; font-weight:700; margin-bottom:25px; }
+
+.dashboard-container { max-width:1200px; margin:30px auto; padding:0 1rem; }
+.dashboard-grid { display:grid; grid-template-columns:1fr 2fr; gap:2rem; align-items:start; }
+.left-panel,.right-panel { display:flex; flex-direction:column; gap:1.5rem; }
+.card { background:var(--surface-color); padding:2rem; border-radius:var(--radius-md); box-shadow:var(--shadow-light); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.card:hover { transform:translateY(-5px); box-shadow:var(--shadow-hover); }
+.card h2 { font-size:1.25rem; font-weight:600; color:var(--text-color); border-bottom:1px solid var(--border-color); padding-bottom:1rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:0.75rem; }
+.icon-primary { color:var(--primary-color); }
+
+.profile-info p { margin:0.5rem 0; }
+.stats-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; }
+.stat-box { background:var(--background-color); padding:1.5rem; border-radius:var(--radius-md); text-align:center; }
+.stat-box span { display:block; font-size:2.5rem; font-weight:700; color:var(--primary-color); }
+.stat-box p { font-size:0.9rem; color:var(--muted-text); }
+
+.booking-card { border-left:4px solid var(--primary-color); padding:1.5rem; background:#f8f9fa; margin-bottom:1rem; border-radius:var(--radius-md); }
+.booking-card .booking-header { display:flex; justify-content:space-between; align-items:center; font-size:1.1rem; font-weight:600; margin-bottom:0.5rem; }
+.status { padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
+.status-pending { background-color:var(--status-pending); color:#78350f; }
+.status-completed { background-color:var(--status-completed); color:#166534; }
+.status-cancelled { background-color:var(--status-cancelled); color:#991b1b; }
+.status-rescheduled { background-color:var(--status-rescheduled); color:#1e40af; }
+.booking-info p { margin:0.5rem 0; color:var(--muted-text); }
+.booking-actions { margin-top:1rem; display:flex; gap:0.75rem; }
+.reschedule-btn { background:var(--primary-color); color:var(--surface-color); }
+.reschedule-btn:hover { background:var(--primary-hover); }
+.cancel-btn { background:var(--red-cancel); color:var(--surface-color); }
+.cancel-btn:hover { background:var(--red-cancel-hover); }
+
+.article-link { display:block; text-decoration:none; color:var(--text-color); margin-bottom:1rem; transition: color 0.2s ease; }
+.article-link:hover h4 { color:var(--primary-color); text-decoration:underline; }
+.article-link h4 { font-size:1.1rem; font-weight:600; margin-bottom:0.25rem; }
+.article-link p { font-size:0.9rem; color:var(--muted-text); }
+
+hr { border:0; height:1px; background:var(--border-color); margin:1rem 0; }
+.empty-state { text-align:center; color:var(--muted-text); font-style:italic; padding:2rem 0; }
+
+.modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); justify-content:center; align-items:center; }
+.modal-content { background:var(--surface-color); padding:2rem; border-radius:var(--radius-md); width:90%; max-width:450px; box-shadow:var(--shadow-hover); position:relative; animation: fadeIn 0.3s ease; }
+.close-btn { position:absolute; top:1rem; right:1.25rem; font-size:1.5rem; color:var(--muted-text); cursor:pointer; line-height:1; }
+.modal-actions { display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem; }
+.input-group { margin-bottom:1.5rem; }
+.input-group label { display:block; margin-bottom:0.5rem; font-weight:500; }
+.input-group input, .input-group select { width:100%; padding:0.75rem; border:1px solid var(--border-color); border-radius:var(--radius-sm); }
+
+.skeleton-item { height:80px; background:linear-gradient(90deg,#e5e5e5 25%,#f5f5f5 50%,#e5e5e5 75%); background-size:200% 100%; border-radius:var(--radius-md); animation:pulse 1.5s cubic-bezier(0.4,0,0.6,1) infinite; }
+@keyframes pulse { 0%,100%{background-position:100% 0;} 50%{background-position:-100% 0;} }
+
+@media(max-width:768px) {
+    .dashboard-grid { grid-template-columns:1fr; }
+    .main-header { flex-direction:column; gap:1rem; }
+    .header-nav { flex-wrap:wrap; justify-content:center; }
+    .nav-link,.logout-btn { padding:0.5rem 1rem; }
+    .dashboard-container { padding:0 1rem; }
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.stat-box {
+  background: var(--card-bg, #fff);
+  color: var(--text-color, #333);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.stat-box span {
+  font-size: 24px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.dark-mode .stat-box {
+  background: #222;
+  color: #eee;
+}
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .card {
+    background: #1e1e1e;
+    border-color: #333;
+}
+
+body.dark-mode .btn {
+    background: #333;
+    color: #fff;
+}
+
+.dark-mode-toggle {
+    text-align: right;
+    margin-bottom: 10px;
+}
+.dark-mode-toggle button {
+    background: #444;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+ /* --- Footer (Unchanged) --- */
+        .swastha-footer {
+            background: linear-gradient(to right, #000000, #1c1c1c);
+            color: #fff;
+            padding: 50px 20px 20px;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .footer-column {
+            flex: 1 1 250px;
+            margin: 20px;
+        }
+
+        .footer-column h3, .footer-column h4 {
+            color: #fff;   /* white headings */
+           margin-bottom: 15px;
+           }
+
+        .footer-column p, .footer-column a, .footer-column li {
+            color: #ccc;
+            font-size: 15px;
+            line-height: 1.8;
+            text-decoration: none;
+        }
+
+        .footer-column a:hover {
+            color: white;
+            transition: 0.3s;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .social-icons a {
+            font-size: 22px;
+            color: #ccc;
+            margin-right: 15px;
+            transition: transform 0.3s, color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container { flex-direction: column; align-items: center; text-align: center; }
+            .footer-column { margin: 20px 0; }
+        }
+
+</style>
+</head>
+<body>
+
+<header>
+    <div class="topbar">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="SwasthaIndia Logo" />
+    </a>
+    <div class="hamburger" id="hamburger">
+      <i class="fas fa-bars"></i>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <button class="nav-close" id="navClose">&times;</button>
+      <a href="/">Home</a>
+      <a href="/my-packages/">Packages</a>
+      <a href="/book-test/">Book Test</a>
+
+      <!-- ✅ Logout Button -->
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- User Menu -->
+
+  
+  <main class="dashboard-container"> 
+<h1 id="greeting">Hello! User</h1>
+ <div class="dashboard-grid"> 
+<div class="left-panel"> 
+<div class="card profile-card"> 
+<h2><i class="fas fa-user-circle icon-primary">
+</i> Your Profile</h2> <div class="profile-info"> 
+<p><strong>Name:</strong> 
+<span id="pname"></span></p>
+<p><strong>Email:</strong> <span id="pemail"></span></p>
+ </div>
+ </div>
+   
+
+            <div class="card stats-card">
+    <h2><i class="fas fa-chart-line icon-primary"></i> Your Activity</h2>
+    <div class="stats-grid">
+        <div class="stat-box">
+            <span id="apptCount">0</span>
+            <p>Appointments</p>
+        </div>
+        <div class="stat-box">
+            <span id="reportCount">0</span>
+            <p>Reports</p>
+        </div>
+        <div class="stat-box">
+            <span id="cancelCount">0</span>
+            <p>Cancelled / Rescheduled</p>
+        </div>
+    </div>
+</div>
+
+
+            <div class="card report-card" id="latest-report-card" style="display:none;">
+                <h2><i class="fas fa-file-medical-alt icon-primary"></i> Latest Health Report</h2>
+                <div id="latestReportInfo">
+                    <p><strong>Blood Pressure:</strong> <span id="bpValue">--</span></p>
+                    <p><strong>Blood Sugar:</strong> <span id="sugarValue">--</span></p>
+                    <p><strong>Cholesterol:</strong> <span id="cholValue">--</span></p>
+                </div>
+            </div>
+<div class="card reports-card">
+  <h2><i class="fas fa-file-pdf icon-primary"></i> My Reports</h2>
+  <div id="reportsList"></div>
+</div>
+
+            <div class="card history-card">
+                <h2><i class="fas fa-history icon-primary"></i> Payment History</h2>
+                <div id="paymentHistory">
+                    <p class="empty-state">No payments found.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="card appt-card" id="upcoming-appt-card" style="display:none;">
+                <h2 style="border-bottom: none;"><i class="fas fa-bell icon-primary"></i> Your Next Appointment</h2>
+                <div id="upcomingApptDetails">
+                    <p><strong>Test:</strong> <span id="apptTest">--</span></p>
+                    <p><strong>Date & Time:</strong> <span id="apptDateTime">--</span></p>
+                    <p><strong>Status:</strong> <span id="apptStatus" class="status">--</span></p>
+                </div>
+            </div>
+
+            <div class="card bookings-card">
+                <h2><i class="fas fa-calendar-check icon-primary"></i> Your Bookings</h2>
+                <div id="bookings" class="bookings-list">
+                    <div class="skeleton-loader">
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card articles-card">
+    <h2><i class="fas fa-newspaper icon-primary"></i> Health Articles</h2>
+    <div id="articlesList">
+        <p class="empty-state">Loading articles...</p>
+    </div>
+</div>
+
+        </div>
+    </div>
+</main>
+
+<div id="rescheduleModal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close-btn">&times;</span>
+        <h3 id="modalTitle">Reschedule Booking</h3>
+        <div class="input-group" id="modalInputs">
+            <label for="newDate">Date:</label>
+            <input type="date" id="newDate" />
+            <label for="newSlot">Slot:</label>
+            <select id="newSlot">
+                <option value="">Select Slot</option>
+                <option value="5:00 AM - 5:30 AM">5:00 AM - 5:30 AM</option>
+                <option value="5:30 AM - 6:00 AM">5:30 AM - 6:00 AM</option>
+                <option value="6:00 AM - 6:30 AM">6:00 AM - 6:30 AM</option>
+                <option value="6:30 AM - 7:00 AM">6:30 AM - 7:00 AM</option>
+                <option value="7:00 AM - 7:30 AM">7:00 AM - 7:30 AM</option>
+		<option value="7:30 AM - 8:00 AM">7:30 AM - 8:00 AM</option>
+		<option value="8:00 AM - 8:30 AM">8:00 AM - 8:30 AM</option>
+		<option value="8:30 AM - 9:00 AM">8:30 AM - 9:00 AM</option>
+		<option value="9:00 AM - 9:30 AM">9:00 AM - 9:30 AM</option>
+		<option value="9:30 AM - 10:00 AM">9:30 AM - 10:00 AM</option>
+		<option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM</option>
+            </select>
+        </div>
+        <div class="modal-actions" id="modalActions">
+            <button class="btn secondary" id="cancelModal">Cancel</button>
+            <button class="btn primary" id="saveReschedule">Save</button>
+        </div>
+    </div>
+</div>
+<!-- Dark Mode Toggle -->
+<div class="dark-mode-toggle">
+    <button id="darkModeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
+</div>
+<footer class="swastha-footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3>SwasthaIndia</h3>
+            <p>Where Healing Meets Innovation. Your trusted platform for reliable blood tests and health packages.</p>
+        </div>
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/book-test.html">Book Test</a></li>
+                <li><a href="/my-packages.html">Health Packages</a></li>
+                <li><a href="/privacy.html">Privacy Policy</a></li>
+                <li><a href="/blogs/">Blog</a></li>
+                <li><a href="/contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Contact</h4>
+            <p>Email: <a href="mailto:info@swasthaindia.in">info@swasthaindia.in</a></p>
+            <p>Phone: <a href="tel:+919911990556">+91 99119 90556</a></p>
+            <div class="social-icons">
+                <a href="https://wa.me/919911990556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/swasthaindia/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100070218915961" target="_blank" rel="noopener noreferrer" title="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 SwasthaIndia. All rights reserved.</p>
+    </div>
+</footer>
+
+<div id="toast"></div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC3vUlsn_2rUytVaYb_tFwvQEK-kE-d8Bw",
+    authDomain: "swasthaindia-f97a6.firebaseapp.com",
+    projectId: "swasthaindia-f97a6",
+    storageBucket: "swasthaindia-f97a6.firebasestorage.app",
+    messagingSenderId: "982224624069",
+    appId: "1:982224624069:web:b875c17f3b53d6ac0a53ac"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, user => { if (user)
+{ document.getElementById("pname").textContent = user.displayName || user.email; 
+document.getElementById("pemail").textContent = user.email; 
+document.getElementById("greeting").textContent = `Hello, ${user.displayName || user.email}!`;
+loadBookings(user.email); loadDashboardArticles(); } else { window.location.href = "index.html";
+ }
+ });
+
+const blogScriptUrl = "https://script.google.com/macros/s/AKfycbzfEsunbbKJEERgUb_Qhn34WkJ9ufNFYVwtpJpTnI46AsdtKcZYCs75cTgc4iIHrjkH/exec";
+async function loadDashboardArticles() {
+    const container = document.getElementById("articlesList");
+    if (!container) return; // safeguard if element is missing
+    container.innerHTML = `<p class="empty-state">Loading articles...</p>`;
+
+    try {
+        const res = await fetch(blogScriptUrl);
+        if (!res.ok) throw new Error('Failed to fetch blogs');
+        const data = await res.json();
+
+        // Check if data.blogs exists and is an array
+        const articles = Array.isArray(data) ? data : data.blogs;
+        if (!articles || articles.length === 0) {
+            container.innerHTML = `<p class="empty-state">No articles found.</p>`;
+            return;
+        }
+
+        // Show top 3 latest articles
+        const topArticles = articles.slice(0, 3);
+
+        let html = "";
+        topArticles.forEach(blog => {
+            html += `
+                <a href="blog.html?slug=${blog.Slug}" class="article-link">
+                    <h4>${blog.Title}</h4>
+                    <p>${blog.Content.substring(0, 80)}...</p>
+                </a>
+            `;
+        });
+
+        container.innerHTML = html;
+
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = `<p class="empty-state">Failed to load articles.</p>`;
+    }
+}
+
+const scriptUrl = "https://script.google.com/macros/s/AKfycbyGoIjrtAR5fx-MPWZ0a9gj3MHtX--LuL0wGf6bGCMmK4cR_--xKvOLbRvZlkDpE6gIeA/exec";
+
+let currentBookingId = null;
+let myBookings = [];
+
+/* ----------------- Helpers ----------------- */
+function showToast(msg, success = true, container = document.body) {
+    const toast = document.createElement("div");
+    toast.textContent = msg;
+    toast.style.position = "absolute";
+    toast.style.background = success ? "#1a73e8" : "#dc3545";
+    toast.style.color = "#fff";
+    toast.style.padding = "0.5rem 1rem";
+    toast.style.borderRadius = "6px";
+    toast.style.fontSize = "0.9rem";
+    toast.style.zIndex = 2000;
+    toast.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+    
+    // Attach near container (booking card)
+    container.style.position = container.style.position || "relative";
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 2500);
+}
+
+
+function formatDisplayDate(dateVal) {
+    if (!dateVal) return 'N/A';
+    try {
+        return new Date(dateVal).toLocaleDateString('en-IN', {
+            weekday: 'short',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+    } catch (e) {
+        return String(dateVal);
+    }
+}
+// Open modal
+function openModal({ title, showInputs = true, onSave, saveText = 'Save' }) {
+    const modal = document.getElementById("rescheduleModal");
+    document.getElementById("modalTitle").textContent = title;
+    document.getElementById("modalInputs").style.display = showInputs ? 'block' : 'none';
+    
+    const saveBtn = document.getElementById("saveReschedule");
+    saveBtn.textContent = saveText;
+
+    // Remove old click listeners
+    saveBtn.replaceWith(saveBtn.cloneNode(true));
+    const newSaveBtn = document.getElementById("saveReschedule");
+    newSaveBtn.onclick = onSave;
+
+    modal.style.display = "flex";
+}
+
+// Close modal
+function closeModal() {
+    document.getElementById("rescheduleModal").style.display = "none";
+}
+
+document.getElementById("closeModal").onclick = closeModal;
+document.getElementById("cancelModal").onclick = closeModal;
+document.getElementById("rescheduleModal").onclick = e => {
+    if (e.target === e.currentTarget) closeModal();
+};
+
+function formatDisplayTime(timeVal) {
+    if (!timeVal) return 'N/A';
+    if (typeof timeVal === "string" && /am|pm/i.test(timeVal)) return timeVal;
+    try {
+        return new Date(timeVal).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+        return String(timeVal);
+    }
+}
+
+function getPrice(obj) {
+    return obj['Final Price'] || obj['Final_Price'] || obj['Offer Price'] || obj['Offer_Price'] ||
+        obj['MRP'] || obj['Price'] || obj['Amount'] || 'N/A';
+}
+
+/* ----------------- Load & Render Bookings ----------------- */
+async function loadBookings(email) {
+    const bookingsContainer = document.getElementById("bookings");
+    bookingsContainer.innerHTML = `
+        <div class="skeleton-loader">
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+        </div>
+    `;
+
+    try {
+        const res = await fetch(`${scriptUrl}?action=getBookings&email=${encodeURIComponent(email)}`);
+        if (!res.ok) throw new Error('Failed fetching bookings: ' + res.status);
+        const data = await res.json();
+
+        myBookings = data.filter(row => row.Email && row.Email.toLowerCase() === email.toLowerCase());
+
+        document.getElementById("apptCount").textContent = myBookings.length;
+        document.getElementById("reportCount").textContent = myBookings.filter(b => (b.Status || '').toLowerCase() === 'completed').length;
+
+        if (myBookings.length === 0) {
+            bookingsContainer.innerHTML = "<p class='empty-state'>No bookings found. Book your first test today!</p>";
+            document.getElementById("upcoming-appt-card").style.display = "none";
+            return;
+        }
+
+        let html = "";
+        let nextAppt = null;
+        myBookings.forEach(b => {
+            const statusText = b.Status || "Pending";
+            const status = statusText.toLowerCase();
+            const showActions = status !== "completed" && status !== "cancelled";
+
+            html += `
+                <div class="booking-card" data-booking-id="${b["Booking ID"]}">
+                    <div class="booking-header">
+                        ${b["Test Name"] || "Test"}
+                        <span class="status status-${status}">${statusText}</span>
+                    </div>
+                    <div class="booking-info">
+                        <p><strong>Booking ID:</strong> ${b["Booking ID"]}</p>
+                        <p><strong>Patient:</strong> ${b["Full Name"] || ''} (${b.Age || ''}, ${b.Gender || ''})</p>
+                        <p data-field="date"><strong>Date & Time:</strong> ${formatDisplayDate(b['Booking Date'])} at ${formatDisplayTime(b['Selected Slot'])}</p>
+                        <p data-field="price"><strong>Price:</strong> ₹${getPrice(b)}</p>
+                    </div>
+                    ${showActions ? `
+                        <div class="booking-actions">
+                            <button class="btn reschedule-btn" data-id="${b["Booking ID"]}"><i class="fas fa-calendar-alt"></i> Reschedule</button>
+                            <button class="btn cancel-btn" data-id="${b["Booking ID"]}"><i class="fas fa-times-circle"></i> Cancel</button>
+                        </div>` 
+                        : status === "completed" ? `
+                        <div class="booking-actions">
+                            <a class="btn report-btn" href="https://drive.google.com/uc?export=download&id=${b['Report ID']}" target="_blank">
+                                <i class="fas fa-file-download"></i> Download Report
+                            </a>
+                        </div>` 
+                        : ""}
+                </div>
+            `;
+
+            if (!nextAppt && status === "pending") nextAppt = b;
+        });
+
+        bookingsContainer.innerHTML = html;
+
+        // Update upcoming appointment
+        const upcomingCard = document.getElementById("upcoming-appt-card");
+        if (nextAppt) {
+            upcomingCard.style.display = "block";
+            document.getElementById("apptTest").textContent = nextAppt["Test Name"];
+            document.getElementById("apptDateTime").textContent = `${formatDisplayDate(nextAppt['Booking Date'])} at ${formatDisplayTime(nextAppt['Selected Slot'])}`;
+            const apptStatusEl = document.getElementById("apptStatus");
+            apptStatusEl.textContent = nextAppt.Status;
+            apptStatusEl.className = `status status-${nextAppt.Status.toLowerCase()}`;
+        } else {
+            upcomingCard.style.display = "none";
+        }
+
+    } catch (err) {
+        console.error(err);
+        bookingsContainer.innerHTML = "<p class='empty-state'>Failed to load bookings.</p>";
+        showToast("Failed to load bookings", false);
+    }
+}
+
+
+/* ----------------- Confirm Modal ----------------- */
+function showConfirmModal(message, onConfirm) {
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.style.display = "flex";
+    modal.innerHTML = `
+        <div class="confirm-modal-content">
+            <h3 style="margin-top:0">${message}</h3>
+            <div class="modal-actions">
+                <button class="btn secondary" id="__confirm_no">No</button>
+                <button class="btn primary" id="__confirm_yes">Yes</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    modal.querySelector("#__confirm_no").onclick = () => modal.remove();
+    modal.querySelector("#__confirm_yes").onclick = () => {
+        modal.remove();
+        try { onConfirm(); } catch(e){ console.error(e); }
+    };
+}
+
+/* ----------------- Update Booking API ----------------- */
+async function updateBooking(action, bookingId, newDate, newSlot) {
+    const payload = new URLSearchParams();
+    payload.append("action", action);
+    payload.append("Booking ID", bookingId);
+    if (action === "reschedule") {
+        payload.append("Booking Date", newDate);
+        payload.append("Selected Slot", newSlot);
+    }
+
+    const res = await fetch(scriptUrl, { method: "POST", body: payload });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+}
+
+/* ----------------- Update Card UI ----------------- */
+function updateBookingCard(bookingId, newDate, newSlot, status) {
+    const card = document.querySelector(`[data-booking-id="${bookingId}"]`);
+    if (!card) return;
+
+    const statusEl = card.querySelector(".status");
+    const dateEl = card.querySelector('[data-field="date"]');
+    const actionsEl = card.querySelector(".booking-actions");
+
+    const idx = myBookings.findIndex(x => x["Booking ID"] === bookingId);
+    if (idx !== -1) {
+        if (status === "rescheduled") {
+            myBookings[idx]['Booking Date'] = newDate;
+            myBookings[idx]['Selected Slot'] = newSlot;
+            myBookings[idx]['Status'] = "Rescheduled";
+        } else if (status === "cancelled") {
+            myBookings[idx]['Status'] = "Cancelled";
+        }
+    }
+
+    if (status === "rescheduled") {
+        statusEl.textContent = "Rescheduled";
+        statusEl.className = "status rescheduled";
+        if (dateEl) dateEl.innerHTML = `<strong>Date & Time:</strong> ${formatDisplayDate(newDate)} at ${formatDisplayTime(newSlot)}`;
+        showToast("✅ Booking successfully rescheduled", true);
+    }
+
+    if (status === "cancelled") {
+        statusEl.textContent = "Cancelled";
+        statusEl.className = "status cancelled";
+        if (actionsEl) actionsEl.remove();
+        if (dateEl) dateEl.innerHTML = `<strong>Status:</strong> Cancelled`;
+        showToast("❌ Booking cancelled", false);
+    }
+
+    // Update Next Appointment
+    updateNextAppointment();
+
+    // Highlight card
+    card.style.transition = "background 0.4s";
+    const prev = card.style.background;
+    card.style.background = "#e8fdf3";
+    setTimeout(() => card.style.background = prev || "", 900);
+}
+
+// Global function (outside updateBookingCard)
+function updateNextAppointment() {
+    const upcomingCard = document.getElementById("upcoming-appt-card");
+    const nextAppt = myBookings.find(b => (b.Status || '').toLowerCase() === "pending" || (b.Status || '').toLowerCase() === "rescheduled");
+    if (nextAppt) {
+        upcomingCard.style.display = "block";
+        document.getElementById("apptTest").textContent = nextAppt["Test Name"];
+        document.getElementById("apptDateTime").textContent = `${formatDisplayDate(nextAppt['Booking Date'])} at ${formatDisplayTime(nextAppt['Selected Slot'])}`;
+        const apptStatusEl = document.getElementById("apptStatus");
+        apptStatusEl.textContent = nextAppt.Status;
+        apptStatusEl.className = `status status-${nextAppt.Status.toLowerCase()}`;
+    } else {
+        upcomingCard.style.display = "none";
+    }
+}
+
+
+/* ----------------- Event Listeners ----------------- */
+document.addEventListener("click", e => {
+    const resBtn = e.target.closest(".reschedule-btn");
+    if (resBtn) {
+        currentBookingId = resBtn.dataset.id;
+        const today = new Date();
+        const next7 = new Date();
+        next7.setDate(today.getDate() + 7);
+
+        const newDateInput = document.getElementById("newDate");
+        newDateInput.min = today.toISOString().split("T")[0];
+        newDateInput.max = next7.toISOString().split("T")[0];
+
+        openModal({
+            title: "Reschedule Booking",
+            showInputs: true,
+            saveText: "Save",
+            onSave: async () => {
+                const newDate = newDateInput.value;
+                const newSlot = document.getElementById("newSlot").value;
+                if (!newDate || !newSlot) { 
+                    showToast("Select date & slot", false); 
+                    return; 
+                }
+
+                const card = document.querySelector(`[data-booking-id="${currentBookingId}"]`);
+                const saveBtn = document.getElementById("saveReschedule");
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Rescheduling...`;
+
+                try {
+                    await updateBooking("reschedule", currentBookingId, newDate, newSlot);
+                    updateBookingCard(currentBookingId, newDate, newSlot, "rescheduled");
+                    closeModal();
+                    showToast("✅ Booking rescheduled", true, card);
+
+                    // Update Next Appointment
+                    updateNextAppointment();
+                } catch(e) {
+                    console.error(e);
+                    showToast("Reschedule failed", false, card);
+                } finally {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = `Save`;
+                }
+            }
+        });
+    }
+
+    const cancelBtn = e.target.closest(".cancel-btn");
+    if (cancelBtn) {
+        const bookingId = cancelBtn.dataset.id;
+        const card = document.querySelector(`[data-booking-id="${bookingId}"]`);
+        openModal({
+            title: "Confirm Cancellation",
+            showInputs: false,
+            saveText: "Yes, Cancel",
+            onSave: async () => {
+                const btn = document.getElementById("saveReschedule");
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Cancelling...`;
+
+                try {
+                    await updateBooking("cancel", bookingId);
+                    updateBookingCard(bookingId, null, null, "cancelled");
+                    closeModal();
+                    showToast("❌ Booking cancelled", false, card);
+                } catch(e) {
+                    console.error(e);
+                    showToast("Cancel failed", false, card);
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = `Yes, Cancel`;
+                }
+            }
+        });
+    }
+});
+
+document.getElementById("saveReschedule").addEventListener("click", async () => {
+    const newDate = document.getElementById("newDate").value;
+    const newSlot = document.getElementById("newSlot").value;
+    if (!newDate || !newSlot) {
+        showToast("Please select a date and slot.", false);
+        return;
+    }
+
+    try {
+        const saveBtn = document.getElementById("saveReschedule");
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Saving...`;
+
+        const result = await updateBooking("reschedule", currentBookingId, newDate, newSlot);
+        if (result && result.status === "success") {
+            updateBookingCard(currentBookingId, newDate, newSlot, "rescheduled");
+            document.getElementById("rescheduleModal").style.display = "none";
+        } else {
+            showToast(result.message || "Reschedule failed", false);
+        }
+    } catch (err) {
+        console.error(err);
+        showToast("Reschedule failed: " + err.message, false);
+    } finally {
+        const saveBtn = document.getElementById("saveReschedule");
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `Save`;
+    }
+});
+function updateStats(bookings) {
+  let total = bookings.length;
+  let reports = bookings.filter(b => b.Status === "Completed").length;
+  let cancelled = bookings.filter(b => b.Status === "Cancelled" || b.Status === "Rescheduled").length;
+
+  document.getElementById("apptCount").innerText = total;
+  document.getElementById("reportCount").innerText = reports;
+  document.getElementById("cancelCount").innerText = cancelled;
+}
+
+/* ----------------- Firebase Auth ----------------- */
+onAuthStateChanged(auth, user => {
+    if (user) {
+        document.getElementById("pname").textContent = user.displayName || user.email;
+        document.getElementById("pemail").textContent = user.email;
+        loadBookings(user.email);
+    } else {
+        window.location.href = "index.html";
+    }
+});
+
+
+async function loadUserReports(userEmail) {
+    const container = document.getElementById("reportsList");
+    container.innerHTML = `<p class="empty-state">Loading reports...</p>`;
+
+    try {
+        const res = await fetch(bookingsApiUrl);
+        const data = await res.json();
+
+        // Filter only completed bookings for this user
+        const completedBookings = data.filter(
+            b => b["Email"] === userEmail && b["Status"] === "Completed"
+        );
+
+        if (!completedBookings || completedBookings.length === 0) {
+            container.innerHTML = `<p class="empty-state">No completed reports available.</p>`;
+            return;
+        }
+
+        let html = "";
+        completedBookings.forEach(booking => {
+            html += `
+                <div class="report-item">
+                    <p><strong>Booking ID: ${booking["Booking ID"]}</strong><br>
+                    Test: ${booking["Test Name"]}</p>
+                    ${
+                        booking["Report URL"] 
+                        ? `<a href="${booking["Report URL"]}" target="_blank" class="btn btn-primary">Download Report</a>`
+                        : `<span class="badge">Report Not Uploaded</span>`
+                    }
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = `<p class="empty-state">Failed to load reports.</p>`;
+    }
+}
+// Dark Mode Toggle
+document.getElementById("darkModeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+});
+
+// Apply saved mode on load
+window.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark-mode");
+    }
+});
+// ==== Logout Handler ====
+// User menu toggle
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await signOut(auth);
+        localStorage.clear();
+        window.location.href = "/index.html";
+      } catch (err) {
+        console.error("Logout failed:", err);
+        alert("Logout failed. Try again.");
+      }
+    });
+  }
+});
+</script>
+
+</body>
+</html>
