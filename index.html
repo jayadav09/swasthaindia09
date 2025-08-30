@@ -894,17 +894,21 @@ html, body {
 .auth-muted { font-size:12px; color:#6b7280; text-align:center; margin-top:10px; }
 .auth-tnc  { font-size:12px; color:#6b7280; text-align:center; margin-top:8px; }
 .auth-check { display:flex; gap:8px; align-items:center; font-size:14px; color:#333; margin: 6px 0 12px; }
+#navLinks a, #navLinks span {
+    display: inline-block; /* ensure they stay on the same line */
+    margin-left: 15px;     /* spacing between links */
+    color: #fff;           /* adjust as per your theme */
+    text-decoration: none;
+}
+
+#navUsername {
+    font-weight: bold;
+}
 
     </style>
 </head>
 <body>   
-  <!-- Navigation Bar -->
-  <nav>
-    <a href="/dashboard/" id="dashboardNavLink" style="display:none;">Dashboard</a>
-    <a href="#" id="logoutNavLink" style="display:none;">Logout</a>
-    <span id="navUsername" style="display:none;"></span>
-  </nav> 
-   <header>
+    <header>
         <div class="topbar">
             <a href="/" class="logo">
                 <img src="/logo.png" alt="SwasthaIndia Logo" />
@@ -920,6 +924,10 @@ html, body {
                 <a href="/contact/">Contact</a>
                 <a href="/about/">About</a>
                 <a href="#" id="openAuthModalLink">Login</a>
+
+                <a href="/dashboard/" id="dashboardNavLink" style="display:none;">Dashboard</a>
+    <a href="#" id="logoutNavLink" style="display:none;">Logout</a>
+    <span id="navUsername" style="display:none;"></span>
 
             </nav>
         </div>
@@ -1881,6 +1889,7 @@ if (closeAuthBtn) {
 
 </body>
 </html>
+
 
 
 
