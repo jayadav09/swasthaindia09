@@ -1797,7 +1797,7 @@ $("#loginBtn").addEventListener("click", async (e) => {
 
     flash("Login successful!", true);
     closeAuth();
-    window.location.href = "/dashboard.html"; // redirect after login
+    window.location.href = "/dashboard/"; // redirect after login
   } catch (err) {
     flash(friendlyAuthError(err), false);
   } finally {
@@ -1822,7 +1822,7 @@ $("#loginBtn").addEventListener("click", async (e) => {
         fcmToken: token,
         notifStatus
       });
-      window.location.href = "dashboard.html";
+      window.location.href = "/dashboard/";
     } catch (err) {
       flash(friendlyAuthError(err), false);
     } finally {
@@ -1928,3 +1928,4 @@ if (closeAuthBtn) {
 
 </body>
 </html>
+
