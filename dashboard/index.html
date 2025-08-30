@@ -1049,6 +1049,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+	 // ====== Hamburger / mobile nav ======
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("navLinks");
+    const navClose = document.getElementById("navClose");
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener("click", () => {
+            navLinks.style.display = "flex"; // show menu
+            document.body.style.overflow = "hidden"; // prevent scrolling
+        });
+    }
+
+    if (navClose && navLinks) {
+        navClose.addEventListener("click", () => {
+            navLinks.style.display = "none"; // hide menu
+            document.body.style.overflow = ""; // restore scrolling
+        });
+    }
+
+}); // ✅ closes your DOMContentLoaded
 </script>
 
 </body>
