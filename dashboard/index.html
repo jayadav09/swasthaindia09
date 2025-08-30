@@ -333,6 +333,54 @@ body.dark-mode .btn {
             .footer-container { flex-direction: column; align-items: center; text-align: center; }
             .footer-column { margin: 20px 0; }
         }
+/* Hide nav-links by default on mobile */
+.nav-links {
+  display: none;
+  flex-direction: column;      /* vertical layout */
+  position: absolute;          /* overlay */
+  top: 60px;                   /* below topbar */
+  right: 0;
+  width: 200px;                /* adjust width */
+  background-color: #fff;      /* menu background */
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Nav links style inside mobile menu */
+.nav-links a, .nav-links button {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Hamburger icon */
+.hamburger {
+  display: none; /* hidden on desktop */
+  cursor: pointer;
+  font-size: 24px;
+}
+
+/* Close button inside nav */
+.nav-close {
+  display: block;
+  font-size: 24px;
+  background: none;
+  border: none;
+  text-align: right;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+/* Show hamburger on small screens */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  .nav-links {
+    display: none; /* hidden until hamburger clicked */
+  }
+}
 
 </style>
 </head>
