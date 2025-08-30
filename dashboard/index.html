@@ -89,42 +89,7 @@ body {
     cursor: pointer;
     z-index: 1001;
 }
-@media (max-width: 768px) {
-    .topbar { padding: 0 10px; }
-            .logo img { width: 140px; }
-    .nav-links {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(5px);
-        z-index: 999;
-        transform: translateX(100%);
-        transition: transform 0.4s ease-in-out;
-    }
-    .nav-links.active {
-        transform: translateX(0);
-    }
-    .nav-links a {
-        color: white;
-        font-size: 1.5rem;
-        margin: 20px 0;
-    }
-    .nav-close {
-        display: block;
-    }
-    .hamburger {
-        display: block;
-    }
-    .logo img {
-        width: 180px;
-    }
-}
+
 .logout-btn {
     background: var(--secondary-color);  /* make sure secondary-color is defined */
     color: #fff;
@@ -333,69 +298,55 @@ body.dark-mode .btn {
             .footer-container { flex-direction: column; align-items: center; text-align: center; }
             .footer-column { margin: 20px 0; }
         }
-/* Hide nav-links by default on mobile */
-/* Overlay for outside click */
-.nav-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.3);
-  z-index: 900; /* behind menu but above content */
-}
-
-/* Mobile navigation */
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 250px;
-  height: 100vh;
-  background-color: #fff;
-  z-index: 1000;
-  padding-top: 60px;
-  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
-  transform: translateX(100%);
-}
-
-/* Active menu (when hamburger clicked) */
-.nav-links.active {
-  transform: translateX(0);
-}
-
-/* Close button always visible */
-.nav-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 28px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-/* Overlay active when menu opens */
-.nav-overlay.active {
-  display: block;
-}
-
-/* Hamburger visible only on mobile */
-.hamburger {
-  display: none;
-  cursor: pointer;
-  font-size: 24px;
-}
-
+/* NEW MOBILE NAVIGATION STYLES */
 @media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
+    /* Main mobile menu container */
+    .nav-links {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+        display: none; /* Hide by default on mobile */
+    }
+
+    /* Active menu state */
+    .nav-links.active {
+        transform: translateX(0);
+        display: flex; /* Show when active */
+    }
+
+    /* Individual links in the mobile menu */
+    .nav-links a, .nav-links button {
+        color: white;
+        font-size: 1.5rem;
+        margin: 20px 0;
+    }
+
+    /* Hamburger icon */
+    .hamburger {
+        display: block; /* Show hamburger icon on mobile */
+    }
+
+    /* Close button */
+    .nav-close {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 3rem;
+        color: white;
+        cursor: pointer;
+        z-index: 1001;
+    }
 }
 
 
@@ -417,7 +368,6 @@ body.dark-mode .btn {
       <a href="/my-packages/">Packages</a>
       <a href="/book-test/">Book Test</a>
 
-      <!-- ✅ Logout Button -->
       <button id="logoutBtn" class="logout-btn">
         <i class="fas fa-sign-out-alt"></i> Logout
       </button>
@@ -425,10 +375,7 @@ body.dark-mode .btn {
   </div>
 </header>
 <div class="nav-overlay" id="navOverlay"></div>
-<!-- User Menu -->
-
-  
-  <main class="dashboard-container"> 
+<main class="dashboard-container"> 
 <h1 id="greeting">Hello! User</h1>
  <div class="dashboard-grid"> 
 <div class="left-panel"> 
@@ -542,7 +489,6 @@ body.dark-mode .btn {
         </div>
     </div>
 </div>
-<!-- Dark Mode Toggle -->
 <div class="dark-mode-toggle">
     <button id="darkModeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
 </div>
@@ -768,7 +714,7 @@ async function loadBookings(email) {
                     </div>
                     <div class="booking-info">
                         <p><strong>Booking ID:</strong> ${b["Booking ID"]}</p>
-                        <p><strong>Patient:</strong> ${b["Full Name"] || ''} (${b.Age || ''}, ${b.Gender || ''})</p>
+                        <p><strong>Patient:</strong> ${b["Full Name"] || ''} (${b.Age || '', b.Gender || ''})</p>
                         <p data-field="date"><strong>Date & Time:</strong> ${formatDisplayDate(b['Booking Date'])} at ${formatDisplayTime(b['Selected Slot'])}</p>
                         <p data-field="price"><strong>Price:</strong> ₹${getPrice(b)}</p>
                     </div>
