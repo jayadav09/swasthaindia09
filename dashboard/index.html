@@ -334,21 +334,33 @@ body.dark-mode .btn {
             .footer-column { margin: 20px 0; }
         }
 /* Hide nav-links by default on mobile */
+/* Overlay for outside click */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 900; /* behind menu but above content */
+}
+
 /* Mobile navigation */
 .nav-links {
-  display: none;              /* hidden by default */
-  flex-direction: column;     /* vertical stack */
-  position: fixed;            /* overlay the screen */
+  display: flex;
+  flex-direction: column;
+  position: fixed;
   top: 0;
   right: 0;
-  width: 250px;               /* menu width */
-  height: 100vh;              /* full height */
-  background-color: #fff;     
+  width: 250px;
+  height: 100vh;
+  background-color: #fff;
   z-index: 1000;
-  padding-top: 60px;          /* leave space for topbar */
+  padding-top: 60px;
   box-shadow: -2px 0 8px rgba(0,0,0,0.2);
   transition: transform 0.3s ease;
-  transform: translateX(100%); /* hidden by default */
+  transform: translateX(100%);
 }
 
 /* Active menu (when hamburger clicked) */
@@ -356,18 +368,7 @@ body.dark-mode .btn {
   transform: translateX(0);
 }
 
-/* Links inside mobile menu */
-.nav-links a, .nav-links button {
-  display: block;
-  padding: 15px 20px;
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  border-bottom: 1px solid #eee;
-  background-color: #fff;
-}
-
-/* Close button */
+/* Close button always visible */
 .nav-close {
   position: absolute;
   top: 10px;
@@ -376,6 +377,12 @@ body.dark-mode .btn {
   background: none;
   border: none;
   cursor: pointer;
+  z-index: 1001;
+}
+
+/* Overlay active when menu opens */
+.nav-overlay.active {
+  display: block;
 }
 
 /* Hamburger visible only on mobile */
@@ -390,6 +397,7 @@ body.dark-mode .btn {
     display: block;
   }
 }
+
 
 </style>
 </head>
@@ -416,7 +424,7 @@ body.dark-mode .btn {
     </nav>
   </div>
 </header>
-
+<div class="nav-overlay" id="navOverlay"></div>
 <!-- User Menu -->
 
   
@@ -1107,25 +1115,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ====== Hamburger / mobile nav ======
+// ✅ Hamburger / Mobile Nav
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("navLinks");
   const navClose = document.getElementById("navClose");
+  const navOverlay = document.getElementById("navOverlay");
 
-  if (hamburger && navLinks) {
-    hamburger.addEventListener("click", () => {
-      navLinks.style.display = "flex"; // show menu
-      document.body.style.overflow = "hidden"; // prevent scrolling
-    });
+  function openMenu() {
+    navLinks.classList.add("active");
+    navOverlay.classList.add("active");
+    document.body.style.overflow = "hidden";
   }
 
-  if (navClose && navLinks) {
-    navClose.addEventListener("click", () => {
-      navLinks.style.display = "none"; // hide menu
-      document.body.style.overflow = ""; // restore scrolling
-    });
+  function closeMenu() {
+    navLinks.classList.remove("active");
+    navOverlay.classList.remove("active");
+    document.body.style.overflow = "";
   }
-}); // ✅ closes your DOMContentLoaded
+
+  if (hamburger) hamburger.addEventListener("click", openMenu);
+  if (navClose) navClose.addEventListener("click", closeMenu);
+  if (navOverlay) navOverlay.addEventListener("click", closeMenu);
+});
 </script>
 
 </body>
