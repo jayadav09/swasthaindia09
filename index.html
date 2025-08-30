@@ -897,9 +897,14 @@ html, body {
 
     </style>
 </head>
-<body>
-
-<header>
+<body>   
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#" id="openAuthModalLink">Login / Sign up</a>
+    <a href="/dashboard/" id="dashboardNavLink" style="display:none;">Dashboard</a>
+    <a href="#" id="logoutNavLink" style="display:none;">Logout</a>
+    <span id="navUsername" style="display:none;"></span>
+  </nav> 
    <header>
         <div class="topbar">
             <a href="/" class="logo">
@@ -1501,19 +1506,27 @@ fetchData().then(() => {
         // Get all HTML elements once
         // --- Safe element references (guard for missing elements) ---
 const loginLink = document.getElementById("openAuthModalLink");
-const dashboardLink = document.getElementById("dashboardNavLink"); // may be null
-const logoutLink = document.getElementById("logoutNavLink");       // may be null
-
+const dashboardLink = document.getElementById("dashboardNavLink");
+const logoutLink = document.getElementById("logoutNavLink");
+const navUsername = document.getElementById("navUsername");
+      
 // Watch login state safely (won't throw if some nav items are absent)
 onAuthStateChanged(auth, (user) => {
-  if (loginLink) {
-    loginLink.style.display = user ? "none" : "inline-block";
-  }
-  if (dashboardLink) {
-    dashboardLink.style.display = user ? "inline-block" : "none";
-  }
-  if (logoutLink) {
-    logoutLink.style.display = user ? "inline-block" : "none";
+  if (user) {
+    // Logged in
+    if (loginLink) loginLink.style.display = "none";
+    if (dashboardLink) dashboardLink.style.display = "inline-block";
+    if (logoutLink) logoutLink.style.display = "inline-block";
+    if (navUsername) {
+      navUsername.textContent = user.displayName || user.email;
+      navUsername.style.display = "inline-block";
+    }
+  } else {
+    // Not logged in
+    if (loginLink) loginLink.style.display = "inline-block";
+    if (dashboardLink) dashboardLink.style.display = "none";
+    if (logoutLink) logoutLink.style.display = "none";
+    if (navUsername) navUsername.style.display = "none";
   }
 });
 
@@ -1523,12 +1536,14 @@ if (logoutLink) {
     e.preventDefault();
     try {
       await signOut(auth);
-      window.location.href = "/"; // back to home
-    } catch (error) {
-      console.error("Logout failed:", error);
+      // optional: show flash message
+      window.location.href = "/"; // redirect home
+    } catch (err) {
+      console.error("Logout failed:", err);
     }
   });
 }
+
    // ====== Sheet sync (add fcmToken + permission) ======
   async function upsertUserToSheet(user, extra = {}) {
     try {
@@ -1867,5 +1882,6 @@ if (closeAuthBtn) {
 
 </body>
 </html>
+
 
 
