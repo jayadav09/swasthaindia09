@@ -1731,36 +1731,40 @@ document.getElementById("signupBtn").addEventListener("click", async (e) => {
 
 // Update the login logic to handle unverified users
 // Login flow
-$("#loginBtn").addEventListener("click", async (e) => {
-  const btn = $("#loginBtn");
+// ---------- Login ----------
+document.getElementById("loginBtn").addEventListener("click", async (e) => {
+  const btn = document.getElementById("loginBtn");
   const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Logging in...');
   try {
-    const email = $("#loginEmail").value.trim();
-    const pass = $("#loginPass").value;
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass = document.getElementById("loginPass").value;
+
     if (!email || !pass) {
       flash("Please enter both email and password.", false);
       return;
     }
 
-    // Try login
+    // 1. Try login
     const cred = await signInWithEmailAndPassword(auth, email, pass);
 
+    // 2. Check email verification
     if (!cred.user.emailVerified) {
-      flash("Please verify your email before logging in.", false);
+      flash("⚠️ Please verify your email before logging in.", false);
       await signOut(auth); // force logout if unverified
       return;
     }
 
-    flash("Login successful!", true);
+    // 3. Success → close modal & redirect
+    flash("✅ Login successful!", true);
     closeAuth();
-    window.location.href = "/dashboard/"; // redirect after login
+    window.location.href = "/dashboard/"; 
+
   } catch (err) {
     flash(friendlyAuthError(err), false);
   } finally {
     restore();
   }
 });
-
   // ---------- Google Sign-in (wrap flow so button shows spinner) ----------
   const googleFlow = async (btn) => {
     const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Signing in...');
@@ -1869,6 +1873,7 @@ if (closeAuthBtn) {
 
 </body>
 </html>
+
 
 
 
