@@ -1676,67 +1676,57 @@ if (logoutLink) {
   // ====== Auth flows (email/password + Google) ======
    // ---------- Signup (with button spinner + friendly errors + optional push signup) ----------
 // ---------- Signup (with button spinner + friendly errors + optional push signup) ----------
-$("#signupBtn").addEventListener("click", async (e) => {
-  const btn = $("#signupBtn");
-  const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Creating...');
-  try {
-    const name = $("#signupName").value.trim();
-    const email = $("#signupEmail").value.trim();
-    const pass = $("#signupPass").value;
-    const phone = $("#signupPhone").value.trim();
-    const wantsPush = $("#signupAllowPush").checked;
+// ---------- Signup ----------
+document.getElementById("signupBtn").addEventListener("click", async (e) => {
+  const btn = document.getElementById("signupBtn");
+  const restore = setBtnLoading(btn, '<i class="fas fa-spinner fa-spin"></i> Creating...');
+  try {
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const pass = document.getElementById("signupPass").value;
+    const phone = document.getElementById("signupPhone").value.trim();
 
-    if (!name || !email || !pass) { 
-        flash("Please fill all required fields.", false); 
-        return; 
+    if (!name || !email || !pass) { 
+      flash("Please fill all required fields.", false); 
+      return; 
     }
 
-    // 1. Create the user account with email and password
-    const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await updateProfile(cred.user, { displayName: name });
+    // 1. Create the user account with email and password
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
 
-    // 2. Request notification permission only if the user opted in
-   await upsertUserToSheet(cred.user, {
-    name,
-    phone,
-    createdAt: new Date().toISOString()
-});
+    // 2. Update profile (set displayName)
+    await updateProfile(cred.user, { displayName: name });
 
-
-    // 3. Save the user data (including notification status/token) to Google Sheets
+    // 3. Save the user data to Google Sheets (basic info only)
     await upsertUserToSheet(cred.user, {
-        name,
-        phone,
-        fcmToken: token,
-        notifStatus,
-        createdAt: new Date().toISOString()
+      name,
+      phone,
+      createdAt: new Date().toISOString()
     });
 
-    // 4. Send the email verification link to the user
+    // 4. Send email verification
     const baseUrl = window.location.hostname === "localhost"
-        ? "http://localhost:5500"
-        : "https://swasthaindia.in";
+      ? "http://localhost:5500"
+      : "https://swasthaindia.in";
 
     await sendEmailVerification(cred.user, {
-        url: baseUrl,
-        handleCodeInApp: false
+      url: baseUrl,
+      handleCodeInApp: false
     });
 
-    // 5. Sign out the user immediately after sending the verification link
-    // This prevents them from auto-logging in until they verify.
+    // 5. Sign out user until they verify
     await signOut(auth);
 
-    // 6. Display a success message and switch to the login tab
-    // The message is displayed *after* the view change to ensure it's visible.
+    // 6. Switch to login tab and show success message
     goLogin();
-    flash("Verification email sent! Please check your inbox to log in.", true);
+    flash("✅ Verification email sent! Please check your inbox to log in.", true);
     authVerifyAlert.style.display = "block";
 
-  } catch (err) {
-    flash(friendlyAuthError(err), false);
-  } finally {
-    restore();
-  }
+  } catch (err) {
+    flash(friendlyAuthError(err), false);
+  } finally {
+    restore();
+  }
 });
 
 // Update the login logic to handle unverified users
@@ -1879,6 +1869,7 @@ if (closeAuthBtn) {
 
 </body>
 </html>
+
 
 
 
