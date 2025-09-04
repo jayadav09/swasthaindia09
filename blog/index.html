@@ -1048,9 +1048,10 @@ body {
                     updateLikesSection(post.Slug, data.likes);
                     renderCommentsSection(post.Slug, data.comments);
                     setupShareButtons(post);
-                } else {
-    // Redirect to a dedicated 404 page
-    window.location.href = '/404.html';
+               } else {
+    document.querySelector('meta[name="robots"]').content = 'noindex, nofollow';
+    dynamicContent.innerHTML = `<p class="error-message">Blog post not found. Please check the URL or go back to all blogs.</p>
+                                <p style="text-align:center;"><a href="/" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">&larr; Back to all blogs</a></p>`;
 }
             } else {
                 renderBlogList(allPosts);
