@@ -1049,9 +1049,9 @@ body {
                     renderCommentsSection(post.Slug, data.comments);
                     setupShareButtons(post);
                 } else {
-                    dynamicContent.innerHTML = `<p class="error-message">Blog post not found. Please check the URL or go back to all blogs.</p>
-                                                <p style="text-align:center;"><a href="/" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">&larr; Back to all blogs</a></p>`;
-                }
+    // Redirect to a dedicated 404 page
+    window.location.href = '/404.html';
+}
             } else {
                 renderBlogList(allPosts);
             }
