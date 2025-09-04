@@ -659,24 +659,26 @@ body.no-scroll {
         }
 
         postsToRender.forEach(post => {
-            const postCard = document.createElement("a");
-            postCard.className = "blog-card";
-            postCard.href = `/blog/?slug=${post.Slug}`;
-            
-            const excerpt = post.Content.split("</p>")[0].replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+    const postCard = document.createElement("a");
+    postCard.className = "blog-card";
+    // ✅ Updated to static HTML blog link
+    postCard.href = `/blog/${post.Slug}.html`;  
+    
+    const excerpt = post.Content.split("</p>")[0].replace(/<[^>]*>/g, '').substring(0, 150) + '...';
 
-            postCard.innerHTML = `
-                <img src="${post["Image URL"]}" alt="${post.Title}" loading="lazy" />
-                <div class="blog-card-content">
-                    <p class="meta">By ${post.Author} | ${post.Date}</p>
-                    <h3>${post.Title}</h3>
-                    <p>${excerpt}</p>
-                    <span class="read-more">Read More &rarr;</span>
-                </div>
-            `;
-            blogListContainer.appendChild(postCard);
-        });
-    }
+    postCard.innerHTML = `
+        <img src="${post["Image URL"]}" alt="${post.Title}" loading="lazy" />
+        <div class="blog-card-content">
+            <p class="meta">By ${post.Author} | ${post.Date}</p>
+            <h3>${post.Title}</h3>
+            <p>${excerpt}</p>
+            <span class="read-more">Read More &rarr;</span>
+        </div>
+    `;
+
+    document.querySelector(".blog-list").appendChild(postCard);
+});
+
     
     // Function to render tags for filtering
     function renderTags(posts) {
